@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./public/css/bootstrap.css">
+    <title>Hortfruit Online :: Página Principal</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./public/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./public/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./public/img/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="./public/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        p.truncate-3l {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        img.dm{
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body style="min-width:372px; overflow-x:hidden; ">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success  shadow-sm ">
+        <div class="container">
+            <a class="navbar-brand" href="">
+                <strong>Hortfruit Online</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link text-white">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/contato" class="nav-link text-white">Contato</a>
+                    </li>
+                </ul>
+                <div class="align-self-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/cadastro" class="nav-link text-white">Quero Me Cadastrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link text-white">Entrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/cliente/carrinho" class="nav-link text-white">
+                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                    <use xlink:href="/bi.svg#cart3" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    <header >
+        <div id="carouselMain" class="carousel carousel-dark slide m-3"data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselMain" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselMain" data-slide-to="1" class="active"></li>
+                <li data-target="#carouselMain" data-slide-to="2" class="active"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active text-center" data-interval="3000">
+                    <img src="./public/img/slides/slide01.jpg" alt="" class="img-fluid d-none d-md-block" style="height: 400px; border-radius: 10px;" >
+                    <img src="./public/img/slides/slide01small.jpg" alt="" class="img-fluid d-block d-md-none">
+                </div>
+                <div class="carousel-item text-center" data-interval="3000">
+                    <img src="./public/img/slides/slide01.jpg" alt="" class="img-fluid d-none d-md-block">
+                    <img src="/img/slides/slide01small.jpg" alt="" class="img-fluid d-block d-md-none">
+                </div>
+                <div class="carousel-item text-center" data-interval="3000">
+                    <img src="./public/img/slides/slide01.jpg" alt="" class="img-fluid d-none d-md-block">
+                    <img src="./public/img/slides/slide01small.jpg" alt="" class="img-fluid d-block d-md-none">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselMain" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Próximo</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselMain" role="button" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Próximo</span>
+            </a>
+        </div>      
+    </header>
+
+    <main class="mb-5 pb-5 mb-md-0 mx-5" >
+        <div class="row w-100 align-items-center gx-lg-2 gx-0">
+            <div class="col-xxl-2 col-lg-3 col-md-6 col-5 ">
+      
+            </div>
+            <div class="col-xxl-5 col-lg-5 d-none d-lg-block">
+                <form action="#">
+                    <div class="input-group">
+                        <input class="form-control rounded" type="search" placeholder="Pesquisar produtos">
+                        <span class="input-group-append">
+                            <button class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
+                <div class="list-inline">
+                  
+                    </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+            <div class="row  my-3">
+                <h3>Mais vendidos diariamente</h3>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000001.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000002.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000003.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>             
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000004.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div> 
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000005.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div> 
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000006.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000007.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000008.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000009.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000010.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000011.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                <div  class="g-3 col-xl-2 col-lg-3 col-md-4 col-sm-6  ">
+                    <div class="card text-center bg-white  btn btn-outline-success">
+                        <a id="favorito-0" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
+                            <svg class="bi" width="20" height="20" fill="currentColor">
+                                <use xlink:href="/bi.svg#suit-heart" />
+                            </svg>
+                        </a>
+                        <img src="./public/img/produtos/000012.jpg" class="card-img-top">
+                        <div class="card-header bg-white">
+                            <div class="text-small mb-1">
+                                <a href="#!" class="text-decoration-none text-muted"><small>Frutas vegetais</small></a>
+                            </div>
+                            <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">Banana</a></h2>  
+
+                            <div>
+                                <small class="text-warning">
+                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                           
+                                </small>
+                                <span class="text-muted small">4,5 (67)</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <div>
+                                    <span class="text-dark">R$12,98</span>
+                                    <span class="text-decoration-line-through text-muted">R$ 8,98</span>
+                                </div>
+                                <div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center m-2">
+                            
+                            
+                            <div>
+                                <a href="#!" class="btn btn-success btn-sm" style="width: 180px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <h3>Fornecedores</h3>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-lg-6">
+                    <!-- col -->
+                    <div class="col">
+                       <!-- card -->
+                       <div class="card btn-outline-success  text-center card-lg">
+                          <div class="card-body bg-white p-6">
+                             <div>
+                                <!-- img -->
+                                <img src="./public/img/favicon/android-chrome-192x192.png" style="width:64px;" alt="" class="rounded-circle icon-shape icon-xxl mb-6 bg-light">
+                                <!-- content -->
+                                <h2 class="mb-2 h5"><a href="#!" class="text-inherit text-decoration-none text-dark">Supermercado eletrônico</h2>
+
+                                    <div>
+                                        <small class="text-warning">
+                                            <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                                    <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                        <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                                   
+                                        </small>
+                                        <span class="text-muted small">4,5 (67)</span>
+                                    </div>                                <div class="text-dark"> <a class="text-decoration-none text-dark" href="#">heathercarpenter@dayrep.com</a></div>
+                             </div>
+                             <!-- meta content -->
+                             
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col">
+                        <!-- card -->
+                        <div class="card btn-outline-success  text-center card-lg">
+                           <div class="card-body bg-white p-6">
+                              <div>
+                                 <!-- img -->
+                                 <img src="./public/img/favicon/android-chrome-192x192.png" style="width:64px;" alt="" class="rounded-circle icon-shape icon-xxl mb-6 bg-light">
+                                 <!-- content -->
+                                 <h2 class="mb-2 h5"><a href="#!" class="text-inherit text-decoration-none text-dark">Supermercado eletrônico</h2>
+ 
+                                     <div>
+                                         <small class="text-warning">
+                                             <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                                 <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                                     <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                         <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                                    
+                                         </small>
+                                         <span class="text-muted small">4,5 (67)</span>
+                                     </div>                                <div class="text-dark"> <a class="text-decoration-none text-dark" href="#">heathercarpenter@dayrep.com</a></div>
+                              </div>
+                              <!-- meta content -->
+                              
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col">
+                        <!-- card -->
+                        <div class="card btn-outline-success  text-center card-lg">
+                           <div class="card-body bg-white p-6">
+                              <div>
+                                 <!-- img -->
+                                 <img src="./public/img/favicon/android-chrome-192x192.png" style="width:64px;" alt="" class="rounded-circle icon-shape icon-xxl mb-6 bg-light">
+                                 <!-- content -->
+                                 <h2 class="mb-2 h5"><a href="#!" class="text-inherit text-decoration-none text-dark">Supermercado eletrônico</h2>
+ 
+                                     <div>
+                                         <small class="text-warning">
+                                             <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
+                                                 <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
+                                                     <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                         <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                                                                                    
+                                         </small>
+                                         <span class="text-muted small">4,5 (67)</span>
+                                     </div>                                <div class="text-dark"> <a class="text-decoration-none text-dark" href="#">heathercarpenter@dayrep.com</a></div>
+                              </div>
+                              <!-- meta content -->
+                              
+                           </div>
+                        </div>
+                     </div>
+                 
+        
+            
+        
+                 </div>
+
+            </div>
+            <div class="row pb-3 my-3">
+                <div class="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
+                    <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mostrando 1 a 8 de 12 entradas</font></font></span>
+                    <nav class="mt-2 mt-md-0 my-3">
+                       <ul class="pagination mb-0 my-3">
+                          <li class="page-item disabled"><a class="page-link" href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Anterior</font></font></a></li>
+                          <li class="page-item"><a class="page-link active" href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></a></li>
+                          <li class="page-item"><a class="page-link" href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2</font></font></a></li>
+                          <li class="page-item"><a class="page-link" href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">3</font></font></a></li>
+                          <li class="page-item"><a class="page-link" href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Próximo</font></font></a></li>
+                       </ul>
+                    </nav>
+                 </div>            <div class="container">
+                <div class="row my-5">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="mb-8 mb-xl-0">
+                            <div class="mb-3"><img src="./public/img/favicon/clock.svg" alt=""></div>
+                            <h3 class="h5 mb-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mercearia de 10 minutos agora</font></font></h3>
+                            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Faça com que seu pedido seja entregue à sua porta o mais rápido possível nas lojas de coleta FreshCart perto de você.</font></font></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="mb-8 mb-xl-0">
+                            <div class="mb-3"><img src="./public/img/favicon/gift.svg""></div>
+                            <h3 class="h5 mb-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Melhores preços e ofertas</font></font></h3>
+                            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Preços mais baratos do que o supermercado local, ótimas ofertas de reembolso para completar. Obtenha os melhores preços e ofertas.</font></font></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="mb-8 mb-xl-0">
+                            <div class="mb-3"><img src="./public/img/favicon/box.svg" alt="">
+                            </div>
+                            <h3 class="h5 mb-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ampla variedade</font></font></h3>
+                            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Escolha entre mais de 5.000 produtos em alimentos, cuidados pessoais, casa, padaria, vegetais e não vegetais e outras categorias.</font></font></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="mb-8 mb-xl-0">
+                            <div class="mb-3"><img src="./public/img/favicon/refresh-cw.svg"></div>
+                            <h3 class="h5 mb-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Devoluções fáceis</font></font></h3>
+                            <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                Não está satisfeito com um produto? Devolva-o na porta e receba um reembolso em poucas horas. </font></font><a href="#!"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Política</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> de não fazer perguntas
+                                 </font><font style="vertical-align: inherit;">
+                                .
+                            </font></font></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top py-4">
+                <div class="row align-items-center">
+                  <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item text-dark">Parceiros de pagamento</li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/amazonpay.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/american-express.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/mastercard.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/paypal.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/visa.svg" alt=""></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-7 mt-4 mt-md-0">
+                    <ul class="list-inline mb-0 text-lg-end text-center">
+                      <li class="list-inline-item mb-2 mb-md-0 text-dark">Obtenha entregas com Hprtfruit Online</li>
+                      <li class="list-inline-item ms-4">
+                        <a href="#!"> <img src="./public/img/favicon/appstore-btn.svg" alt="" style="width: 140px;"></a></li>
+                      <li class="list-inline-item">
+                        <a href="#!"> <img src="./public/img/favicon/googleplay-btn.svg" alt="" style="width: 140px;"></a></li>
+                    </ul>
+                  </div>
+                </div>
+          
+              </div>
+        </div>
+    </main>
+<script>
+
+</script>
+    <!-- <div style="height: 273px;" class="d-block d-md-none"></div>
+    <div style="height: 153px;" class="d-none d-md-block d-lg-none"></div>
+    <div class="d-none d-lg-block"></div> -->
+
+    <footer class="border-top text-muted bg-light" style="z-index: 1000;">
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-12 col-md-4 text-center text-md-left">
+                    &copy; 2020 - Hortfruit Online Ltda ME<br>
+                    Rua Malaguti, 179, Hortlândia <br>
+                    CPNJ 99.999.999/0001-99
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <a href="/privacidade.html" class="text-decoration-none text-dark">Política de Privacidade</a><br>
+                    <a href="/termos.html" class="text-decoration-none text-dark">Termos de Uso</a><br>
+                    <a href="/quemsomos.html" class="text-decoration-none text-dark">Quem Somos</a><br>
+                    <a href="/trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-right">
+                    <a href="/contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
+                    E-mail: <a href="mailto:email@dominio.com"
+                        class="text-decoration-none text-dark">email@dominio.com</a><br>
+                    Telefone: <a href="phone:28999990000" class="text-decoration-none text-dark">(27) 99999-9999</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+</body>
+
+</html>
