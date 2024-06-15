@@ -2,361 +2,113 @@
 <html lang="pt-BR">
 <body>
                         <main class="flex-fill">
-                            <div class="container">
+                            <div class="row">
+                                <!-- col -->
                                     <div class="col-12">
-                                        <form class="row mb-3">
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <div class="form-floating">
-                                                    <select class="form-select">
-                                                        <option value="30">Últimos 30 dias</option>
-                                                        <option value="60">Últimos 60 dias</option>
-                                                        <option value="90">Últimos 90 dias</option>
-                                                        <option value="180">Últimos 180 dias</option>
-                                                        <option value="360" selected>Últimos 360 dias</option>
-                                                        <option value="9999">Todo o período</option>
-                                                    </select>
-                                                    <label>Período</label>
+                                       <div class="p-4">
+                                          <!-- heading -->
+                                          <div class="d-flex justify-content-between mb-6 align-items-center">
+                                             <h2 class="mb-0">Métodos de Pagamento</h2>
+                                             <a href="#" style="background-color: #0aad0a; border-color: #0aad0a;" class="text-decoration-none btn text-light" data-bs-toggle="modal" data-bs-target="#paymentModal">Adcionar
+                                             Pagamento </a>
+                                          </div>
+                                          <ul class="list-group list-group-flush">
+                                             <!-- List group item -->
+                                             <li class="list-group-item py-5">
+                                                <div class="d-flex justify-content-between">
+                                                   <div class="d-flex">
+                                                      <!-- img -->
+                                                      <img src="../../public/img/favicon/visa_p.svg" alt="">
+                                                      <!-- text -->
+                                                      <div class="ms-4">
+                                                          <h5 class="mb-0 h6 h6">**** 1234</h5>
+                                                         <p class="mb-0 small">Expires in 10/2023
+                                                        </p>
+                                                      </div>
+                                                   </div>
+                                                   <div>
+                                                      <!-- button -->
+                                                      <a href="#" class="btn btn-outline-gray-400 disabled btn-sm">Remove</a>
+                                                   </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-floating">
-                                                    <select class="form-select">
-                                                        <option value="1" selected>Mais novos primeiro</option>
-                                                        <option value="2">Mais antigos primeiro</option>
-                                                    </select>
-                                                    <label>Ordenação</label>
+                                             </li>
+                                             <!-- List group item -->
+                                             <li class="list-group-item py-5">
+                                                <div class="d-flex justify-content-between">
+                                                   <div class="d-flex">
+                                                      <!-- img -->
+                                                      <img src="../../public/img/favicon/mastercard_p.svg" alt="" class="me-3">
+                                                      <div>
+                                                       <h5 class="mb-0 h6">Mastercard ending in 1234</h5>
+                                                       <p class="mb-0 small">Expires in 03/2026</p>
+                                                      </div>
+                                                   </div>
+                                                   <div>
+                                                      <!-- button-->
+                                                      <a href="#" class="btn btn-outline-gray-400 text-muted btn-sm">Remove</a>
+                                                   </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                        <div class="accordion" id="divPedidos">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#pedido000010">
-                                                        <b>Pedido 000010</b>
-                                                        <span class="mx-1">(realizado em 11/10/2020)</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="pedido000010" class="accordion-collapse collapse"
-                                                    data-bs-parent="#divPedidos">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produto</th>
-                                                                    <th class="text-end">R$ Unit.</th>
-                                                                    <th class="text-center">Qtde.</th>
-                                                                    <th class="text-end">Subtotal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Abacate Manteiga</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Banana Prata</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mamão Papaya</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor dos Produtos:
-                                                                    </th>
-                                                                    <td class="text-end">26,91</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor do Frete:
-                                                                    </th>
-                                                                    <td class="text-end">7,50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor a Pagar:</th>
-                                                                    <td class="text-end">34,41</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Forma de Pagamento:
-                                                                    </th>
-                                                                    <td class="text-end">Crédito VISA 1x</td>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
+                                             </li>
+                                             <!-- List group item -->
+                                             <li class="list-group-item py-5">
+                                                <div class="d-flex justify-content-between">
+                                                   <div class="d-flex">
+                                                      <!-- img -->
+                                                      <img src="../../public/img/favicon/discover_p.svg" alt="" class="me-3">
+                                                      <div>
+                                                          <!-- text -->
+                                                                <h5 class="mb-0 h6">Discover ending in 1234</h5>
+                                                             <p class="mb-0 small">Expires in 07/2020 <span class="badge bg-warning text-dark"> This card is
+                                                           expired.</span>
+                                                         </p>
+                                                      </div>
+                                                   </div>
+                                                   <div>
+                                                      <!-- btn -->
+                                                      <a href="#" class="btn btn-outline-gray-400 text-muted btn-sm">Remove</a>
+                                                   </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#pedido000009">
-                                                        <b>Pedido 000009</b>
-                                                        <span class="mx-1">(realizado em 11/10/2020)</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="pedido000009" class="accordion-collapse collapse"
-                                                    data-bs-parent="#divPedidos">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produto</th>
-                                                                    <th class="text-end">R$ Unit.</th>
-                                                                    <th class="text-center">Qtde.</th>
-                                                                    <th class="text-end">Subtotal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Abacate Manteiga</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Banana Prata</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mamão Papaya</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor dos Produtos:
-                                                                    </th>
-                                                                    <td class="text-end">26,91</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor do Frete:
-                                                                    </th>
-                                                                    <td class="text-end">7,50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor a Pagar:</th>
-                                                                    <td class="text-end">34,41</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Forma de Pagamento:
-                                                                    </th>
-                                                                    <td class="text-end">Crédito VISA 1x</td>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
+                                             </li>
+                                             <!-- List group item -->
+                                             <li class="list-group-item py-5">
+                                                <div class="d-flex justify-content-between">
+                                                   <div class="d-flex">
+                                                      <!-- img -->
+                                                      <img src="../../public/img/favicon/american-express.svg" alt="" class="me-3">
+                                                      <!-- text -->
+                                                      <div>
+                                                         <h5 class="mb-0 h6">American Express ending in 1234</h5>
+                                                        <p class="mb-0 small">Expires in 12/2021</p>
+                                                      </div>
+                                                   </div>
+                                                   <div>
+                                                      <!-- btn -->
+                                                      <a href="#" class="btn btn-outline-gray-400 text-muted btn-sm">Remove</a>
+                                                   </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#pedido000008">
-                                                        <b>Pedido 000008</b>
-                                                        <span class="mx-1">(realizado em 11/10/2020)</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="pedido000008" class="accordion-collapse collapse"
-                                                    data-bs-parent="#divPedidos">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produto</th>
-                                                                    <th class="text-end">R$ Unit.</th>
-                                                                    <th class="text-center">Qtde.</th>
-                                                                    <th class="text-end">Subtotal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Abacate Manteiga</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Banana Prata</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mamão Papaya</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor dos Produtos:
-                                                                    </th>
-                                                                    <td class="text-end">26,91</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor do Frete:
-                                                                    </th>
-                                                                    <td class="text-end">7,50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor a Pagar:</th>
-                                                                    <td class="text-end">34,41</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Forma de Pagamento:
-                                                                    </th>
-                                                                    <td class="text-end">Crédito VISA 1x</td>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
+                                             </li>
+                                             <!-- List group item -->
+                                             <li class="list-group-item py-5 border-bottom">
+                                                <div class="d-flex justify-content-between">
+                                                   <div class="d-flex">
+                                                      <!-- img -->
+                                                      <img src="../../public/img/favicon/paypal.svg" alt="" class="me-3">
+                                                      <div>
+                                                       <!-- text -->
+                                                        <h5 class="mb-0 h6">Paypal Express ending in 1234</h5>
+                                                         <p class="mb-0 small">Expires in 10/2021</p>
+                                                      </div>
+                                                   </div>
+                                                   <div>
+                                                      <!-- btn -->
+                                                      <a href="#" class="btn btn-outline-gray-400 text-muted btn-sm">Remove</a>
+                                                   </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#pedido000007">
-                                                        <b>Pedido 000007</b>
-                                                        <span class="mx-1">(realizado em 11/10/2020)</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="pedido000007" class="accordion-collapse collapse"
-                                                    data-bs-parent="#divPedidos">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produto</th>
-                                                                    <th class="text-end">R$ Unit.</th>
-                                                                    <th class="text-center">Qtde.</th>
-                                                                    <th class="text-end">Subtotal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Abacate Manteiga</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Banana Prata</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mamão Papaya</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor dos Produtos:
-                                                                    </th>
-                                                                    <td class="text-end">26,91</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor do Frete:
-                                                                    </th>
-                                                                    <td class="text-end">7,50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor a Pagar:</th>
-                                                                    <td class="text-end">34,41</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Forma de Pagamento:
-                                                                    </th>
-                                                                    <td class="text-end">Crédito VISA 1x</td>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#pedido000006">
-                                                        <b>Pedido 000006</b>
-                                                        <span class="mx-1">(realizado em 11/10/2020)</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="pedido000006" class="accordion-collapse collapse"
-                                                    data-bs-parent="#divPedidos">
-                                                    <div class="accordion-body">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produto</th>
-                                                                    <th class="text-end">R$ Unit.</th>
-                                                                    <th class="text-center">Qtde.</th>
-                                                                    <th class="text-end">Subtotal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Abacate Manteiga</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Banana Prata</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Mamão Papaya</td>
-                                                                    <td class="text-end">2,99</td>
-                                                                    <td class="text-center">3</td>
-                                                                    <td class="text-end">8,97</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor dos Produtos:
-                                                                    </th>
-                                                                    <td class="text-end">26,91</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor do Frete:
-                                                                    </th>
-                                                                    <td class="text-end">7,50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Valor a Pagar:</th>
-                                                                    <td class="text-end">34,41</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="text-end" colspan="3">Forma de Pagamento:
-                                                                    </th>
-                                                                    <td class="text-end">Crédito VISA 1x</td>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                             </li>
+                                          </ul>
+                                       </div>
                                     </div>
-                                </div>
+                                                         </div>
                         </main>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 

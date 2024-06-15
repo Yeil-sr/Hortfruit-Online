@@ -41,7 +41,7 @@ class Usuario {
     }
 
 
-    static async authenticate(email, senha) {
+    static async authenticate(email) {
         const query = "SELECT * FROM usuarios WHERE email = ?";
         return new Promise((resolve, reject) => {
             db.query(query, [email], async (err, results) => {

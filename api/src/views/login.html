@@ -21,9 +21,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success border-bottom shadow-sm ">
+    <nav class="shadow p-3 mb-5  navbar navbar-expand-lg navbar-dark bg-success border-bottom shadow-sm ">
         <div class="container">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="/">
                 <strong>Hortfruit Online</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -61,64 +61,126 @@
 
     </nav>
 
-    <main class="mb-5 pb-5 mb-md-0">
+    <main class="mb-5 p-5 mb-md-0">
         <div class="container">
-            <div class="row justify-content-center">
-                <form id="formLogin" class="col-sm-10 col-md-8 col-lg-6">
-                    <h1 class="mb-3">Indentifique-se, por favor</h1>
-                    <div class="form-floating mb-3">
-                        <input type="email" autofocus id="txtEmail" placeholder=" " class="form-control">
-                        <label for="txtEmail">E-mail</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" id="txtSenha" placeholder=" " class="form-control">
-                        <label for="txtSenha">Senha</label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" value="" id="checklembrar">
-                        <label for="checklembrar" class="form-check-label">Lembrar de mim</label>
-                    </div>
-                    <button id="btnLogin" class="btn btn-lg btn-danger" type="button">Entrar</button>
-                    <p class="mt-3">
-                        Ainda não é cadastrado? <a href="/cadastro">Clique aqui para se cadastrar.</a>
-                    </p>
-                    <p class="mt-3">
-                        Esqueceu sua senha? <a href="/recuperarsenha.html">Clique aqui para recuperá-la.</a>
-                    </p>
-                </form>
-            </div>
-        </div>
-    </main>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
+                   <!-- img -->
+                   <img src="./public/img/favicon/login.svg" alt="" class="img-fluid">
+                </div>
+                <!-- col -->
+                <div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
+                   <div class="mb-lg-9 mb-5">
+                      <h1 class="mb-1 h2 fw-bold">Identifique-se</h1>
+                      <p>Bem-vindo de volta ao Hortfruit: Online! Insira o seu email para iniciar.</p>
+                   </div>
+
+                   <form class="formLogin" novalidate="">
+                      <div class="row g-3">
+                         <!-- row -->
+
+                         <div class="col-12">
+                            <!-- input -->
+                            <label for="txtEmail" class="form-label visually-hidden">Endereço de email</label>
+                            <input type="email" class="form-control" id="txtEmail" placeholder="E-mail" required="">
+                            <div class="invalid-feedback">Por favor insira o nome.</div>
+                         </div>
+                         <div class="col-12">
+                            <!-- input -->
+                            <div class="password-field position-relative">
+                               <label for="txtSenha" class="form-label visually-hidden">Senha</label>
+                               <div class="password-field position-relative">
+                                  <input type="password" class="form-control fakePassword" id="txtSenha" placeholder="*****" required="">
+                                  <span><i class="bi bi-eye-slash passwordToggler"></i></span>
+                                  <div class="invalid-feedback">Por favor insira a senha.</div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="d-flex justify-content-between">
+                            <!-- form check -->
+                            <div class="form-check">
+                               <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                               <!-- label -->
+                               <label class="form-check-label" for="flexCheckDefault">Lembre de mim</label>
+                            </div>
+                            <div>
+                               Esqueceu sua senha?
+                                <a style="color: #0b9b0e;" class="text-decoration-none" href="/">Redefinir</a>
+                            </div>
+                         </div>
+                         <!-- btn -->
+                         <div class="col-12 d-grid"><button style="background-color: #0AAD0d; border-color: #0AAD0d;" type="submit" id="btnLogin" class="btn btn-primary">Entrar</button></div>
+                         <!-- link -->
+                         <div>
+                            Não tem uma conta?
+                             <a  style="color: #0b9b0e;" class="text-decoration-none" href="/cadastro">Inscrever-se</a>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>    </main>
     <script src="../public/js/login.js"></script>
 
                         <div style="height: 273px;" class="d-block d-md-none"></div>
     <div style="height: 153px;" class="d-none d-md-block d-lg-none"></div>
     <div class="d-none d-lg-block"></div>
 
-    <footer class="border-top fixed-bottom text-muted bg-light">
+    <footer class="border-top text-muted bg-light" style="z-index: 1000;">
         <div class="container">
             <div class="row py-3">
-                <div class="col-12 col-md-4 text center text-md-left">
-                    &copy; 2020-Hortfruit Online Ltda ME<br>
-                    Inc. All rights reserved.
+                <div class="col-12 col-md-4 text-center text-md-left">
+                    &copy; 2020 - Hortfruit Online Ltda ME<br>
+                    Rua Malaguti, 179, Hortlândia <br>
+                    CPNJ 99.999.999/0001-99
                 </div>
-                <div class="col-12 col-md-4 text center">
-                    <a href="#" class="text-decoration-none text-dark">Política de Privacidade</a><br>
+                <div class="col-12 col-md-4 text-center">
+                    <a href="/privacidade.html" class="text-decoration-none text-dark">Política de Privacidade</a><br>
                     <a href="/termos.html" class="text-decoration-none text-dark">Termos de Uso</a><br>
-                    <a href="/trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a><br>
                     <a href="/quemsomos.html" class="text-decoration-none text-dark">Quem Somos</a><br>
+                    <a href="/trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-right">
-                    <a class="text-decoration-none text-dark" href="#footer">Contato pelo site</a><br>
-                    <a href="#" class="text-decoration-none text-dark">E-mail:</a>
-                    <a href="lorenco:email@dominio.com" class="text-decoration-none text-dark">email@dominio.com</a><br>
-                    Telefone:<a href="phone:29999999999" class="text-decoration-none text-dark">(29-99999-9999)</a><br>
-
+                    <a href="/contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
+                    E-mail: <a href="mailto:email@dominio.com"
+                        class="text-decoration-none text-dark">email@dominio.com</a><br>
+                    Telefone: <a href="phone:28999990000" class="text-decoration-none text-dark">(27) 99999-9999</a>
                 </div>
             </div>
-        </div>
-        </div>
+            <div class="border-top py-4">
+                <div class="row align-items-center">
+                  <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item text-dark">Parceiros de pagamento</li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/amazonpay.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/american-express.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/mastercard.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/paypal.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="./public/img/favicon/visa.svg" alt=""></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-7 mt-4 mt-md-0">
+                    <ul class="list-inline mb-0 text-lg-end text-center">
+                      <li class="list-inline-item mb-2 mb-md-0 text-dark">Obtenha entregas com Hprtfruit Online</li>
+                      <li class="list-inline-item ms-4">
+                        <a href="#!"> <img src="./public/img/favicon/appstore-btn.svg" alt="" style="width: 140px;"></a></li>
+                      <li class="list-inline-item">
+                        <a href="#!"> <img src="./public/img/favicon/googleplay-btn.svg" alt="" style="width: 140px;"></a></li>
+                    </ul>
+                  </div>
+                </div>
+<hr>              </div>
 
+        </div>
     </footer>
 
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>

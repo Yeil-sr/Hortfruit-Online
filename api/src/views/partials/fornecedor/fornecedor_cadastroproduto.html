@@ -9,9 +9,31 @@
 </head>
 <body>
     <main class="flex-fill">
-        <div class="container">
-            <div class="col-8">
-                <form id="formCadastro" class="row g-3" action="/produto" method="POST">
+        <div class=" container">
+            <div class="col-xl-12 col-12 mb-5">
+                <div class="row mb-8">
+                    <div class="col-md-12">
+                       <div class="d-md-flex justify-content-between align-items-center">
+                          <!-- page header -->
+                          <div>
+                             <h2>Adicionar novo produto</h2>
+                             <!-- breacrumb -->
+                             <nav aria-label="migalhas de pão">
+                                <ol class="breadcrumb mb-0">
+                                   <li class="breadcrumb-item"><a href="#" class="text-inherit">Painel</a></li>
+                                   <li class="breadcrumb-item"><a href="#" class="text-inherit">Produtos</a></li>
+                                   <li class="breadcrumb-item active" aria-current="page">Adicionar novo produto</li>
+                                </ol>
+                             </nav>
+                          </div>
+                          <!-- button -->
+                          <div>
+                             <a href="products.html" class="btn btn-light">Voltar ao produto</a>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                <form id="formCadastro" class="row " action="/produto" method="POST">
                     <div class="form-floating mb-3 col-md-12">
                         <input type="text" placeholder=" " class="form-control" name="nome" id="nome" autofocus>
                         <label for="nome">Nome</label>
