@@ -60,40 +60,72 @@
             </div>
         </div>
     </nav>
-    <mainclass="main-content-wrapper">
+    <main class="main-content-wrapper">
 
-        <div class="container">
+        <div class="px-4 py-5">
 
-            <h1>Minha Conta</h1>
-            <div class="row ">
-                <div class="col-4">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action bg-danger text-light" data-target="fornecedor_dados.html">
-                            <i class="bi-person fs-6"></i>Dados Pessoais
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="fornecedor_contatos.html">
-                            <i class="bi-mailbox fs-6"></i>Contatos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="fornecedor_endereco.html">
-                            <i class="bi-house-door fs-6"></i>Endereço
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="fornecedor_pedidos.html">
-                            <i class="bi-truck fs-6"></i>Pedidos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action " data-target="fornecedor_produtos.html">
-                            <i class="bi-mailbox  fs-6"></i> Produtos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action " data-target="fornecedor_cadastroproduto.html">
-                            <i class="bi-mailbox  fs-6"></i>Cadastrar Produtos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action " data-target="fornecedor_favoritos.html">
-                            <i class="bi-heart fs-6"></i>Favoritos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action " data-target="fornecedor_senha.html">
-                            <i class="bi-lock fs-6"></i>Alterar Senha
-                        </a>
-                    
-                    </div>
+      
+            <div class="  row ">
+                <div class ="col-lg-3 col-md-4 col-12 border-end d-none d-md-block">
+                    <div >
+                        <div class="pt-10 pe-lg-10">
+                           <!-- nav -->
+                           <ul class="nav flex-column nav-pills">
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="list-group-item-action  nav-link active text-decoration-none" data-target="fornecedor_dados.html" aria-current="page" href="account-orders.html" style="background-color: rgb(0, 51, 51);">
+                                    <i class="feather-icon icon-shopping-bag me-2"></i>
+                                Painel
+                                </a>
+                              </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="list-group-item-action nav-link text-dark" href="#" data-target="fornecedor_dados.html">
+                                    <i class="feather-icon icon-settings me-2"></i>
+                                    Configurações
+                                </a>
+                              </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="list-group-item-action nav-link text-dark" href="#" data-target="fornecedor_endereco.html">
+                                    <i class="feather-icon icon-map-pin me-2"></i>
+                                    Endereço
+                                </a>
+                              </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="list-group-item-action nav-link text-dark" href="#" data-target="fornecedor_pedidos.html">
+                                    <i class="feather-icon icon-credit-card me-2"></i>
+                                    Forma de pagamento
+                                </a>
+                              </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="list-group-item-action nav-link text-dark" href="#" data-target="fornecedor_produtos.html">
+                                    <i class="feather-icon icon-bell me-2"></i>
+                                   Produtos
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="list-group-item-action nav-link text-dark" href="#" data-target="fornecedor_cadastroproduto.html">
+                                   <i class="feather-icon icon-bell me-2"></i>
+                                  Cadastrar Produtos
+                               </a>
+                             </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <hr>
+                              </li>
+                              <!-- nav item -->
+                              <li class="nav-item">
+                                 <a class="nav-link text-dark" href="../index.html">
+                                    <i class="feather-icon icon-log-out me-2"></i>
+                                    Sair
+                                </a>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
                 </div>
                 <div class="col-xl-8 col-8 mb-5">
                     <div id="content"></div>
@@ -106,7 +138,7 @@
     <div style="height: 153px;" class="d-none d-md-block d-lg-none"></div>
     <div class="d-none d-lg-block"></div>
 
-    <footer class="border-top  text-muted bg-light">
+    <footer class="border-top text-muted bg-light">
         <div class="container">
             <div class="row py-3">
                 <div class="col-12 col-md-4 text center text-md-left">
