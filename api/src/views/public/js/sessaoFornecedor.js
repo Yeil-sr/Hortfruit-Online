@@ -67,20 +67,22 @@ async function obterListaProdutos(fornecedor_id) {
 }
 
 // Função para construir a tabela de produtos
+// Função para construir a tabela de produtos
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');
     produtosContainer.innerHTML = ''; // Limpa o conteúdo atual
 
     try {
         // Obtendo a lista de produtos
-        const produtos = await obterListaProdutos();
+        const produtos = await obterListaProdutos(fornecedor_id);
 
         // Criando a tabela HTML
         const tabela = document.createElement('table');
-        tabela.classList.add('table', 'table-striped');
+        tabela.classList.add('table', 'table-striped','table-responsive');
         tabela.innerHTML = `
-            <thead>
+            <thead >
                 <tr>
+                    <th>Imagem</th>
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Unidade</th>
@@ -88,7 +90,7 @@ async function construirTabelaProdutos(fornecedor_id) {
                     <th>Quantidade</th>
                     <th>Preço</th>
                     <th>Descrição</th>
-                    <th>Ações</th> <!-- Coluna para os botões de editar e deletar -->
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -99,6 +101,7 @@ async function construirTabelaProdutos(fornecedor_id) {
         produtos.forEach(produto => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
+                <td><img src="./uploads/${produto.img_produto}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></td>
                 <td>${produto.nome}</td>
                 <td>${produto.tipo}</td>
                 <td>${produto.unidade}</td>
@@ -107,8 +110,8 @@ async function construirTabelaProdutos(fornecedor_id) {
                 <td>${produto.preco}</td>
                 <td>${produto.descricao}</td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarProduto(${produto.id},${fornecedor_id})">Editar</button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="excluirProduto(${produto.id})">Excluir</button>
+                    <a  type="button" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarProduto(${produto.id}, ${fornecedor_id})"><img src="./public/img/favicon/edit.svg" style="height: 18px;"></a>
+                    <a type="button"  onclick="excluirProduto(${produto.id})"><img src="./public/img/favicon/trash-2.svg" style="height: 20px;"></a></a>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -124,7 +127,8 @@ async function construirTabelaProdutos(fornecedor_id) {
 }
 
 // Função para editar um produto
-async function editarProduto(id) {
+// Função para editar um produto
+async function editarProduto(id, fornecedor_id) {
     try {
         const response = await fetch(`/produto/editar/${id}`);
         const produto = await response.json();
@@ -137,12 +141,12 @@ async function editarProduto(id) {
         document.getElementById('quantidade').value = produto.quantidade;
         document.getElementById('preco').value = produto.preco;
         document.getElementById('descricao').value = produto.descricao;
+        document.getElementById('fornecedor_id').value = fornecedor_id;
 
         // Define o ID do produto no botão de envio do formulário
         const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
         btnSalvarEdicao.setAttribute('data-id', id);
-
-        // Show the modal
+ // Show the modal
         const modalElement = document.getElementById('editarProdutoModal');
         modalElement.classList.add('show');
         modalElement.style.display = 'block';
@@ -164,8 +168,6 @@ function fecharModal() {
     modalElement.removeAttribute('aria-modal');
     document.body.classList.remove('modal-open');
 }
-
-// Função para enviar os dados do formulário de edição
 // Função para enviar os dados do formulário de edição
 async function enviarDadosFormulario() {
     try {
@@ -173,23 +175,11 @@ async function enviarDadosFormulario() {
         const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
         const id = btnSalvarEdicao.getAttribute('data-id');
         
-        const nome = document.getElementById('nome').value;
-        const tipo = document.getElementById('tipo').value;
-        const unidade = document.getElementById('unidade').value;
-        const cod = document.getElementById('cod').value;
-        const quantidade = document.getElementById('quantidade').value;
-        const preco = document.getElementById('preco').value;
-        const descricao = document.getElementById('descricao').value;
-        const fornecedor_id = document.getElementById('fornecedor_id').value; // Get fornecedor_id 
-
-        const dadosProduto = { nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id };
+        const formData = new FormData(form);
 
         const putResponse = await fetch(`/produto/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dadosProduto)
+            body: formData
         });
 
         if (!putResponse.ok) {
@@ -199,6 +189,7 @@ async function enviarDadosFormulario() {
         alert('Produto atualizado com sucesso!');
         fecharModal(); // Fechar o modal após a atualização
         // Reconstruir a tabela de produtos
+        const fornecedor_id = document.getElementById('fornecedor_id').value;
         construirTabelaProdutos(fornecedor_id);
     } catch (error) {
         console.error('Erro ao atualizar o produto:', error);

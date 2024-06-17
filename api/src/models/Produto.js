@@ -63,8 +63,8 @@ class Produto {
     static async addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto }) {
         return new Promise((resolve, reject) => {
             const q = `
-                INSERT INTO produto(nome,tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO produto(nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
             const values = [nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto];
             db.query(q, values, (err, result) => {

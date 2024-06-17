@@ -1,6 +1,6 @@
 const Produto = require("../models/Produto.js");
-const Usuario = require('../models/Usuario.js');
 const Fornecedor = require('../models/Fornecedor.js');
+const upload = require('../multerConfig/multerConfig'); 
 
 class ProdutoController {
     async index(req, res) {
@@ -15,20 +15,16 @@ class ProdutoController {
 
     async getProdutosByFornecedor(req, res) {
         try {
-            // Verificar se o usuário está autenticado na sessão
             if (!req.session.user) {
                 return res.status(401).json({ error: 'Usuário não autenticado' });
             }
 
-            // Obter o fornecedor_id do usuário autenticado
             const userId = req.session.user.id;
             const fornecedor = await Fornecedor.findByUsuarioId(userId);
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
             const fornecedor_id = fornecedor.id;
-
-            // Obter a lista de produtos do fornecedor com base no fornecedor_id
             const produtos = await Produto.findByFornecedorId(fornecedor_id);
             res.json(produtos);
         } catch (error) {
@@ -36,21 +32,19 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao obter a lista de produtos do fornecedor' });
         }
     }
-    
+
     async addProduto(req, res) {
         try {
-                   // Verificar se o usuário está autenticado na sessão
-                   if (!req.session.user) {
-                    return res.status(401).json({ error: 'Usuário não autenticado' });
-                }
-    
-                // Obter o fornecedor_id do usuário autenticado
-                const userId = req.session.user.id;
-                const fornecedor = await Fornecedor.findByUsuarioId(userId);
-                if (!fornecedor) {
-                    return res.status(404).json({ error: 'Fornecedor não autenticado' });
-                }
-                const fornecedor_id = fornecedor.id;
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+
+            const userId = req.session.user.id;
+            const fornecedor = await Fornecedor.findByUsuarioId(userId);
+            if (!fornecedor) {
+                return res.status(404).json({ error: 'Fornecedor não encontrado' });
+            }
+            const fornecedor_id = fornecedor.id;
 
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
 
@@ -58,7 +52,9 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            await Produto.addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id:fornecedor_id });
+            const img_produto = req.file ? req.file.filename : null; // Pegando o nome do arquivo de imagem
+
+            await Produto.addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
 
             res.status(201).json({ message: 'Produto cadastrado com sucesso!' });
         } catch (error) {
@@ -69,18 +65,16 @@ class ProdutoController {
 
     async updateProduto(req, res) {
         try {
-                    // Verificar se o usuário está autenticado na sessão
-                    if (!req.session.user) {
-                        return res.status(401).json({ error: 'Usuário não autenticado' });
-                    }
-        
-                    // Obter o fornecedor_id do usuário autenticado
-                    const userId = req.session.user.id;
-                    const fornecedor = await Fornecedor.findByUsuarioId(userId);
-                    if (!fornecedor) {
-                        return res.status(404).json({ error: 'Fornecedor não encontrado' });
-                    }
-                    const fornecedor_id = fornecedor.id;
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+
+            const userId = req.session.user.id;
+            const fornecedor = await Fornecedor.findByUsuarioId(userId);
+            if (!fornecedor) {
+                return res.status(404).json({ error: 'Fornecedor não encontrado' });
+            }
+            const fornecedor_id = fornecedor.id;
 
             const { id } = req.params;
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
@@ -89,7 +83,9 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            const result = await Produto.updateProduto(id, { nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id: fornecedor_id });
+            const img_produto = req.file ? req.file.filename : null; 
+
+            const result = await Produto.updateProduto(id, { nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
 
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: 'Produto não encontrado ou nenhum dado foi alterado' });
@@ -104,12 +100,10 @@ class ProdutoController {
 
     async deleteProduto(req, res) {
         try {
-            // Verificar se o usuário está autenticado na sessão
             if (!req.session.user) {
                 return res.status(401).json({ error: 'Usuário não autenticado' });
             }
 
-            // Obter o fornecedor_id do usuário autenticado
             const userId = req.session.user.id;
             const fornecedor = await Fornecedor.findByUsuarioId(userId);
             if (!fornecedor) {
@@ -127,18 +121,17 @@ class ProdutoController {
 
     async editarProduto(req, res) {
         try {
-           // Verificar se o usuário está autenticado na sessão
-                    if (!req.session.user) {
-                        return res.status(401).json({ error: 'Usuário não autenticado' });
-                    }
-        
-                    // Obter o fornecedor_id do usuário autenticado
-                    const userId = req.session.user.id;
-                    const fornecedor = await Fornecedor.findByUsuarioId(userId);
-                    if (!fornecedor) {
-                        return res.status(404).json({ error: 'Fornecedor não encontrado' });
-                    }
-                    const fornecedor_id = fornecedor.id;
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+
+            const userId = req.session.user.id;
+            const fornecedor = await Fornecedor.findByUsuarioId(userId);
+            if (!fornecedor) {
+                return res.status(404).json({ error: 'Fornecedor não encontrado' });
+            }
+            const fornecedor_id = fornecedor.id;
+
             const { id } = req.params;
             const produto = await Produto.findById(id);
             res.json(produto);
