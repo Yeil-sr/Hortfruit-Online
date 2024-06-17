@@ -11,58 +11,45 @@
     <main class="flex-fill">
         <div class=" container">
             <div class="col-xl-12 col-12 mb-5">
-                <div class="row mb-8">
-                    <div class="col-md-12">
-                       <div class="d-md-flex justify-content-between align-items-center">
-                          <!-- page header -->
-                          <div>
-                             <h2>Adicionar novo produto</h2>
-                             <!-- breacrumb -->
-                             <nav aria-label="migalhas de pão">
-                                <ol class="breadcrumb mb-0">
-                                   <li class="breadcrumb-item"><a href="#" class="text-inherit">Painel</a></li>
-                                   <li class="breadcrumb-item"><a href="#" class="text-inherit">Produtos</a></li>
-                                   <li class="breadcrumb-item active" aria-current="page">Adicionar novo produto</li>
-                                </ol>
-                             </nav>
-                          </div>
-                          <!-- button -->
-                          <div>
-                             <a href="products.html" class="btn btn-light">Voltar ao produto</a>
-                          </div>
-                       </div>
-                    </div>
-                 </div>
+              
                 <form id="formCadastro" class="row " action="/produto" method="POST">
-                    <div class="form-floating mb-3 col-md-12">
-                        <input type="text" placeholder=" " class="form-control" name="nome" id="nome" autofocus>
+                    <div class="form mb-3 col-md-6">
                         <label for="nome">Nome</label>
+                        <input type="text" placeholder=" " class="form-control" name="nome" id="nome" >
                     </div>
-                    <div class="form-floating mb-3 col-md-12">
-                        <input type="text" placeholder=" " class="form-control" name="tipo" id="tipo" autofocus>
-                        <label for="tipo">Tipo</label>
-                    </div>
-                    <div class="form-floating mb-3 col-md-12">
-                        <input type="text" placeholder=" " class="form-control" name="unidade" id="unidade" autofocus>
-                        <label for="unidade">Unidade</label>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6 col-xl-6">
-                        <input type="tel" placeholder=" " class="form-control" name="cod" id="cod" autofocus>
-                        <label for="cod">Código do Produto</label>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6 col-xl-6">
-                        <input type="tel" placeholder=" " class="form-control" name="quantidade" id="quantidade" autofocus>
-                        <label for="quantidade">Quantidade em Estoque</label>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6 col-xl-6">
-                        <input type="tel" placeholder=" " class="form-control" id="preco" name="preco" autocomplete="tel" autofocus>
-                        <label for="preco">Preço</label>
-                    </div>
-                    <div class="form-floating mb-3 col-md-6">
-                        <textarea class="form-control" name="descricao" id="descricao"></textarea>
+                    <div class="form mb-3 col-md-6">
                         <label for="descricao">Descrição:</label>
+                        <textarea class="form-control" name="descricao" id="descricao"></textarea>
                     </div>
-                    <button id="btnSalvarProduto" w type="submit" class="btn btn-lg btn-danger mb-3" style="width: 200px;">Cadastrar Produto</button>
+                    <div class="input-group col-md-6 mb-3">
+                        <input type="file" class="form-control" id="img_produto">
+                      </div>
+                    <div class="form mb-3 col-md-6">
+                        <label for="tipo">Tipo</label>
+                        <input type="text" placeholder=" " class="form-control" name="tipo" id="tipo" >
+                    </div>
+                    <div class="form mb-3 col-md-6">
+                        <label for="unidade">Unidade</label>
+                        <input type="text" placeholder=" " class="form-control" name="unidade" id="unidade" >
+                    </div>
+                    <div class="form mb-3 col-md-6 col-xl-6">
+                        <label for="cod">Código do Produto</label>
+                        <input type="tel" placeholder=" " class="form-control" name="cod" id="cod" >
+                    </div>
+                    <div class="form mb-3 col-md-6 col-xl-6">
+                        <label for="quantidade">Quantidade em Estoque</label>
+                        <input type="tel" placeholder=" " class="form-control" name="quantidade" id="quantidade" >
+                    </div>
+                    <div class="form mb-3 col-md-6 col-xl-6">
+                        <label for="preco">Preço</label>
+                        <input type="tel" placeholder=" " class="form-control" id="preco" name="preco" autocomplete="tel">
+                    </div>
+                  
+                    
+                    <div class="col-lg-5 m-4">
+                        <button id="btnSalvarProduto"  type="submit" class="btn text-light bg-success " >Cadastrar Produto</button>
+                     </div>
+                    
                 </form>
             </div>
         </div>

@@ -44,6 +44,7 @@ class Produto {
                 // Construir o objeto com os campos do formulário de edição
                 const formularioEdicao = {
                     nome: produto.nome,
+                    img_produto: produto.img_produto,
                     tipo: produto.tipo,
                     unidade: produto.unidade,
                     cod: produto.cod,
@@ -59,13 +60,13 @@ class Produto {
     }
 
     // Método para adicionar um novo produto
-    static async addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id }) {
+    static async addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto }) {
         return new Promise((resolve, reject) => {
             const q = `
-                INSERT INTO produto(nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id)
+                INSERT INTO produto(nome,tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            const values = [nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id];
+            const values = [nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto];
             db.query(q, values, (err, result) => {
                 if (err) {
                     console.error('Erro ao adicionar o produto:', err);
@@ -86,10 +87,10 @@ class Produto {
                 }
                 const q = `
                     UPDATE produto 
-                    SET nome=?, tipo=?, unidade=?, cod=?, quantidade=?, preco=?, descricao=?, fornecedor_id=?
+                    SET nome=?, tipo=?, unidade=?, cod=?, quantidade=?, preco=?, descricao=?, fornecedor_id=?, img_produto=?
                     WHERE id=?
                 `;
-                const values = [dadosProduto.nome, dadosProduto.tipo, dadosProduto.unidade, dadosProduto.cod, dadosProduto.quantidade, dadosProduto.preco, dadosProduto.descricao, dadosProduto.fornecedor_id, id];
+                const values = [dadosProduto.nome, dadosProduto.tipo, dadosProduto.unidade, dadosProduto.cod, dadosProduto.quantidade, dadosProduto.preco, dadosProduto.descricao, dadosProduto.fornecedor_id,  dadosProduto.img_produto, id];
                 db.query(q, values, (err, result) => {
                     if (err) {
                         console.error('Erro ao atualizar o produto:', err);

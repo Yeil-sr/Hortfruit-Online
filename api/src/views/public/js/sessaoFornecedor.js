@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Carregar a página de dados pessoais por padrão
-    loadPartial('fornecedor_dados.html');
+    loadPartial('fornecedor_painel.html');
 });
 
 // Função para obter a lista de produtos
@@ -124,12 +124,12 @@ async function construirTabelaProdutos(fornecedor_id) {
 }
 
 // Função para editar um produto
-// Função para editar um produto
 async function editarProduto(id) {
     try {
         const response = await fetch(`/produto/editar/${id}`);
         const produto = await response.json();
 
+        document.getElementById('img_produto').value = produto.img_produto;
         document.getElementById('nome').value = produto.nome;
         document.getElementById('tipo').value = produto.tipo;
         document.getElementById('unidade').value = produto.unidade;
