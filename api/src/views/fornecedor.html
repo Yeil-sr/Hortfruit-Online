@@ -9,22 +9,27 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../public/css/bootstrap.css">
     <title>Hortfruit Online :: Área do Cliente</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/img/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./public/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./public/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./public/img/favicon/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
+    <meta name="msapplication-config" content="./public/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow px-5">
+            <div>
+                <!-- img -->
+                 <a href="#modalLogo">
+                <img src="./public/img/favicon/favicon.ico" style="height: 48px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
+             </a>
+             </div>
+            <a class="navbar-brand mx-2" href="">
                 <strong>Hortfruit Online</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,7 +45,36 @@
                     </li>
                 </ul>
                 <div class="align-self-end">
+                    
                     <ul class="navbar-nav">
+                        
+                            <!-- img -->
+                        <li class="nav-item">
+                             <a href="#" id="modalAvatar">
+                            <img src="./public/img/favicon/avatar-10.jpg" style="height: 40px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalAvatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    <div class="modal-body">
+                                    ...
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
+                          
+                        </li>
                         <li class="nav-item">
                             <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
                         </li>
@@ -58,7 +92,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
     </nav>
     <main class="main-content-wrapper">
 
@@ -70,7 +103,7 @@
                     <div class="d-flex flex-column">
                         <div>
                            <!-- img -->
-                            <a href="#modalLogo">
+                            <a id="editar" type="button" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarLoja()">
                            <img src="./public/img/favicon/melancia-logo.svg" style="height: 64px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
                         </a>
                         </div>
@@ -177,6 +210,40 @@
                 </div>
             </div>
                   </div>
+                  
+    <!-- Modal de Edição de Loja-->
+    <div class="modal fade" id="editaLojaModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editaLojaModalLabel">Editar Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="fecharModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de edição de produto -->
+                    <form id="editaLojaForm" data-id="" onsubmit="enviarDadosFormulario(); return false;">
+                        <div class="form-floating mb-3 col-md-12">
+                            <input type="text" placeholder=" " class="form-control" name="nome" id="nomeLoja" autofocus>
+                            <label for="nomeLoja">Título da Loja</label>
+                        </div>
+                        <div class="form-floating mb-3 col-md-12">
+                            <input type="file" placeholder=" " class="form-control" name="logoLoja" id="logoLoja">
+                        </div>
+                
+                        <div class="form-floating mb-3 col-md-6">
+                            <textarea class="form-control" name="descricao" id="descricaoLoja"></textarea>
+                            <label for="descricaoLoja">Descrição da Loja:</label>
+                        </div>
+                        <input type="hidden" id="fornecedor_id">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="fecharModal()">Fechar</button>
+                            <button id="btnSalvarEdicao" type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     </main>
     <script src="../public/js/sessaoFornecedor.js"></script>
     <div style="height: 273px;" class="d-block d-md-none"></div>

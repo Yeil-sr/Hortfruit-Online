@@ -10,6 +10,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const { isAuthenticated } = require('./middleware/authMiddleware.js');
+const upload = require('./multerConfig/multerConfig.js');
 
 const app = express();
 const porta = process.env.PORT || 8080;
@@ -39,6 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
+
 
 // Configuração de sessões
 app.use(session({

@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(user => {
                 if (user && user.nome && user.isFornecedor) {
                     document.getElementById('user-link').textContent = user.nome;
+                    document.getElementById('user-link').href = '#';
                     document.getElementById('auth-link').textContent = 'Sair';
                     document.getElementById('auth-link').href = '#';
                     document.getElementById('auth-link').addEventListener('click', function() {
@@ -65,8 +66,6 @@ async function obterListaProdutos(fornecedor_id) {
         throw error;
     }
 }
-
-// Função para construir a tabela de produtos
 // Função para construir a tabela de produtos
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');
@@ -78,9 +77,9 @@ async function construirTabelaProdutos(fornecedor_id) {
 
         // Criando a tabela HTML
         const tabela = document.createElement('table');
-        tabela.classList.add('table', 'table-striped','table-responsive');
+        tabela.classList.add('table', 'table-striped', 'table-responsive');
         tabela.innerHTML = `
-            <thead >
+            <thead>
                 <tr>
                     <th>Imagem</th>
                     <th>Nome</th>
@@ -100,8 +99,9 @@ async function construirTabelaProdutos(fornecedor_id) {
         const tbody = tabela.querySelector('tbody');
         produtos.forEach(produto => {
             const tr = document.createElement('tr');
+            const imgSrc = produto.img_produto ? `/uploads/${produto.img_produto}` : '/path/to/default/image.jpg';
             tr.innerHTML = `
-                <td><img src="./uploads/${produto.img_produto}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></td>
+                <td><img src="${imgSrc}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></td>
                 <td>${produto.nome}</td>
                 <td>${produto.tipo}</td>
                 <td>${produto.unidade}</td>
@@ -110,8 +110,8 @@ async function construirTabelaProdutos(fornecedor_id) {
                 <td>${produto.preco}</td>
                 <td>${produto.descricao}</td>
                 <td>
-                    <a  type="button" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarProduto(${produto.id}, ${fornecedor_id})"><img src="./public/img/favicon/edit.svg" style="height: 18px;"></a>
-                    <a type="button"  onclick="excluirProduto(${produto.id})"><img src="./public/img/favicon/trash-2.svg" style="height: 20px;"></a></a>
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarProduto(${produto.id}, ${fornecedor_id})"><img src="./public/img/favicon/edit.svg" style="height: 18px;"></a>
+                    <a type="button" onclick="excluirProduto(${produto.id})"><img src="./public/img/favicon/trash-2.svg" style="height: 20px;"></a>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -126,7 +126,30 @@ async function construirTabelaProdutos(fornecedor_id) {
     }
 }
 
-// Função para editar um produto
+async function editarLoja(id){
+    const editar = document.getElementById('editar');
+    editar.addEventListener('click', editarLoja);
+    const response = await fetch(`/fornecedor/${id}`);
+    const fornecedor = await response.json();
+    
+    document.getElementById('nomeLoja').value = fornecedor.nomeLoja;
+    document.getElementById('descricaoLoja').value = fornecedor.editarLoja;
+    document.getElementById('logoLoja').files[0] = fornecedor.logoLoja;
+
+     // Define o ID do produto no botão de envio do formulário
+     const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
+     btnSalvarEdicao.setAttribute('data-id', id);
+    // Show the modal
+     const modalElement = document.getElementById('editarLojaModal');
+     modalElement.classList.add('show');
+     modalElement.style.display = 'block';
+     modalElement.removeAttribute('aria-hidden');
+     modalElement.setAttribute('aria-modal', 'true');
+     document.body.classList.add('modal-open');
+    
+    
+}
+
 // Função para editar um produto
 async function editarProduto(id, fornecedor_id) {
     try {

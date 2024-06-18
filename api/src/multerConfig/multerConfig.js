@@ -16,15 +16,14 @@ const storage = multer.diskStorage({
         cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
-        // Gera um nome de arquivo único com a extensão original
-        cb(null, Date.now() + path.extname(file.originalname));
+        const produtoId = req.params.id || Date.now();
+        cb(null, `${produtoId}${path.extname(file.originalname)}`);
     }
 });
 
 // Configura o multer para lidar com o upload de arquivos de imagem
-const upload = multer({ 
+const upload = multer({
     storage: storage,
-    // Define o filtro para aceitar apenas arquivos de imagem
     fileFilter: function (req, file, cb) {
         const filetypes = /jpeg|jpg|png|gif/;
         const mimetype = filetypes.test(file.mimetype);

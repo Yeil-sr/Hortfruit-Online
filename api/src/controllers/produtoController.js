@@ -1,6 +1,6 @@
 const Produto = require("../models/Produto.js");
 const Fornecedor = require('../models/Fornecedor.js');
-const upload = require('../multerConfig/multerConfig'); 
+const upload = require('../multerConfig/multerConfig');
 
 class ProdutoController {
     async index(req, res) {
@@ -52,7 +52,7 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            const img_produto = req.file ? req.file.filename : null; // Pegando o nome do arquivo de imagem
+            const img_produto = req.file ? req.file.filename : null;
 
             await Produto.addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
 
@@ -83,7 +83,7 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            const img_produto = req.file ? req.file.filename : null; 
+            const img_produto = req.file ? req.file.filename : null;
 
             const result = await Produto.updateProduto(id, { nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
 

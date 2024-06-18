@@ -90,7 +90,7 @@ class Produto {
                     SET nome=?, tipo=?, unidade=?, cod=?, quantidade=?, preco=?, descricao=?, fornecedor_id=?, img_produto=?
                     WHERE id=?
                 `;
-                const values = [dadosProduto.nome, dadosProduto.tipo, dadosProduto.unidade, dadosProduto.cod, dadosProduto.quantidade, dadosProduto.preco, dadosProduto.descricao, dadosProduto.fornecedor_id,  dadosProduto.img_produto, id];
+                const values = [dadosProduto.nome, dadosProduto.tipo, dadosProduto.unidade, dadosProduto.cod, dadosProduto.quantidade, dadosProduto.preco, dadosProduto.descricao, dadosProduto.fornecedor_id, dadosProduto.img_produto, id];
                 db.query(q, values, (err, result) => {
                     if (err) {
                         console.error('Erro ao atualizar o produto:', err);
