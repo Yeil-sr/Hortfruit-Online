@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadPartial('fornecedor_painel.html');
 });
 
+
 // Função para obter a lista de produtos
 async function obterListaProdutos(fornecedor_id) {
     try {
@@ -66,7 +67,29 @@ async function obterListaProdutos(fornecedor_id) {
         throw error;
     }
 }
-// Função para construir a tabela de produtos
+
+
+async function obterImagemProduto(produto_id) {
+    try {
+        const response = await fetch(`/produto/imagem/produto/${produto_id}`);
+        if (!response.ok) {
+            if (response.status === 404) {
+                // Se a imagem não for encontrada, retornar um caminho para uma imagem padrão
+                return './public/img/default-image.jpg';
+            }
+            throw new Error('Erro ao obter a imagem do produto');
+        }
+        const imageName = await response.text(); // Supõe que o servidor retorna o nome do arquivo como texto
+        return `/uploads/${imageName}`; // Retorna o caminho relativo da imagem
+    } catch (error) {
+        console.error('Erro ao obter a imagem do produto:', error);
+        // Retornar um caminho para uma imagem padrão em caso de erro
+        return './public/img/default-image.jpg';
+    }
+}
+
+
+
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');
     produtosContainer.innerHTML = ''; // Limpa o conteúdo atual
@@ -97,11 +120,11 @@ async function construirTabelaProdutos(fornecedor_id) {
 
         // Adicionando cada produto como uma linha na tabela
         const tbody = tabela.querySelector('tbody');
-        produtos.forEach(produto => {
+        for (const produto of produtos) {
             const tr = document.createElement('tr');
-            const imgSrc = produto.img_produto ? `/uploads/${produto.img_produto}` : '/path/to/default/image.jpg';
+            const imgSrc = await obterImagemProduto(produto.id, fornecedor_id); // Chama função para obter a imagem
             tr.innerHTML = `
-                <td><img src="${imgSrc}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></td>
+                <td><img src="${imgSrc}" alt="Imagem do Produto" style="width: 64px; height: 64px;"></td>
                 <td>${produto.nome}</td>
                 <td>${produto.tipo}</td>
                 <td>${produto.unidade}</td>
@@ -115,7 +138,7 @@ async function construirTabelaProdutos(fornecedor_id) {
                 </td>
             `;
             tbody.appendChild(tr);
-        });
+        }
 
         // Adicionando a tabela ao container
         produtosContainer.appendChild(tabela);
@@ -126,29 +149,33 @@ async function construirTabelaProdutos(fornecedor_id) {
     }
 }
 
-async function editarLoja(id){
-    const editar = document.getElementById('editar');
-    editar.addEventListener('click', editarLoja);
-    const response = await fetch(`/fornecedor/${id}`);
-    const fornecedor = await response.json();
-    
-    document.getElementById('nomeLoja').value = fornecedor.nomeLoja;
-    document.getElementById('descricaoLoja').value = fornecedor.editarLoja;
-    document.getElementById('logoLoja').files[0] = fornecedor.logoLoja;
 
-     // Define o ID do produto no botão de envio do formulário
-     const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
-     btnSalvarEdicao.setAttribute('data-id', id);
-    // Show the modal
-     const modalElement = document.getElementById('editarLojaModal');
-     modalElement.classList.add('show');
-     modalElement.style.display = 'block';
-     modalElement.removeAttribute('aria-hidden');
-     modalElement.setAttribute('aria-modal', 'true');
-     document.body.classList.add('modal-open');
-    
-    
+async function editarLoja(id) {
+    try {
+        const response = await fetch(`/fornecedor/${id}`);
+        const fornecedor = await response.json();
+
+        document.getElementById('nomeLoja').value = fornecedor.nomeLoja;
+        document.getElementById('descricaoLoja').value = fornecedor.descricaoLoja;
+
+        // Define o ID do fornecedor no botão de envio do formulário
+        const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
+        btnSalvarEdicao.setAttribute('data-id', id);
+
+        // Show the modal
+        const modalElement = document.getElementById('editarLojaModal');
+        modalElement.classList.add('show');
+        modalElement.style.display = 'block';
+        modalElement.removeAttribute('aria-hidden');
+        modalElement.setAttribute('aria-modal', 'true');
+        document.body.classList.add('modal-open');
+    } catch (error) {
+        console.error('Erro ao preencher o formulário de edição de loja:', error);
+        alert('Erro ao preencher o formulário de edição de loja');
+    }
 }
+
+// Função para editar Avatar
 
 // Função para editar um produto
 async function editarProduto(id, fornecedor_id) {

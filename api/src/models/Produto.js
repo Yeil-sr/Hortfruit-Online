@@ -14,7 +14,41 @@ class Produto {
             });
         });
     }
+
+  // Método para encontrar a imagem de um produto pelo ID do produto
+  static async findImageByProdutoId(produto_id) {
+    return new Promise((resolve, reject) => {
+        const q = "SELECT img_produto FROM produto WHERE id=?";
+        db.query(q, [produto_id], (err, result) => {
+            if (err) {
+                console.error('Erro ao buscar imagem do produto:', err);
+                return reject(err);
+            }
+            if (result.length === 0) {
+                return resolve(null); // Retorna null se a imagem não for encontrada
+            }
+            resolve(result[0].img_produto); // Retorna o buffer da imagem
+        });
+    });
+}
     
+    // // Método para encontrar a imagem de um produto pelo ID do produto e fornecedor_id
+    // static async findImageByFornecedor(produto_id, fornecedor_id) {
+    //     return new Promise((resolve, reject) => {
+    //         const q = "SELECT img_produto FROM produto WHERE id=? AND fornecedor_id=?";
+    //         db.query(q, [produto_id, fornecedor_id], (err, result) => {
+    //             if (err) {
+    //                 console.error('Erro ao buscar imagem do produto:', err);
+    //                 return reject(err);
+    //             }
+    //             if (result.length === 0) {
+    //                 return resolve(null); // Retorna null se a imagem não for encontrada
+    //             }
+    //             resolve(result[0].img_produto); // Retorna o buffer da imagem
+    //         });
+    //     });
+    // }
+
     static async findByFornecedorId(fornecedor_id) {
         return new Promise((resolve, reject) => {
             const q = "SELECT * FROM produto WHERE fornecedor_id=?";

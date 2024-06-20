@@ -50,29 +50,9 @@
                         
                             <!-- img -->
                         <li class="nav-item">
-                             <a href="#" id="modalAvatar">
-                            <img src="./public/img/favicon/avatar-10.jpg" style="height: 40px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
+                             <a id="editarAvatar"type="button" data-bs-toggle="modal" data-bs-target="#editarAvatar" onclick="editarAvatar()">
+                            <img src="./public/img/favicon/avatar-10.jpg" style="height: 40px;" alt="logoAvatar" class="rounded-circle icon-shape icon-xxl">
                             </a>
-                            <!-- Modal -->
-                            <div class="modal fade" id="modalAvatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    <div class="modal-body">
-                                    ...
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
                           
                         </li>
                         <li class="nav-item">
@@ -103,7 +83,7 @@
                     <div class="d-flex flex-column">
                         <div>
                            <!-- img -->
-                            <a id="editar" type="button" data-bs-toggle="modal" data-bs-target="#editarProdutoModal" onclick="editarLoja()">
+                            <a id="editar" type="button" data-bs-toggle="modal" data-bs-target="#editarLojaModal" onclick="editarLoja()">
                            <img src="./public/img/favicon/melancia-logo.svg" style="height: 64px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
                         </a>
                         </div>
@@ -216,12 +196,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editaLojaModalLabel">Editar Produto</h5>
+                    <h5 class="modal-title" id="editaLojaModal">Editar Loja</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="fecharModal()"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Formulário de edição de produto -->
-                    <form id="editaLojaForm" data-id="" onsubmit="enviarDadosFormulario(); return false;">
+                    <form id="editaLojaModal" data-id="" onsubmit="enviarDadosFormulario(); return false;">
                         <div class="form-floating mb-3 col-md-12">
                             <input type="text" placeholder=" " class="form-control" name="nome" id="nomeLoja" autofocus>
                             <label for="nomeLoja">Título da Loja</label>
@@ -239,6 +219,24 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="fecharModal()">Fechar</button>
                             <button id="btnSalvarEdicao" type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+                          
+    <!-- Modal de Edição de Avatar-->
+    <div class="modal fade" id="editaAvatar" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editaAvtarModalLabel">Editar Logo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="fecharModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de edição de produto -->
+                    <form id="editarAvatar" data-id="" onsubmit="; return false;">
+                       
                     </form>
                 </div>
             </div>
@@ -275,6 +273,9 @@
         </div>
 
     </footer>
+
+    
+
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 </body>

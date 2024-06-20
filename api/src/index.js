@@ -12,8 +12,13 @@ const multer = require('multer');
 const { isAuthenticated } = require('./middleware/authMiddleware.js');
 const upload = require('./multerConfig/multerConfig.js');
 
+
 const app = express();
 const porta = process.env.PORT || 8080;
+
+// Middleware para servir arquivos estáticos
+const uploadDir = path.join(__dirname, 'uploads');
+app.use('/uploads', express.static(uploadDir));
 
 // Configuração do Sequelize para MySQL
 const sequelize = new Sequelize('hortfruit', 'root', "", {
