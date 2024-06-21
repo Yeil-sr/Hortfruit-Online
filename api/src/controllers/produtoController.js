@@ -62,44 +62,7 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao obter imagem do produto' });
         }
     }
-    // async  getPictureByFornecedor(req, res) {
-    //     try {
-    //         if (!req.session.user) {
-    //             return res.status(401).json({ error: 'Usuário não autenticado' });
-    //         }
     
-    //         const userId = req.session.user.id;
-    //         const fornecedor = await Fornecedor.findByUsuarioId(userId);
-    //         if (!fornecedor) {
-    //             return res.status(404).json({ error: 'Fornecedor não encontrado' });
-    //         }
-    
-    //         const fornecedor_id = fornecedor.id;
-    //         const produto_id = req.query.produto_id; // Obter o ID do produto da query params
-    //         const imagemProduto = await Produto.findImageByFornecedor(produto_id, fornecedor_id); // Chamada para buscar imagem
-    
-    //         if (!imagemProduto) {
-    //             return res.status(404).json({ error: 'Imagem não encontrada' });
-    //         }
-    
-    //         // Decodificar o buffer binário
-    //         const buffer = Buffer.from(imagemProduto.data);
-    
-    //         // Determinar o caminho para salvar a imagem (se necessário)
-    //         const imagePath = path.join(__dirname, `../uploads/${produto_id}.jpg`);
-    
-    //         // Salvar a imagem no servidor (opcional)
-    //         fs.writeFileSync(imagePath, buffer);
-    
-    //         // Enviar o arquivo de imagem como resposta
-    //         res.sendFile(imagePath);
-    //     } catch (error) {
-    //         console.error('Erro ao obter imagem do produto:', error);
-    //         res.status(500).json({ error: 'Erro ao obter imagem do produto' });
-    //     }
-    // }
-    
-
     async addProduto(req, res) {
         try {
             if (!req.session.user) {

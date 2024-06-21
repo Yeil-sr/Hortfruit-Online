@@ -34,14 +34,17 @@
         background-color: rgba(230, 230, 230, 0.555);
 
 
+
     }
     .descricaoDesign{
-        box-shadow: 0px 5px 5px;
-        
         border: none;
         width: 100%;
         height: 150px;
     }
+    textarea:focus, input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
 </style>
 <body>
     <main class="flex-fill">
@@ -63,23 +66,23 @@
                             <input type="file" class="form" id="img_produto" name="img_produto">
                         </label>
                     </div>
-                    <div class=" col-md-6 col-md-12  mb-3">
+                    <div class=" col-md-6 col-md-12  mb-3 ">
                         <label class="mb-3">Descrição</label>
-                        <span class="design"> text</span>
-                        <textarea class="descricaoDesign" id="descricao" name="descricao"></textarea>
+                        <span class="design shadow-sm"> text</span>
+                        <textarea class="descricaoDesign shadow-sm" id="descricao" name="descricao"></textarea>
                     </div>
                     <div class="form mb-3 col-md-6">
                         <label for="tipo">Categoria do Produto</label>
                         <select class="form-select" id="tipo" name="tipo">
-                            <option value="1">Fruta</option>
-                            <option value="2">Verdura</option>
+                            <option value="Fruta">Fruta</option>
+                            <option value="Verdura">Verdura</option>
                         </select>
                     </div>
                     <div class="form mb-3 col-md-6">
                         <label for="unidade">Peso</label>
                         <select class="form-select" id="unidade" name="unidade">
-                            <option value="1">Kilograma</option>
-                            <option value="2">Unidade</option>
+                            <option value="Kilograma">Kilograma</option>
+                            <option value="Unidade">Unidade</option>
                         </select>
                     </div>
                     <div class="form mb-3 col-md-6 col-xl-6">
@@ -97,6 +100,27 @@
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById('formCadastro').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+    
+            // Captura as opções selecionadas
+            const tipoSelect = document.getElementById('tipo');
+            const unidadeSelect = document.getElementById('unidade');
+    
+            // Captura as strings das opções selecionadas
+            const tipo = tipoSelect.options[tipoSelect.selectedIndex].text;
+            const unidade = unidadeSelect.options[unidadeSelect.selectedIndex].text;
+    
+            // Substitui os valores dos campos de seleção com as strings
+            tipoSelect.value = tipo;
+            unidadeSelect.value = unidade;
+    
+            // Envia o formulário após a substituição dos valores
+            this.submit();
+        });
+    </script>
+    
 
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
   

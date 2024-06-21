@@ -183,7 +183,6 @@ async function editarProduto(id, fornecedor_id) {
         const response = await fetch(`/produto/editar/${id}`);
         const produto = await response.json();
 
-        document.getElementById('img_produto').value = produto.img_produto;
         document.getElementById('nome').value = produto.nome;
         document.getElementById('tipo').value = produto.tipo;
         document.getElementById('unidade').value = produto.unidade;
@@ -192,11 +191,19 @@ async function editarProduto(id, fornecedor_id) {
         document.getElementById('preco').value = produto.preco;
         document.getElementById('descricao').value = produto.descricao;
         document.getElementById('fornecedor_id').value = fornecedor_id;
+        
+
+        // Obter e definir a imagem do produto
+        const imgSrc = await obterImagemProduto(produto.id);
+        document.getElementById('img_produto_atual').src = imgSrc;
+       
+
 
         // Define o ID do produto no botão de envio do formulário
         const btnSalvarEdicao = document.getElementById('btnSalvarEdicao');
         btnSalvarEdicao.setAttribute('data-id', id);
- // Show the modal
+
+        // Mostrar o modal
         const modalElement = document.getElementById('editarProdutoModal');
         modalElement.classList.add('show');
         modalElement.style.display = 'block';

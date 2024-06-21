@@ -77,7 +77,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes.js');
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "./views/index.html"));
+    res.sendFile(path.join(__dirname, "./views/catalago.html"));
 });
 
 app.get('/cadastro', (req, res) => {

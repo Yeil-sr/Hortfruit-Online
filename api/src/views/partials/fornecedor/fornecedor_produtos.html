@@ -23,7 +23,13 @@
 <body>
     <main class="mb-5 pb-5 mb-md-0">
         <div class="container">
-            <div class="col-xl-12 col-12 mb-5" id="produtosContainer" class="col-8"></div>
+            <div class="card-body  mt-3 py-4 px-4" style="background: url('../../public/img/banners/banner05.jpg') center center / cover no-repeat; border-radius: 0.5rem;">
+                <h1>Bem vindo de volta!</h1>
+                <p class="py-2"> Hortfruit: Online possue um design simples e limpo <br>para desenvolvedor e designer.</p>
+                <a href="#" class="btn text-light" style="background-color: #0aad0a;">Criar produto</a>
+             </div>
+
+            <div class="col-xl-12 col-12 mb-5" id="produtosContainer" ></div>
         </div>
     </main>
 
@@ -37,12 +43,13 @@
                 </div>
                 <div class="modal-body">
                     <!-- Formulário de edição de produto -->
-                    <form id="editarProdutoForm" data-id="" onsubmit="enviarDadosFormulario(); return false;">
+                    <form id="editarProdutoForm" data-id="" enctype="multipart/form-data" onsubmit="enviarDadosFormulario(); return false;">
                         <div class="form-floating mb-3 col-md-12">
                             <input type="text" placeholder=" " class="form-control" name="nome" id="nome" autofocus>
                             <label for="nome">Nome</label>
                         </div>
                         <div class="form-floating mb-3 col-md-12">
+                            <img id="img_produto_atual" src="" alt="Imagem do Produto" style="width: 256px; display: block;  margin: 0 auto;">
                             <input type="file" placeholder=" " class="form-control" name="img_produto" id="img_produto">
                         </div>
                         <div class="form-floating mb-3 col-md-12">
@@ -79,7 +86,7 @@
             </div>
         </div>
     </div>
-        <!-- Bootstrap JS -->
+            <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-bnUwFEMxWAFs3hAznZ2uoPkro2YfozJKJv9KYp+8W+0i6UivX+Y2TsGwVXDJGaJl" crossorigin="anonymous"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     
