@@ -35,6 +35,20 @@ class ProdutoController {
         }
     }
 
+   async getProdutoById(req,res){
+     try{
+        const { id } = req.params;
+        const produto = await Produto.findById(id);
+        if(!produto){
+            res.status(404).json({error: 'Produto não encontrado'});
+            }
+            res.json(produto)
+          
+        }catch(error){
+        console.log( 'Produto não encontrado',error)
+        }
+    }
+   
 
     async getPictureByProdutoId(req, res) {
         try {
