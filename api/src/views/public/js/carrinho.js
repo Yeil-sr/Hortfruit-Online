@@ -2,22 +2,36 @@ document.addEventListener('DOMContentLoaded', async function() {
     const params = new URLSearchParams(window.location.search);
     const produtoIds = params.get('id');
     
-    if (!produtoIds) {
-        console.error('ID do produto não encontrado na URL');
+    // Verifica se existem IDs de produtos na URL
+    if (produtoIds) {
+        const idsArray = produtoIds.split(',');
+        // Adiciona os IDs ao localStorage
+        let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
+        storedIds = [...new Set([...storedIds, ...idsArray])];
+        localStorage.setItem('produtoIds', JSON.stringify(storedIds));
+
+        // Limpa a URL
+        const newURL = window.location.origin + window.location.pathname;
+        window.history.pushState({}, document.title, newURL);
+    }
+
+    // Carrega os IDs dos produtos do localStorage
+    const storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
+    
+    if (storedIds.length === 0) {
+        console.error('Nenhum produto no carrinho');
         return;
     }
-    const idsArray = produtoIds.split(',');
-    let subtotal = 0;
 
+    let subtotal = 0;
     const produtosContainer = document.querySelector('.list-group');
 
     try {
         produtosContainer.innerHTML = ''; // Limpa o conteúdo anterior
 
-        for (let id of idsArray) {
+        for (let id of storedIds) {
             try {
                 const response = await fetch(`/produto/${id}`);
-             
                 const produto = await response.json();
 
                 // Calcula o subtotal
@@ -68,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 produtosContainer.appendChild(listItem);
 
             } catch (error) {
-                console.error(`Erro ao obter os dados do produto com ID :`, error);
+                console.error(`Erro ao obter os dados do produto com ID ${id}:`, error);
                 // Se ocorrer um erro ao obter um produto, continua para o próximo ID
                 continue;
             }
@@ -134,16 +148,26 @@ function updateSubtotal() {
         subtotal += parseFloat(priceElement.innerText.replace('R$', ''));
     });
 
-    const subtotalElement = document.querySelector('.list-group .subtotal');
-    if (subtotalElement) {
-        subtotalElement.innerText = `R$ ${subtotal.toFixed(2)}`;
-    }
+    const taxaServico = 2.99;  // Taxa de serviço fixa, você pode ajustar conforme necessário
+    const total = subtotal + taxaServico;
+
+    // Atualiza os elementos do sidebar
+    document.getElementById('subtotal').innerText = `R$ ${subtotal.toFixed(2)}`;
+    document.getElementById('taxa-servico').innerText = `R$ ${taxaServico.toFixed(2)}`;
+    document.getElementById('total').innerText = `R$ ${total.toFixed(2)}`;
+    document.getElementById('total-btn').innerText = `R$ ${total.toFixed(2)}`;
 }
 
 function removeItem(produtoId) {
     const itemElement = document.querySelector(`.row[data-produto-id="${produtoId}"]`).parentElement;
     if (itemElement) {
         itemElement.remove();
+
+        // Remove o ID do produto do localStorage
+        let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
+        storedIds = storedIds.filter(id => id !== produtoId);
+        localStorage.setItem('produtoIds', JSON.stringify(storedIds));
+
         updateSubtotal();
     }
 }

@@ -84,6 +84,10 @@ app.get('/cadastro', (req, res) => {
     res.sendFile(path.join(__dirname, "./views/cadastro.html"));
 });
 
+app.get('/carrinho',(req,res)=>{
+    res.sendFile(path.join(__dirname,'./views/carrinho.html'))
+})
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, './views/login.html'));
 });
