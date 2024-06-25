@@ -20,6 +20,10 @@ const porta = process.env.PORT || 8080;
 const uploadDir = path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadDir));
 
+
+const public = path.join(__dirname, 'public');
+app.use('/public', express.static(public));
+
 // Configuração do Sequelize para MySQL
 const sequelize = new Sequelize('hortfruit', 'root', "", {
     host: 'localhost',
@@ -63,8 +67,9 @@ app.use(session({
 sessionStore.sync();
 
 // Configuração de rotas e outros middlewares
-const public = path.join(__dirname, "views");
-app.use(express.static(public));
+const views = path.join(__dirname, "views");
+app.use(express.static(views));
+
 
 
 const clienteRoutes = require('../src/routes/clienteRoutes.js');
@@ -74,6 +79,7 @@ const enderecoRoutes = require('./routes/enderecoRoutes.js');
 const pedidoRoutes = require('./routes/pedidoRoutes.js');
 const pagamentoRoutes = require('./routes/pagamentoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes.js');
+const carrinhoRoutes = require('./routes/carrinhoRoutes.js');
 
 
 app.get('/', (req, res) => {
@@ -102,6 +108,7 @@ app.use('/produto', produtoRoutes);
 app.use('/cliente', clienteRoutes);
 app.use('/fornecedor', fornecedorRoutes);
 app.use('/endereco', enderecoRoutes);
+app.use('/carrinho', carrinhoRoutes);
 app.use('/pedido', pedidoRoutes);
 app.use('/pagamento', pagamentoRoutes);
 app.use('/usuario', usuarioRoutes);

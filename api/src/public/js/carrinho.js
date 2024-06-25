@@ -2,20 +2,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     const params = new URLSearchParams(window.location.search);
     const produtoIds = params.get('id');
     
-    // Verifica se existem IDs de produtos na URL
     if (produtoIds) {
         const idsArray = produtoIds.split(',');
-        // Adiciona os IDs ao localStorage
         let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
         storedIds = [...new Set([...storedIds, ...idsArray])];
         localStorage.setItem('produtoIds', JSON.stringify(storedIds));
-
-        // Limpa a URL
         const newURL = window.location.origin + window.location.pathname;
         window.history.pushState({}, document.title, newURL);
     }
 
-    // Carrega os IDs dos produtos do localStorage
     const storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
     
     if (storedIds.length === 0) {
@@ -27,17 +22,25 @@ document.addEventListener('DOMContentLoaded', async function() {
     const produtosContainer = document.querySelector('.list-group');
 
     try {
-        produtosContainer.innerHTML = ''; // Limpa o conteúdo anterior
+        produtosContainer.innerHTML = '';
 
         for (let id of storedIds) {
             try {
                 const response = await fetch(`/produto/${id}`);
+                if (!response.ok) {
+                    console.error(`Erro ao obter os dados do produto com ID ${id}`);
+                    continue;
+                }
+
                 const produto = await response.json();
+                if (!produto || !produto.preco) {
+                    console.error(`Produto com ID ${id} está indefinido ou não tem preço`);
+                    continue;
+                }
+                
+                let quantidade = JSON.parse(localStorage.getItem('quantidades'))?.[id] || 1;
+                subtotal += produto.preco * quantidade;
 
-                // Calcula o subtotal
-                subtotal += produto.preco;
-
-                // Cria o item do carrinho
                 const listItem = document.createElement('li');
                 listItem.classList.add('list-group-item', 'py-3', 'py-lg-0', 'px-0', 'border-top');
 
@@ -68,12 +71,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <div class="col-3 col-md-3 col-lg-2">
                             <div class="number-input">
                                 <button onclick="updateQuantity(this, -1, '${produto.id}', ${produto.preco})" class="minus">-</button>
-                                <input class="quantity" min="0" name="quantity" value="1" type="number" onchange="updateQuantityInput(this, '${produto.id}', ${produto.preco})">
+                                <input class="quantity" min="0" name="quantity" value="${quantidade}" type="number" onchange="updateQuantityInput(this, '${produto.id}', ${produto.preco})">
                                 <button onclick="updateQuantity(this, 1, '${produto.id}', ${produto.preco})" class="plus">+</button>
                             </div>
                         </div>
                         <div class="col-2 text-lg-end text-start text-md-end col-md-2">
-                            <span class="fw-bold item-price" style="font-size: 1.5rem;">R$ ${produto.preco.toFixed(2)}</span>
+                            <span class="fw-bold item-price" style="font-size: 1.5rem;">R$ ${(produto.preco * quantidade).toFixed(2)}</span>
                         </div>
                     </div>
                 `;
@@ -83,12 +86,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             } catch (error) {
                 console.error(`Erro ao obter os dados do produto com ID ${id}:`, error);
-                // Se ocorrer um erro ao obter um produto, continua para o próximo ID
                 continue;
             }
         }
 
-        // Após adicionar todos os itens, atualiza o subtotal
+        localStorage.setItem('subtotal', subtotal.toFixed(2));  // Salva o subtotal no localStorage
         updateSubtotal();
 
     } catch (error) {
@@ -122,6 +124,7 @@ function updateQuantity(button, increment, produtoId, preco) {
     quantityInput.value = currentQuantity;
 
     updatePrice(produtoId, currentQuantity, preco);
+    saveQuantity(produtoId, currentQuantity);
     updateSubtotal();
 }
 
@@ -131,6 +134,7 @@ function updateQuantityInput(input, produtoId, preco) {
     input.value = currentQuantity;
 
     updatePrice(produtoId, currentQuantity, preco);
+    saveQuantity(produtoId, currentQuantity);
     updateSubtotal();
 }
 
@@ -141,6 +145,12 @@ function updatePrice(produtoId, quantity, preco) {
     }
 }
 
+function saveQuantity(produtoId, quantity) {
+    let quantidades = JSON.parse(localStorage.getItem('quantidades')) || {};
+    quantidades[produtoId] = quantity;
+    localStorage.setItem('quantidades', JSON.stringify(quantidades));
+}
+
 function updateSubtotal() {
     const priceElements = document.querySelectorAll('.item-price');
     let subtotal = 0;
@@ -148,14 +158,22 @@ function updateSubtotal() {
         subtotal += parseFloat(priceElement.innerText.replace('R$', ''));
     });
 
-    const taxaServico = 2.99;  // Taxa de serviço fixa, você pode ajustar conforme necessário
+    const taxaServico = 2.99;
     const total = subtotal + taxaServico;
 
-    // Atualiza os elementos do sidebar
-    document.getElementById('subtotal').innerText = `R$ ${subtotal.toFixed(2)}`;
-    document.getElementById('taxa-servico').innerText = `R$ ${taxaServico.toFixed(2)}`;
-    document.getElementById('total').innerText = `R$ ${total.toFixed(2)}`;
-    document.getElementById('total-btn').innerText = `R$ ${total.toFixed(2)}`;
+    const subtotalElement = document.getElementById('subtotal');
+    const taxaServicoElement = document.getElementById('taxa-servico');
+    const totalElement = document.getElementById('total');
+    const totalBtnElement = document.getElementById('total-btn');
+
+    if (subtotalElement && taxaServicoElement && totalElement && totalBtnElement) {
+        subtotalElement.innerText = `R$ ${subtotal.toFixed(2)}`;
+        taxaServicoElement.innerText = `R$ ${taxaServico.toFixed(2)}`;
+        totalElement.innerText = `R$ ${total.toFixed(2)}`;
+        totalBtnElement.innerText = `R$ ${total.toFixed(2)}`;
+    }
+
+    localStorage.setItem('subtotal', subtotal.toFixed(2));  // Salva o subtotal atualizado no localStorage
 }
 
 function removeItem(produtoId) {
@@ -163,10 +181,13 @@ function removeItem(produtoId) {
     if (itemElement) {
         itemElement.remove();
 
-        // Remove o ID do produto do localStorage
         let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
         storedIds = storedIds.filter(id => id !== produtoId);
         localStorage.setItem('produtoIds', JSON.stringify(storedIds));
+
+        let quantidades = JSON.parse(localStorage.getItem('quantidades')) || {};
+        delete quantidades[produtoId];
+        localStorage.setItem('quantidades', JSON.stringify(quantidades));
 
         updateSubtotal();
     }

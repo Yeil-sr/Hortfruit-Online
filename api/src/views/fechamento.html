@@ -146,14 +146,14 @@
                             <!-- alert -->
                             <div class="col-md-10 order-md-1">
                                 <h4 class="mb-3">Endereço de Cobrança</h4>
-                                <form class="needs-validation" novalidate="">
+                                <form class="formCompra">
                                   <div class="mb-3">
                                     <label for="username">Nome de usuário</label>
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">@</span>
                                       </div>
-                                      <input type="text" class="form-control" id="username" placeholder="Nome de usuário" required="">
+                                      <input type="text" class="form-control" id="nome" placeholder="Nome de usuário" required="">
                                       <div class="invalid-feedback" style="width: 100%;">
                                         Seu nome de usuário é obrigatório.
                                       </div>
@@ -161,16 +161,16 @@
                                   </div>
                       
                                   <div class="mb-3">
-                                    <label for="email">E-mail <span class="text-muted"></span></label>
-                                    <input type="email" class="form-control" id="email" placeholder="você@exemplo.com">
+                                    <label class="form-label" for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" placeholder="nome@email.com">
                                     <div class="invalid-feedback">
                                       Insira um endereço de e-mail válido para atualizações de envio.
                                     </div>
                                   </div>
                       
                                   <div class="mb-3">
-                                    <label for="address">Endereço</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Rua Principal 1234" required="">
+                                    <label class="form-label" for="endereco">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco" placeholder="Rua Principal 1234" required="">
                                     <div class="invalid-feedback">
                                       Favor inserir seu endereço de entrega.
                                     </div>
@@ -202,19 +202,23 @@
                                       <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
                                       <label class="custom-control-label" for="paypal">PayPal</label>
                                     </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="pix" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                        <label class="custom-control-label" for="paypal">Pix</label>
+                                      </div>
                                   </div>
                                   <div class="row">
                                     <div class="col-md-6 mb-3">
-                                      <label for="cc-name">Nome no cartão</label>
-                                      <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                                      <label for="cartaoNome">Nome no cartão</label>
+                                      <input type="text" class="form-control" id="cartaoNome" placeholder="" required="">
                                       <small class="text-muted">Nome completo conforme exibido no cartão</small>
                                       <div class="invalid-feedback">
                                         O nome no cartão é obrigatório
                                       </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                      <label for="cc-number">Número do cartão de crédito</label>
-                                      <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                                      <label for="cartaoNumero">Número do cartão de crédito</label>
+                                      <input type="text" class="form-control" id="cartaoNumero" placeholder="" required="">
                                       <div class="invalid-feedback">
                                         O número do cartão de crédito é obrigatório
                                       </div>
@@ -222,15 +226,15 @@
                                   </div>
                                   <div class="row">
                                     <div class="col-md-3 mb-3">
-                                      <label for="cc-expiration">Expiração</label>
-                                      <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                                      <label for="cartaoExpiracao">Expiração</label>
+                                      <input type="text" class="form-control" id="cartaoExpiracao" placeholder="" required="">
                                       <div class="invalid-feedback">
                                         Data de validade necessária
                                       </div>
                                     </div>
                                     <div class="col-md-3 mb-3">
-                                      <label for="cc-expiration">CVV</label>
-                                      <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                                      <label for="cartaoCodigo">CVV</label>
+                                      <input type="text" class="form-control" id="cartaoCodigo" placeholder="" required="">
                                       <div class="invalid-feedback">
                                         Código de segurança obrigatório
                                       </div>
@@ -380,7 +384,30 @@
             </div>
         </footer>
     </div>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateSidebar() {
+                const subtotalElement = document.getElementById('subtotal');
+                const taxaServicoElement = document.getElementById('taxa-servico');
+                const totalElement = document.getElementById('total');
+                const totalBtnElement = document.getElementById('total-btn');
+                
+                const subtotal = parseFloat(localStorage.getItem('subtotal')) || 0;
+                const taxaServico = 2.99; // Taxa de serviço fixa
+                const total = subtotal + taxaServico;
+    
+                if (subtotalElement && taxaServicoElement && totalElement && totalBtnElement) {
+                    subtotalElement.innerText = `R$ ${subtotal.toFixed(2)}`;
+                    taxaServicoElement.innerText = `R$ ${taxaServico.toFixed(2)}`;
+                    totalElement.innerText = `R$ ${total.toFixed(2)}`;
+                    totalBtnElement.innerText = `R$ ${total.toFixed(2)}`;
+                }
+            }
+    
+            updateSidebar();
+        });
+    </script>
+            <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<script src="./public/js/carrinho.js"></script>
 </html>
