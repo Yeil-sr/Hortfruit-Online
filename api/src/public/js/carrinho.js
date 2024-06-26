@@ -1,4 +1,45 @@
+// Função para obter o ID do usuário logado
+async function obterUsuario() {
+    try {
+        const response = await fetch('/usuario/user');
+        if (!response.ok) {
+            throw new Error('Erro ao obter informações do usuário');
+        }
+        const usuario = await response.json();
+        return usuario.id;  // Supondo que o objeto retornado tenha um campo 'id'
+    } catch (error) {
+        console.error('Erro ao obter informações do usuário:', error);
+        return null;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async function() {
+
+    const limpaCart = document.getElementById('limpaCart');
+    limpaCart.addEventListener('click', async function limparCarrinho(userId) {
+        try {
+            const response = await fetch(`/carrinho/clear/${userId}`, {
+                method: 'DELETE'
+            });
+    
+            if (!response.ok) {
+                throw new Error('Erro ao limpar o carrinho');
+            }
+    
+            const data = await response.json();
+            console.log('Carrinho limpo:', data);
+        } catch (error) {
+            console.error(error);
+        }
+    })
+
+    const userId = await obterUsuario();
+    if (!userId) {
+        console.error('Usuário não encontrado. Redirecionando para a página de login.');
+        window.location.href = '/login.html';
+        return;
+    }
+
     const params = new URLSearchParams(window.location.search);
     const produtoIds = params.get('id');
     
@@ -55,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </a>
                             <span><small class="text-muted">${produto.tipo}</small></span>
                             <div class="mt-2 small lh-1">
-                                <a href="#!" class="text-decoration-none text-inherit" onclick="removeItem('${produto.id}')">
+                                <a href="#!" class="text-decoration-none text-inherit" onclick="removeItem('${produto.id}', ${userId})">
                                     <span class="me-1 align-text-bottom">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-success">
                                             <polyline points="3 6 5 6 21 6"></polyline>
@@ -70,9 +111,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                         <div class="col-3 col-md-3 col-lg-2">
                             <div class="number-input">
-                                <button onclick="updateQuantity(this, -1, '${produto.id}', ${produto.preco})" class="minus">-</button>
-                                <input class="quantity" min="0" name="quantity" value="${quantidade}" type="number" onchange="updateQuantityInput(this, '${produto.id}', ${produto.preco})">
-                                <button onclick="updateQuantity(this, 1, '${produto.id}', ${produto.preco})" class="plus">+</button>
+                                <button onclick="updateQuantity(this, -1, '${produto.id}', ${produto.preco}, ${userId})" class="minus">-</button>
+                                <input class="quantity" min="0" name="quantity" value="${quantidade}" type="number" onchange="updateQuantityInput(this, '${produto.id}', ${produto.preco}, ${userId})">
+                                <button onclick="updateQuantity(this, 1, '${produto.id}', ${produto.preco}, ${userId})" class="plus">+</button>
                             </div>
                         </div>
                         <div class="col-2 text-lg-end text-start text-md-end col-md-2">
@@ -91,11 +132,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         localStorage.setItem('subtotal', subtotal.toFixed(2));  // Salva o subtotal no localStorage
-        updateSubtotal();
+        updateSubtotal(userId);
 
     } catch (error) {
         console.error('Erro ao obter os dados dos produtos:', error);
         produtosContainer.innerHTML = '<p>Erro ao carregar os itens do carrinho</p>';
+    }
+
+    const total = await obterTotalDoCarrinho(userId);
+    
+    if (total !== null) {
+        const totalElement = document.getElementById('total');
+        const totalBtnElement = document.getElementById('total-btn');
+        
+        totalElement.innerText = `R$ ${total.toFixed(2)}`;
+        totalBtnElement.innerText = `R$ ${total.toFixed(2)}`;
     }
 });
 
@@ -116,7 +167,66 @@ async function obterImagemProduto(produto_id) {
     }
 }
 
-function updateQuantity(button, increment, produtoId, preco) {
+async function adicionarItemAoCarrinho(produtoId, quantidade = 1) {
+    try {
+        const response = await fetch('/carrinho/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ produtoId, quantidade })
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao adicionar item ao carrinho');
+        }
+
+        const data = await response.json();
+        console.log('Item adicionado ao carrinho:', data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function atualizarItemNoCarrinho(produtoId, quantidade, userId) {
+    try {
+        const response = await fetch('/carrinho/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ produtoId, quantidade, userId })
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao atualizar item no carrinho');
+        }
+
+        const data = await response.json();
+        console.log('Item atualizado no carrinho:', data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function obterTotalDoCarrinho(userId) {
+    try {
+        const response = await fetch(`/carrinho/total/${userId}`);
+        if (!response.ok) {
+            throw new Error('Erro ao obter o total do carrinho');
+        }
+
+        const total = await response.json();
+        return total;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+
+
+function updateQuantity(button, increment, produtoId, preco, userId) {
     const quantityInput = button.parentNode.querySelector('input[type=number]');
     let currentQuantity = parseInt(quantityInput.value);
     currentQuantity += increment;
@@ -125,17 +235,36 @@ function updateQuantity(button, increment, produtoId, preco) {
 
     updatePrice(produtoId, currentQuantity, preco);
     saveQuantity(produtoId, currentQuantity);
-    updateSubtotal();
+    atualizarItemNoCarrinho(produtoId, currentQuantity, userId); // Atualiza no backend
+    updateSubtotal(userId);
 }
 
-function updateQuantityInput(input, produtoId, preco) {
+function updateQuantityInput(input, produtoId, preco, userId) {
     let currentQuantity = parseInt(input.value);
     if (currentQuantity < 0) currentQuantity = 0;
     input.value = currentQuantity;
 
     updatePrice(produtoId, currentQuantity, preco);
     saveQuantity(produtoId, currentQuantity);
-    updateSubtotal();
+    atualizarItemNoCarrinho(produtoId, currentQuantity, userId); // Atualiza no backend
+    updateSubtotal(userId);
+}
+
+function removeItem(produtoId, userId) {
+    const itemElement = document.querySelector(`.row[data-produto-id="${produtoId}"]`).parentElement;
+    if (itemElement) {
+        itemElement.remove();
+
+        let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
+        storedIds = storedIds.filter(id => id !== produtoId);
+        localStorage.setItem('produtoIds', JSON.stringify(storedIds));
+
+        let quantidades = JSON.parse(localStorage.getItem('quantidades')) || {};
+        delete quantidades[produtoId];
+        localStorage.setItem('quantidades', JSON.stringify(quantidades));
+
+        updateSubtotal(userId);
+    }
 }
 
 function updatePrice(produtoId, quantity, preco) {
@@ -151,7 +280,7 @@ function saveQuantity(produtoId, quantity) {
     localStorage.setItem('quantidades', JSON.stringify(quantidades));
 }
 
-function updateSubtotal() {
+function updateSubtotal(userId) {
     const priceElements = document.querySelectorAll('.item-price');
     let subtotal = 0;
     priceElements.forEach(priceElement => {
@@ -174,21 +303,4 @@ function updateSubtotal() {
     }
 
     localStorage.setItem('subtotal', subtotal.toFixed(2));  // Salva o subtotal atualizado no localStorage
-}
-
-function removeItem(produtoId) {
-    const itemElement = document.querySelector(`.row[data-produto-id="${produtoId}"]`).parentElement;
-    if (itemElement) {
-        itemElement.remove();
-
-        let storedIds = JSON.parse(localStorage.getItem('produtoIds')) || [];
-        storedIds = storedIds.filter(id => id !== produtoId);
-        localStorage.setItem('produtoIds', JSON.stringify(storedIds));
-
-        let quantidades = JSON.parse(localStorage.getItem('quantidades')) || {};
-        delete quantidades[produtoId];
-        localStorage.setItem('quantidades', JSON.stringify(quantidades));
-
-        updateSubtotal();
-    }
 }

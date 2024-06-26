@@ -17,7 +17,7 @@
     <meta name="msapplication-config" content="./public/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Quitanda Online :: Fechamento da Compra</title>
+    <title>Hortfruit Online:: Fechamento da Compra</title>
 </head>
 <style>
     input[type="number"] {
@@ -78,6 +78,33 @@
         font-weight: bold;
         text-align: center;
     }
+    .checkbox {
+  display: none;
+}
+
+    .checkbox:checked + label {
+  font-weight: bold;
+}
+.checkbox:checked + label:before {
+  background: #005700;
+}
+.checkbox + label:before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 10px;
+  margin-right: 15px;
+  border: 2px solid #015501;
+  margin-bottom: -2px;
+  
+}
+
+.checkdiv::after{
+    border-color: #0aad0a;
+}
+
+    
 </style>
 
 <body class="bg-light">
@@ -137,28 +164,22 @@
                 </div>
             </div>
         </nav>
-        <main class="flex-fill bg-white">
+        <main class="flex-fill bg-light">
             <div class="container">
-                <h1 class="my-3">Fechamento de Compras</h1>
+
+                <div class="my-4 pb-5">
+
+                </div>
+                
                 <div class="row">
                     <div class="col-lg-8 col-md-7">
                         <div class="py-3">
                             <!-- alert -->
                             <div class="col-md-10 order-md-1">
+
+                                <section class="bg-white p-4 mb-3">
                                 <h4 class="mb-3">Endereço de Cobrança</h4>
                                 <form class="formCompra">
-                                  <div class="mb-3">
-                                    <label for="username">Nome de usuário</label>
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">@</span>
-                                      </div>
-                                      <input type="text" class="form-control" id="nome" placeholder="Nome de usuário" required="">
-                                      <div class="invalid-feedback" style="width: 100%;">
-                                        Seu nome de usuário é obrigatório.
-                                      </div>
-                                    </div>
-                                  </div>
                       
                                   <div class="mb-3">
                                     <label class="form-label" for="email">E-mail</label>
@@ -176,7 +197,7 @@
                                     </div>
                                   </div>
                                
-                                  <hr class="mb-4">
+                                  <hr class="mb-3">
                                   <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="same-address">
                                     <label class="custom-control-label" for="same-address">O endereço de entrega é igual ao meu endereço de cobrança</label>
@@ -185,26 +206,23 @@
                                     <input type="checkbox" class="custom-control-input" id="save-info">
                                     <label class="custom-control-label" for="save-info">Salve essas informações para a próxima vez</label>
                                   </div>
-                                  <hr class="mb-4">
+                                  </section>
+                                  <section class="bg-white p-4">
                       
-                                  <h4 class="mb-3">Pagamento</h4>
+                                  <h4 class="mb-2">Forma de Pagamento</h4>
                       
                                   <div class="d-block my-3">
-                                    <div class="custom-control custom-radio">
-                                      <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
-                                      <label class="custom-control-label" for="credit">Cartão de crédito</label>
+                                    <div class="custom-control custom-radio  " style=" border-radius: 5px; border-color: rgb(153, 153, 153); border-style:inset; border-width: 1px;  padding: 10px 10px;">
+                                      <input id="credit" name="paymentMethod"  type="radio" class="checkbox " required="">
+                                      <label class="custom-control-label " style="font-size: larger; margin-left: 10px; color: #2b2b2b;" for="credit">Cartão de crédito</label>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                      <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                                      <label class="custom-control-label" for="debit">Cartão de débito</label>
+                                    <div class="custom-control custom-radio my-3"style=" border-radius: 5px; border-color: rgb(153, 153, 153); border-style:inset; border-width: 1px;  padding: 10px 10px;">
+                                      <input id="paypal" name="paymentMethod" type="radio" class="checkbox custom-control-input" required="">
+                                      <label class="custom-control-label" for="paypal"style="font-size: larger; margin-left: 10px; color: #2b2b2b;">PayPal</label>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                      <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                                      <label class="custom-control-label" for="paypal">PayPal</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="pix" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                                        <label class="custom-control-label" for="paypal">Pix</label>
+                                    <div class="custom-control custom-radio my-3"style=" border-radius: 5px; border-color: rgb(153, 153, 153); border-style:inset; border-width: 1px;  padding: 10px 10px;">
+                                        <input id="pix" name="paymentMethod" type="radio" class="checkbox" required="">
+                                        <label class="custom-control-label" for="paypal"style="font-size: larger; margin-left: 10px; color: #2b2b2b;">Pix</label>
                                       </div>
                                   </div>
                                   <div class="row">
@@ -240,6 +258,7 @@
                                       </div>
                                     </div>
                                   </div>
+                                </section>
                                   <hr class="mb-4">
                                   <div class="d-flex justify-content-between mb-4">
                                   <a href="/" class="btn p-2 text-light" style="background-color: #0aad0a;">Continue

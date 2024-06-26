@@ -1,4 +1,4 @@
-const Carrinho = require('./models/Carrinho');
+const Carrinho = require('../models/Carrinho');
 
 class CarrinhoController {
     static async addItem(req, res) {
