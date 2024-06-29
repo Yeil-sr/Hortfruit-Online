@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const params = new URLSearchParams(window.location.search);
     const produtoId = params.get('id');
-    
+
     if (!produtoId) {
         console.error('ID do produto não encontrado na URL');
         return;
@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Container de imagens de produtos não encontrado.');
         }
 
+      
+
     } catch (error) {
         console.error('Erro ao obter os dados do produto:', error);
         document.querySelector('.row.g-3').innerHTML = '<p>Erro ao carregar os detalhes do produto</p>';
@@ -98,3 +100,5 @@ async function obterImagemProduto(produto_id) {
         return './public/img/default-image.jpg';
     }
 }
+
+
