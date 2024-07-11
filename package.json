@@ -2,7 +2,7 @@
   "name": "supermercado",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./api/src/index.js",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
