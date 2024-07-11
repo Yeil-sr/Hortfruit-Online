@@ -3,16 +3,26 @@ const Pedido = require('../models/Pedido');
 class pedidoController {
 
     async createPedido(req, res) {
-        const userId = req.user.id; // Supondo que o middleware de autenticação adiciona o usuário ao objeto req
-        const { pagamentoId } = req.body;
-
         try {
-            const { pedidoId, total } = await Pedido.createPedido(userId, pagamentoId);
-            res.status(201).json({ pedidoId, total });
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+
+            const userId = req.session.user.id;
+            const { pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo, data_venda } = req.body;
+
+            // Verifica se valor_total foi enviado
+            if (valor_total == null) {
+                return res.status(400).json({ error: 'Valor total é obrigatório' });
+            }
+
+            // Cria o pedido no banco de dados
+            const { pedidoId } = await Pedido.createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo, data_venda);
+            res.status(201).json({ pedidoId, valor_total });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    };
+    }
 
     async atualizarPedido(req, res) {
         const { pedidoId } = req.params;
@@ -24,7 +34,7 @@ class pedidoController {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    };
+    }
 
     async cancelarPedido(req, res) {
         const { pedidoId } = req.params;
@@ -35,7 +45,7 @@ class pedidoController {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    };
+    }
 }
 
 module.exports = new pedidoController();

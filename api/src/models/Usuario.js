@@ -40,6 +40,29 @@ class Usuario {
         });
     }
 
+    static async findByEmail(email) {
+        return new Promise((resolve, reject) => {
+            const q = "SELECT * FROM usuarios WHERE email=?";
+            db.query(q, [email], (err, result) => {
+                if (err) {
+                    console.error('Erro ao encontrar o usuario pelo ID:', err);
+                    return reject(err);
+                }
+                if (result.length === 0) {
+                    return resolve(null); 
+                }
+                const usuario = result[0];
+                const userResponse = {
+                    id: usuario.id,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    isFornecedor: usuario.isFornecedor
+                };
+                resolve(userResponse);
+            });
+        });
+    }
+
 
     static async authenticate(email) {
         const query = "SELECT * FROM usuarios WHERE email = ?";

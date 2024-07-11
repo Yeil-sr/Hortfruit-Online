@@ -3,13 +3,14 @@ const path = require('path');
 const router = express.Router();
 const fornecedorController = require('../controllers/fornecedorController');
 const upload = require('../multerConfig/multerConfig.js');
+const { isAuthenticated } = require('../middleware/authMiddleware'); // Importando o middleware
 
 
-router.post('/',fornecedorController.create);
-router.get('/:id', fornecedorController.findById);
-router.put('/:id', fornecedorController.update);
-router.delete('/', fornecedorController.delete);
-router.get('/',(req,res)=>{
+router.post('/',isAuthenticated,fornecedorController.create);
+router.get('/:id',isAuthenticated, fornecedorController.findById);
+router.put('/:id', isAuthenticated,fornecedorController.update);
+router.delete('/', isAuthenticated,fornecedorController.delete);
+router.get('/',isAuthenticated,(req,res)=>{
     res.sendFile(path.join(__dirname,'../views/fornecedor.html'));
 });
 // Rota para servir as partials

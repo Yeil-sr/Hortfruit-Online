@@ -2,9 +2,14 @@ const Carrinho = require('../models/Carrinho');
 
 class CarrinhoController {
     static async addItem(req, res) {
-        const { userId, produtoId, quantidade } = req.body;
+        const { produtoId, quantidade } = req.body;
 
         try {
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+
+            const userId = req.session.user.id;
             const result = await Carrinho.addItemById(userId, produtoId, quantidade);
             res.status(200).json(result);
         } catch (err) {
@@ -26,16 +31,26 @@ class CarrinhoController {
     }
 
     static async calcularTotal(req, res) {
-        const { userId } = req.params;
-
         try {
-            const total = await Carrinho.calcularTotal(userId);
-            res.status(200).json({ total });
+            if (!req.session.user) {
+                return res.status(401).json({ error: 'Usuário não autenticado' });
+            }
+    
+            const { userId } = req.params;
+            const { valor_total } = req.body;
+    
+            if (valor_total === undefined || valor_total === null) {
+                return res.status(400).json({ error: 'Valor total não fornecido' });
+            }
+    
+            // Retorna o valor_total calculado
+            res.status(200).json({ valor_total });
         } catch (err) {
             console.error('Erro ao calcular total do carrinho:', err);
             res.status(500).json({ error: 'Erro ao calcular total do carrinho' });
         }
     }
+    
 
     static async limparCarrinho(req, res) {
         const { userId } = req.params;

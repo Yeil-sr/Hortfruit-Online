@@ -65,6 +65,7 @@ class usuarioController {
         }
     }
 
+
  async getUser(req, res) {
         if (!req.session.user) {
             return res.status(401).json({ error: 'Usuário não autenticado' });
@@ -97,6 +98,68 @@ class usuarioController {
         } catch (error) {
             console.error('Erro ao buscar informações do usuário:', error);
             res.status(500).json({ error: 'Erro ao buscar informações do usuário' });
+        }
+    }
+
+    async  getUserById(req, res) {
+        const userId = req.params.id;
+    
+        try {
+            const usuario = await Usuario.findById(userId);
+    
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+    
+            const userResponse = {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email,
+                isFornecedor: usuario.isFornecedor
+            };
+    
+            if (usuario.isFornecedor) {
+                const fornecedor = await Fornecedor.findByUsuarioId(userId);
+                if (fornecedor) {
+                    userResponse.fornecedor_id = fornecedor.id;
+                }
+            }
+    
+            res.json(userResponse);
+        } catch (error) {
+            console.error('Erro ao buscar informações do usuário:', error);
+            res.status(500).json({ error: 'Erro ao buscar informações do usuário' });
+        }
+    }
+    
+    async  getUserByEmail(req, res) {
+        const userEmail = req.params.email;
+    
+        try {
+            const usuario = await Usuario.findByEmail(userEmail);
+    
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+    
+            const userResponse = {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email,
+                isFornecedor: usuario.isFornecedor
+            };
+    
+            if (usuario.isFornecedor) {
+                const fornecedor = await Fornecedor.findByUsuarioId(usuario.id);
+                if (fornecedor) {
+                    userResponse.fornecedor_id = fornecedor.id;
+                }
+            }
+    
+            res.json(userResponse);
+        } catch (error) {
+            console.error('Erro ao buscar informações do usuário por email:', error);
+            res.status(500).json({ error: 'Erro ao buscar informações do usuário por email' });
         }
     }
 

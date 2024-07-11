@@ -8,16 +8,21 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../public/css/bootstrap.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
     <title>Hortfruit Online :: Área do Cliente</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./public/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./public/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./public/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="./public/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="./public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="./public/img/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./pu.blic/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../public/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="../public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="../public/img/favicon/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="./public/img/favicon/browserconfig.xml">
+    <meta name="msapplication-config" content="../public/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/estilos.css">
 
 </head>
 
@@ -48,13 +53,7 @@
                     
                     <ul class="navbar-nav">
                         
-                            <!-- img -->
-                        <li class="nav-item">
-                             <a id="editarAvatar"type="button" data-bs-toggle="modal" data-bs-target="#editarAvatar" onclick="editarAvatar()">
-                            <img src="./public/img/favicon/avatar-10.jpg" style="height: 40px;" alt="logoAvatar" class="rounded-circle icon-shape icon-xxl">
-                            </a>
-                          
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
                         </li>
@@ -82,10 +81,6 @@
                 <div class ="col-lg-3 col-md-4 col-12 border-end d-none d-md-block  p-3" style="box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.2);">
                     <div class="d-flex flex-column">
                         <div>
-                           <!-- img -->
-                            <a id="editar" type="button" data-bs-toggle="modal" data-bs-target="#editarLojaModal" onclick="editarLoja()">
-                           <img src="./public/img/favicon/melancia-logo.svg" style="height: 64px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
-                        </a>
                         </div>
                         <!-- heading -->
                         <div class="mt-4">
@@ -100,11 +95,11 @@
                            <div class="mt-2">
                               <!-- rating -->
                               <small class="text-warning">
-                              <img src="./public/img/favicon/star2.png" style="height: 12px;" alt="">
-                              <img src="./public/img/favicon/star2.png" style="height: 12px;" alt="">
-                              <img src="./public/img/favicon/star2.png" style="height: 12px;" alt="">
-                              <img src="./public/img/favicon/star2.png" style="height: 12px;" alt="">
-                              <img src="./public/img/favicon/star2.png" style="height: 12px;" alt="">
+                              <img src="../public/img/favicon/star2.png" style="height: 12px;" alt="">
+                              <img src="../public/img/favicon/star2.png" style="height: 12px;" alt="">
+                              <img src="../public/img/favicon/star2.png" style="height: 12px;" alt="">
+                              <img src="../public/img/favicon/star2.png" style="height: 12px;" alt="">
+                              <img src="../public/img/favicon/star2.png" style="height: 12px;" alt="">
 
                               <i class="bi bi-star-half"></i></small><span class="ms-2">5.0
                                 
@@ -244,39 +239,72 @@
         </div>
     </div>
     </main>
-    <script src="../public/js/sessaoFornecedor.js"></script>
+    <script src="../public/js/sessaoFornecedor.js" defer></script>
     <div style="height: 273px;" class="d-block d-md-none"></div>
     <div style="height: 153px;" class="d-none d-md-block d-lg-none"></div>
     <div class="d-none d-lg-block"></div>
 
-    <footer class="border-top text-muted" style="background-color: rgb(235, 235, 235);">
+    <footer class="border-top text-muted " style="z-index: 1000; background-color: rgb(235, 235, 235);">
         <div class="container">
             <div class="row py-3">
-                <div class="col-12 col-md-4 text center text-md-left">
-                    &copy; 2020-Hortfruit Online Ltda ME<br>
-                    Inc. All rights reserved.
+                <div class="col-12 col-md-4 text-center text-md-left">
+                    &copy; 2020 - Hortfruit Online Ltda ME<br>
+                    Rua Malaguti, 179, Hortlândia <br>
+                    CPNJ 99.999.999/0001-99
                 </div>
-                <div class="col-12 col-md-4 text center">
-                    <a href="#" class="text-decoration-none text-dark">Política de Privacidade</a><br>
+                <div class="col-12 col-md-4 text-center">
+                    <a href="/privacidade.html" class="text-decoration-none text-dark">Política de Privacidade</a><br>
                     <a href="/termos.html" class="text-decoration-none text-dark">Termos de Uso</a><br>
-                    <a href="/trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a><br>
                     <a href="/quemsomos.html" class="text-decoration-none text-dark">Quem Somos</a><br>
+                    <a href="/trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-right">
-                    <a class="text-decoration-none text-dark" href="#footer">Contato pelo site</a><br>
-                    <a href="#" class="text-decoration-none text-dark">E-mail:</a>
-                    <a href="lorenco:email@dominio.com" class="text-decoration-none text-dark">email@dominio.com</a><br>
-                    Telefone:<a href="phone:29999999999" class="text-decoration-none text-dark">(29-99999-9999)</a><br>
-
+                    <a href="/contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
+                    E-mail: <a href="mailto:email@dominio.com"
+                        class="text-decoration-none text-dark">email@dominio.com</a><br>
+                    Telefone: <a href="phone:28999990000" class="text-decoration-none text-dark">(27) 99999-9999</a>
                 </div>
             </div>
-        </div>
-        </div>
+            <div class="border-top py-4">
+                <div class="row align-items-center">
+                  <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item text-dark">Parceiros de pagamento</li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="../public/img/favicon/amazonpay.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="../public/img/favicon/american-express.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="../public/img/favicon/mastercard.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="../public/img/favicon/paypal.svg" alt=""></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a href="#!"><img src="../public/img/favicon/visa.svg" alt=""></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-7 mt-4 mt-md-0">
+                    <ul class="list-inline mb-0 text-lg-end text-center">
+                      <li class="list-inline-item mb-2 mb-md-0 text-dark">Obtenha entregas com Hprtfruit Online</li>
+                      <li class="list-inline-item ms-4">
+                        <a href="#!"> <img src="../public/img/favicon/appstore-btn.svg" alt="" style="width: 140px;"></a></li>
+                      <li class="list-inline-item">
+                        <a href="#!"> <img src="../public/img/favicon/googleplay-btn.svg" alt="" style="width: 140px;"></a></li>
+                    </ul>
+                  </div>
+                </div>
+<hr>              </div>
 
+        </div>
     </footer>
 
-    
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 </body>

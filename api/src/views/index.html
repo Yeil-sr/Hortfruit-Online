@@ -19,6 +19,8 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="../public/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    
+
     <style>
         p.truncate-3l {
             display: -webkit-box;
@@ -34,12 +36,15 @@
 </head>
 
 <body style="min-width:372px; overflow-x:hidden; ">
-    
+   
+       
+   
     <nav class="navbar navbar-expand-lg navbar-dark bg-success px-4" style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);">
+        
         <div>
             <!-- img -->
              <a href="#modalLogo">
-            <img src="../public/img/favicon/favicon.ico" style="height: 48px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
+            <img src="./public/img/favicon/favicon.ico" style="height: 48px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
          </a>
          </div>
         <a class="navbar-brand mx-2" href="">
@@ -61,13 +66,7 @@
                 
                 <ul class="navbar-nav">
                     
-                        <!-- img -->
-                    <li class="nav-item">
-                         <a id="editarAvatar"type="button" data-bs-toggle="modal" data-bs-target="#editarAvatar" onclick="editarAvatar()">
-                        <img src="../public/img/favicon/avatar-10.jpg" style="height: 40px;" alt="logoAvatar" class="rounded-circle icon-shape icon-xxl">
-                        </a>
-                      
-                    </li>
+                    
                     <li class="nav-item">
                         <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
                     </li>
@@ -76,7 +75,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a href="/carrinho" class="nav-link text-white">
+                        <a href="/cliente/carrinho" class="nav-link text-white">
                             <svg class="bi" width="24" height="24" fill="currentColor">
                                 <use xlink:href="/bi.svg#cart3" />
                             </svg>
@@ -86,7 +85,9 @@
             </div>
         </div>
 </nav>
-
+<div class="bg-danger  "> 
+    <p class="text-white text-center py-1">Esta é uma loja de demonstração. Nenhum pedido será entregue.</p> 
+</div> 
     <header >
         <div id="carouselMain" class="carousel carousel-dark slide my-3 mx-5 px-2" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -320,9 +321,7 @@
 <script>
 
 </script>
-    <!-- <div style="height: 273px;" class="d-block d-md-none"></div>
-    <div style="height: 153px;" class="d-none d-md-block d-lg-none"></div>
-    <div class="d-none d-lg-block"></div> -->
+    
 
     <footer class="border-top text-muted " style="z-index: 1000; background-color: rgb(235, 235, 235);">
         <div class="container">
