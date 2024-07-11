@@ -27,7 +27,8 @@
     "vercel.json": "^0.1.0"
   },
   "scripts": {
-    "start": "node api/src/index.js"
+    "start": "node api/src/index.js",
+    "vercel-build":"node api/db.js"
   },
   "keywords": [],
   "author": "",
