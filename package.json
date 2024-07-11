@@ -2,7 +2,7 @@
   "name": "supermercado",
   "version": "1.0.0",
   "description": "",
-  "main": "./api/src/index.js",
+  "main": "api/src/index.js",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -26,7 +26,7 @@
     "sequelize": "^6.37.3"
   },
   "scripts": {
-    "start": "node ./api/src/index.js"
+    "start": "node api/src/index.js"
   },
   "keywords": [],
   "author": "",
