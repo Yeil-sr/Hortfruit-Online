@@ -1,17 +1,15 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "api/src/index.js",
-        "use": "@vercel/node"
+    "functions": {
+      "api/src/index.js": {
+        "runtime": "vercel-nodejs@18.x"
       }
-    ],
+    },
     "routes": [
       {
         "src": "/(.*)",
         "dest": "api/src/index.js"
       }
-    ],
-    "cleanUrls": true
+    ]
   }
   
