@@ -23,6 +23,7 @@ As funcionalidades principais do Hortfruit Online incluem:
  - HTML
  - CSS
  - JavaScript 
+-  Node.js 
  - MySQL 
 -  Express.js 
 
