@@ -11,6 +11,7 @@
         "src": "/(.*)",
         "dest": "api/src/index.js"
       }
-    ]
+    ],
+    "cleanUrls": true
   }
   
