@@ -72,12 +72,12 @@ sessionStore.sync();
 const views = path.join(__dirname, "views");
 app.use(express.static(views));
 
-const clienteRoutes = require('../src/routes/clienteRoutes.js');
-const fornecedorRoutes = require('../src/routes/fornecedorRoutes.js');
+const clienteRoutes = require('./routes/clienteRoutes.js');
+const fornecedorRoutes = require('./routes/fornecedorRoutes.js');
 const produtoRoutes = require('./routes/produtoRoutes.js');
 const enderecoRoutes = require('./routes/enderecoRoutes.js');
 const pedidoRoutes = require('./routes/pedidoRoutes.js');
-const pagamentoRoutes = require('./routes/pagamentoRoutes');
+const pagamentoRoutes = require('./routes/pagamentoRoutes.js');
 const usuarioRoutes = require('./routes/usuarioRoutes.js');
 const carrinhoRoutes = require('./routes/carrinhoRoutes.js');
 

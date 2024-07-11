@@ -14,7 +14,7 @@ router.get('/',isAuthenticated,(req,res)=>{
     res.sendFile(path.join(__dirname,'../views/fornecedor.html'));
 });
 // Rota para servir as partials
-router.get('/partials/fornecedor:partial', (req, res) => {
+router.get('/partials/fornecedor:partial',isAuthenticated, (req, res) => {
     const partial = req.params.partial;
     res.sendFile(path.join(__dirname, '../views/partials/fornecedor', partial));
 });

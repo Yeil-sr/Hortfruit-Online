@@ -16,79 +16,149 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="">
-                <strong>Hortfruit Online</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link text-white">Principal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/contato" class="nav-link text-white">Contato</a>
-                    </li>
-                </ul>
-                <div class="align-self-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/login" class="nav-link text-white" id="auth-link">Entrar</a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a href="/cliente/carrinho" class="nav-link text-white">
-                                <svg class="bi" width="24" height="24" fill="currentColor">
-                                    <use xlink:href="/bi.svg#cart3" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success px-4"
+    style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);">
+    <div>
+        <!-- img -->
+        <a href="#modalLogo">
+            <img src="./public/img/favicon/favicon.ico" style="height: 48px;" alt="logo_loja"
+                class="rounded-circle icon-shape icon-xxl">
+        </a>
+    </div>
+    <a class="navbar-brand mx-2" href="">
+        <strong>Hortfruit Online</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a href="/" class="nav-link text-white">Principal</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contato" class="nav-link text-white">Contato</a>
+            </li>
+        </ul>
+        <div class="align-self-end">
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/login" class="nav-link text-white" id="auth-link">Entrar</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/carrinho" class="nav-link text-white">
+                        <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/bi.svg#cart3" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+    <div class="bg-danger  "> 
+        <p class="text-white text-center ">Esta é uma loja de demonstração. Nenhum pedido será entregue.</p> 
+    </div> 
     <main class="flex-fill">
         <div class="container">
-            <h1>Minha Conta</h1>
-            <div class="row gx-3">
-                <div class="col-4">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action bg-danger text-light" data-target="cliente_dados.html">
-                            <i class="bi-person fs-6"></i>Dados Pessoais
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="cliente_contatos.html">
-                            <i class="bi-mailbox fs-6"></i>Contatos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="cliente_endereco.html">
-                            <i class="bi-house-door fs-6"></i>Endereço
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="cliente_pedidos.html">
-                            <i class="bi-truck fs-6"></i>Pedidos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="cliente_favoritos.html">
-                            <i class="bi-heart fs-6"></i>Favoritos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-target="cliente_senha.html">
-                            <i class="bi-lock fs-6"></i>Alterar Senha
-                        </a>
-                        <a href="/" class="list-group-item list-group-item-action">
-                            <i id="auth-link" class="bi bi-door-open fs-6"></i>Sair
-                        </a>
+            <h1 class="mt-3">Carrinho de Compras</h1>
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-12">
+                    <div class="py-3">
+                        <!-- alert -->
+                        <div class="alert alert-danger p-2" role="alert">
+                            Você tem entrega GRATUITA. Comece a finalizar a compra agora! <a href="#!"
+                                class="alert-link">checkout now!</a>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <!-- list group items serão inseridos aqui -->
+                            <li class="list-group-item py-3 py-lg-0 px-0 border-top">
+                                <div class="row">
+                                    <div class="col-12 text-end">
+                                        <span class="subtotal fw-bold">R$ 0.00</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <!-- btn -->
+                        <div class="d-flex justify-content-between mt-4 mb-5">
+                            <a href="/" class="btn p-2 text-light" style="background-color: #0aad0a;">Continue
+                                comprando</a>
+                            <a id="limpaCart" class="btn text-light p-2" style="background-color: rgb(3, 12, 44);">Limpar Carrinho</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-8">
-                    <div id="content"></div>
+                <!-- sidebar -->
+                <div class="col-lg-4 col-md-5 col-12">
+                    <!-- card -->
+                    <div class="mb-5 card mt-5">
+                        <div class="card-body p-6">
+                            <!-- heading -->
+                            <h2 class="h5 mb-4">Resumo</h2>
+                            <div class="card mb-2">
+                                <!-- list group -->
+                                <ul class="list-group list-group-flush">
+                                    <!-- list group item -->
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="me-auto">
+                                            <div>Subtotal do item</div>
+                                        </div>
+                                        <span id="subtotal">$0.00</span>
+                                    </li>
+                                    <!-- list group item -->
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="me-auto">
+                                            <div>Taxa de serviço</div>
+                                        </div>
+                                        <span id="taxa-servico">0.00</span>
+                                    </li>
+                                    <!-- list group item -->
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="me-auto">
+                                            <div class="fw-bold">Total</div>
+                                        </div>
+                                        <span id="total" class="fw-bold">$3.00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="d-grid mb-1 mt-4">
+                                <!-- btn -->
+                                <a class="btn text-light btn-lg" type="submit" style="background-color: #0aad0a;" href="/fechamento.html">
+                                    Vá para a finalização da compra! <span id="total-btn" class="carrinho-subtotal fw-bold">$3.00</span>
+                                </a>
+                            </div>
+                            <!-- text -->
+                            <p><small>Ao fazer seu pedido, você concorda em obedecer aos <a href="#!" style="color: #0aad0a; text-decoration: none;">Termos de Serviço</a>
+                                e <a href="#!" style="color: #0aad0a; text-decoration: none;">Política de Privacidade do Hortfruit Online.</a> </small>
+                            </p>
+                            <!-- heading -->
+                            <div class="mt-8">
+                                <h2 class="h5 mb-3">Adicionar promoção ou vale-presente</h2>
+                                <form>
+                                    <div class="mb-2">
+                                        <!-- input -->
+                                        <label for="giftcard" class="form-label sr-only"> Endereço de email</label>
+                                        <input type="text" class="form-control" id="giftcard" placeholder="Promoção ou vale-presente">
+                                    </div>
+                                    <!-- btn -->
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-dark mb-1">Resgatar</button></div>
+                                    <p class="text-muted mb-0"> <small>Termos & Condições se aplicam</small></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </main>
+    
  
     <script src="../public/js/sessao.js"></script>
     <div style="height: 273px;" class="d-block d-md-none"></div>
