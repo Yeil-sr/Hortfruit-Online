@@ -9,7 +9,13 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/src/index.js"
+      "dest": "/api/src/index.js"
+    }
+  ],
+  "files": [
+    {
+      "src": "api/etc/ssl/cacert-2024-07-02.pem",
+      "dest": "./etc/ssl/cacert-2024-07-02.pem"
     }
   ]
 }
