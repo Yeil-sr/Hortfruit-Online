@@ -9,6 +9,7 @@ const session = require('express-session');
 const Sequelize = require('sequelize');
 const SequelizeStore = require('connect-session-sequelize')(session.Store); 
 const cookieParser = require('cookie-parser');
+const fs = require("fs");
 const multer = require('multer');
 const { isAuthenticated } = require('./middleware/authMiddleware.js');
 const upload = require('./multerConfig/multerConfig.js');
@@ -28,10 +29,15 @@ app.use('/uploads', express.static(uploadDir));
 const public = path.join(__dirname, 'public');
 app.use('/public', express.static(public));
 
-// Configuração do Sequelize para MySQL
-const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    dialectOptions: {
+        ssl: {
+            ca: fs.readFileSync(path.resolve(__dirname, process.env.CA_CERT_PATH)),
+            rejectUnauthorized: true
+        }
+    }
 });
 
 // Verificar conexão com o banco de dados
