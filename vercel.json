@@ -9,17 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/src/index.js"
+      "dest": "/api/src/index.js"
     }
-  ],
-  "env": {
-    "DB_NAME": "@db_name",
-    "DB_USER": "@db_user",
-    "DB_PASSWORD": "@db_password",
-    "DB_HOST": "@db_host",
-    "CA_CERT_PATH": "@ca_cert_path",
-    "MERCAOPAGO_ACCESS_TOKEN": "@mercado_pago_access_token",
-    "SESSION_KEY": "@session_key",
-    "SESSION_SECRET": "@session_secret"
-  }
+  ]
 }

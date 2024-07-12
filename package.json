@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "node api/src/index.js",
-    "vercel-build": "npm install && npm run build"
+    "vercel-build": "npm install"
   },
   "keywords": [],
   "author": "",

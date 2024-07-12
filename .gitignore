@@ -3,3 +3,4 @@ node_modules
 base.html
 reference.html
 .env
+.vercel
