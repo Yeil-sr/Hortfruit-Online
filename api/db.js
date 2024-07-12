@@ -2,10 +2,13 @@ const mysql = require("mysql2");
 const fs = require("fs");
 const path = require("path");
 
+// Defina o caminho absoluto para o certificado SSL
+const caCertPath = path.resolve(__dirname, './src/etc/ssl/cacert-2024-07-02.pem');
+
 const sslOptions = {
     ssl: {
         rejectUnauthorized: true,
-        ca: fs.readFileSync(path.resolve(__dirname, process.env.CA_CERT_PATH))
+        ca: fs.readFileSync(caCertPath)
     }
 };
 
@@ -14,7 +17,7 @@ const db = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    ssl: sslOptions.ssl // Use sslOptions.ssl diretamente
+    ssl: sslOptions.ssl
 });
 
 db.connect((err) => {

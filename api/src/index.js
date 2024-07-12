@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
@@ -18,6 +17,7 @@ const client = new MercadoPagoConfig({
     accessToken: process.env.MERCAOPAGO_ACCESS_TOKEN,
     options: { timeout: 5000, idempotencyKey: 'abc' }
 });
+const caCertPath = path.resolve(__dirname, './etc/ssl/cacert-2024-07-02.pem');
 
 const app = express();
 const porta = process.env.PORT || 8080;
@@ -34,8 +34,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     dialect: 'mysql',
     dialectOptions: {
         ssl: {
-            ca: fs.readFileSync(path.resolve(__dirname, process.env.CA_CERT_PATH)),
-            rejectUnauthorized: true
+            rejectUnauthorized: true,
+            ca: fs.readFileSync(caCertPath)
         }
     }
 });
