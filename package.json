@@ -23,12 +23,11 @@
     "nodemon": "^3.1.0",
     "path": "^0.12.7",
     "popper.js": "^1.16.1",
-    "sequelize": "^6.37.3",
-    "vercel.json": "^0.1.0"
+    "sequelize": "^6.37.3"
   },
   "scripts": {
     "start": "node api/src/index.js",
-    "vercel-build": "node api/src/index.js"
+    "vercel-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
