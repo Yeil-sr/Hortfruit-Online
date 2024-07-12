@@ -9,12 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/src/index.js"
+      "dest": "api/src/index.js"
     }
-  ],
-  "static": {
-    "include": [
-      "api/etc/ssl/cacert-2024-07-02.pem"
-    ]
-  }
+  ]
 }
