@@ -111,6 +111,12 @@ app.get('/pedido/sucesso', (req,res)=>{
     res.sendFile(path.join(__dirname,'./views/fechamento_pedido.html'))
 })
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+
 app.use('/produto', produtoRoutes);
 app.use('/cliente', clienteRoutes);
 app.use('/fornecedor', fornecedorRoutes);
