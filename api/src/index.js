@@ -75,6 +75,10 @@ app.get('/carrinho', (req, res) => {
     res.sendFile(path.join(__dirname, './views/carrinho.html'));
 });
 
+app.get('/contato', (req,res)=>{
+    res.sendFile(path.join(__dirname, './views/contato.html'));
+})
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, './views/login.html'));
 });
@@ -90,6 +94,14 @@ app.get('/pedido/sucesso', (req, res) => {
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
+});
+
+// Rota para servir as partials
+app.get('/partials/nav:partial', (req, res) => {
+    const partial = req.params.partial;
+    const partialPath = path.join(__dirname, 'views/partials/nav', partial);
+    console.log(`Serving partial: ${partialPath}`);
+    res.sendFile(partialPath);
 });
 
 app.use('/produto', produtoRoutes);

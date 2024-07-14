@@ -45,54 +45,8 @@
 
 <body style="min-width:372px; overflow-x:hidden; ">
    
-       
+    <nav id="navbar"></nav>   
    
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success px-4" style="box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);">
-        
-        <div>
-            <!-- img -->
-             <a href="#modalLogo">
-            <img src="./public/img/favicon/favicon.ico" style="height: 48px;" alt="logo_loja" class="rounded-circle icon-shape icon-xxl">
-         </a>
-         </div>
-        <a class="navbar-brand mx-2" href="">
-            <strong>Hortfruit Online</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a href="/" class="nav-link text-white">Principal</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/contato" class="nav-link text-white">Contato</a>
-                </li>
-            </ul>
-            <div class="align-self-end">
-                
-                <ul class="navbar-nav">
-                    
-                    
-                    <li class="nav-item">
-                        <a href="/cadastro" class="nav-link text-white" id="user-link">Quero Me Cadastrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/login" class="nav-link text-white" id="auth-link">Entrar</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="/carrinho" class="nav-link text-white">
-                            <svg class="bi" width="24" height="24" fill="currentColor">
-                                <use xlink:href="/bi.svg#cart3" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-</nav>
 <div class="bg-danger  "> 
     <p class="text-white text-center py-1">Esta é uma loja de demonstração. Nenhum pedido será entregue.</p> 
 </div> 
@@ -388,6 +342,7 @@
 
         </div>
     </footer>
+    <script src="../public/js/navPartials.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>

@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     alert('Erro ao fazer logout');
                                 }
                             });
+                           
                     });
 
                     // Carregar a lista de produtos do fornecedor usando fornecedor_id
