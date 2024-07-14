@@ -47,8 +47,7 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao encontrar produto' });
         }
     }
-
-    async getPictureByProdutoId(req, res) {
+ async getPictureByProdutoId(req, res) {
         try {
             const produto_id = req.params.id;
             const produto = await Produto.findById(produto_id);
@@ -57,7 +56,10 @@ class ProdutoController {
                 return res.status(404).json({ error: 'Imagem não encontrada' });
             }
 
-            const imagePath = path.join(__dirname, produto.img_produto);
+            const uploadDir = path.join(__dirname, '../uploads');
+            const imagePath = path.join(uploadDir, `${produto_id}.jpg`);
+
+            fs.writeFileSync(imagePath, produto.img_produto);
             res.sendFile(imagePath);
         } catch (error) {
             console.error('Erro ao obter imagem do produto:', error);
