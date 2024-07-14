@@ -1,7 +1,6 @@
 const Pedido = require('../models/Pedido');
 
-class pedidoController {
-
+class PedidoController {
     async createPedido(req, res) {
         try {
             if (!req.session.user) {
@@ -9,7 +8,7 @@ class pedidoController {
             }
 
             const userId = req.session.user.id;
-            const { pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo, data_venda } = req.body;
+            const { pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo } = req.body;
 
             // Verifica se valor_total foi enviado
             if (valor_total == null) {
@@ -17,9 +16,10 @@ class pedidoController {
             }
 
             // Cria o pedido no banco de dados
-            const { pedidoId } = await Pedido.createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo, data_venda);
+            const { pedidoId } = await Pedido.createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo);
             res.status(201).json({ pedidoId, valor_total });
         } catch (error) {
+            console.error('Erro ao criar pedido:', error);
             res.status(500).json({ error: error.message });
         }
     }
@@ -29,9 +29,14 @@ class pedidoController {
         const dadosPedido = req.body;
 
         try {
-            await Pedido.atualizarPedido(pedidoId, dadosPedido);
-            res.status(200).json({ message: 'Pedido atualizado com sucesso' });
+            const [updated] = await Pedido.atualizarPedido(pedidoId, dadosPedido);
+            if (updated) {
+                res.status(200).json({ message: 'Pedido atualizado com sucesso' });
+            } else {
+                res.status(404).json({ error: 'Pedido não encontrado' });
+            }
         } catch (error) {
+            console.error('Erro ao atualizar pedido:', error);
             res.status(500).json({ error: error.message });
         }
     }
@@ -40,12 +45,17 @@ class pedidoController {
         const { pedidoId } = req.params;
 
         try {
-            await Pedido.cancelarPedido(pedidoId);
-            res.status(200).json({ message: 'Pedido cancelado com sucesso' });
+            const [updated] = await Pedido.cancelarPedido(pedidoId);
+            if (updated) {
+                res.status(200).json({ message: 'Pedido cancelado com sucesso' });
+            } else {
+                res.status(404).json({ error: 'Pedido não encontrado' });
+            }
         } catch (error) {
+            console.error('Erro ao cancelar pedido:', error);
             res.status(500).json({ error: error.message });
         }
     }
 }
 
-module.exports = new pedidoController();
+module.exports = new PedidoController();

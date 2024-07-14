@@ -1,31 +1,31 @@
-const mysql = require("mysql2");
-const fs = require("fs");
-const path = require("path");
+const { Sequelize } = require('sequelize');
+const fs = require('fs');
+const path = require('path');
 
 // Defina o caminho absoluto para o certificado SSL
 const caCertPath = path.resolve(__dirname, './src/etc/ssl/cacert-2024-07-02.pem');
 
-const sslOptions = {
-    ssl: {
-        rejectUnauthorized: true,
-        ca: fs.readFileSync(caCertPath)
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'mysql',
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: true,
+            ca: fs.readFileSync(caCertPath),
+        },
+    },
+});
+
+// Verificar conexão com o banco de dados
+const testConnection = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Conexão com o banco de dados estabelecida com sucesso.');
+    } catch (err) {
+        console.error('Não foi possível conectar ao banco de dados:', err);
     }
 };
 
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: sslOptions.ssl
-});
+testConnection();
 
-db.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err);
-        return;
-    }
-    console.log('Conexão bem-sucedida ao banco de dados');
-});
-
-module.exports = { db };
+module.exports = sequelize;

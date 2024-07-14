@@ -8,23 +8,39 @@ class PagamentoController {
             let pagamentoId;
 
             if (tipo === 'cartao') {
-                const { titular, numCartao, dataExpiracao, cvv } = cartao;
+                // Verifica se todos os dados do cartão foram fornecidos
+                if (!cartao || !cartao.titular || !cartao.numCartao || !cartao.dataExpiracao || !cartao.cvv) {
+                    return res.status(400).json({ error: 'Dados do cartão incompletos' });
+                }
+
                 pagamentoId = await Pagamento.processarPagamento({
                     tipo,
                     metodo,
                     parceladas,
-                    cartao: { titular, numCartao, dataExpiracao, cvv }
+                    cartao: {
+                        titular: cartao.titular,
+                        numCartao: cartao.numCartao,
+                        dataExpiracao: cartao.dataExpiracao,
+                        cvv: cartao.cvv
+                    }
                 });
             } else if (tipo === 'boleto') {
-                const { dataVencimento, instrucoes } = boleto;
+                // Verifica se todos os dados do boleto foram fornecidos
+                if (!boleto || !boleto.dataVencimento || !boleto.instrucoes) {
+                    return res.status(400).json({ error: 'Dados do boleto incompletos' });
+                }
+
                 pagamentoId = await Pagamento.processarPagamento({
                     tipo,
                     metodo,
                     parceladas,
-                    boleto: { dataVencimento, instrucoes }
+                    boleto: {
+                        dataVencimento: boleto.dataVencimento,
+                        instrucoes: boleto.instrucoes
+                    }
                 });
             } else {
-                throw new Error('Tipo de pagamento inválido');
+                return res.status(400).json({ error: 'Tipo de pagamento inválido' });
             }
 
             res.status(201).json({ pagamentoId });

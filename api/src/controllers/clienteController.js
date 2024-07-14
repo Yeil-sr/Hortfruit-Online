@@ -1,6 +1,5 @@
-const { db } = require("../../db.js");
+const { Cliente } = require('../models/Cliente'); // Importar o modelo Cliente
 const Endereco = require('../models/Endereco');
-const Cliente = require('../models/Cliente');
 
 class clienteController {
     async index(req, res) {
@@ -18,44 +17,51 @@ class clienteController {
             const { nome, email, telefone, endereco } = req.body;
 
             // Criar o endereço primeiro
-            const enderecoData = await Endereco.create;
+            const enderecoData = await Endereco.create(endereco);
             const enderecoId = enderecoData.id;
 
-
             // Criar o cliente
-            const cliente = await Cliente.create;
-            res.status(201).json({ success: true, id: cliente.insertId });
+            const cliente = await Cliente.create({ nome, email, telefone, endereco_id: enderecoId });
+            res.status(201).json({ success: true, id: cliente.id });
         } catch (err) {
             console.error('Erro ao criar cliente:', err);
             res.status(500).json({ error: err.message });
         }
     }
 
-     async findById(req, res) {
+    async findById(req, res) {
         try {
-            const cliente = await Cliente.findById(req.params.id);
+            const cliente = await Cliente.findByPk(req.params.id);
             if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
             res.status(200).json(cliente);
         } catch (err) {
+            console.error('Erro ao encontrar cliente pelo ID:', err);
             res.status(500).json({ error: err.message });
         }
     }
 
-     async update(req, res) {
+    async update(req, res) {
         try {
-            const cliente = await Cliente.update(req.params.id, req.body);
-            if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
-            res.status(200).json(cliente);
+            const { nome, email, telefone, endereco_id } = req.body;
+            const [updated] = await Cliente.update(
+                { nome, email, telefone, endereco_id },
+                { where: { id: req.params.id } }
+            );
+            if (!updated) return res.status(404).json({ error: 'Cliente não encontrado' });
+            res.status(200).json({ success: true });
         } catch (err) {
+            console.error('Erro ao atualizar cliente:', err);
             res.status(500).json({ error: err.message });
         }
     }
 
-     async delete(req, res) {
+    async delete(req, res) {
         try {
-            await Cliente.delete(req.params.id);
+            const deleted = await Cliente.destroy({ where: { id: req.params.id } });
+            if (!deleted) return res.status(404).json({ error: 'Cliente não encontrado' });
             res.status(204).send();
         } catch (err) {
+            console.error('Erro ao deletar cliente:', err);
             res.status(500).json({ error: err.message });
         }
     }

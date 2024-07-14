@@ -11,15 +11,8 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Define as opções de armazenamento do multer para arquivos de imagem
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        const produtoId = req.params.id || Date.now();
-        cb(null, `${produtoId}${path.extname(file.originalname)}`);
-    }
-});
+const storage = multer.memoryStorage();
+
 
 // Configura o multer para lidar com o upload de arquivos de imagem
 const upload = multer({

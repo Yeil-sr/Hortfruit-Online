@@ -1,23 +1,19 @@
 require('dotenv').config();
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql");
-const { db } = require('../db.js')
-const path = require("path");
+const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
-const Sequelize = require('sequelize');
-const SequelizeStore = require('connect-session-sequelize')(session.Store); 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const cookieParser = require('cookie-parser');
-const fs = require("fs");
-const multer = require('multer');
-const { isAuthenticated } = require('./middleware/authMiddleware.js');
+const fs = require('fs');
+const path = require('path');
 const upload = require('./multerConfig/multerConfig.js');
-const { MercadoPagoConfig, Pagamento } = require('mercadopago');
+const { MercadoPagoConfig } = require('mercadopago');
+const sequelize = require('../db.js'); // Importar a instância do Sequelize
+
 const client = new MercadoPagoConfig({
-    accessToken: process.env.MERCAOPAGO_ACCESS_TOKEN,
-    options: { timeout: 5000, idempotencyKey: 'abc' }
+    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+    options: { timeout: 5000, idempotencyKey: 'abc' },
 });
-const caCertPath = path.resolve(__dirname, './etc/ssl/cacert-2024-07-02.pem');
 
 const app = express();
 const porta = process.env.PORT || 8080;
@@ -26,28 +22,8 @@ const porta = process.env.PORT || 8080;
 const uploadDir = path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadDir));
 
-const public = path.join(__dirname, 'public');
-app.use('/public', express.static(public));
-
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: true,
-            ca: fs.readFileSync(caCertPath)
-        }
-    }
-});
-
-// Verificar conexão com o banco de dados
-sequelize.authenticate()
-    .then(() => {
-        console.log('Conexão com o banco de dados estabelecida com sucesso.');
-    })
-    .catch(err => {
-        console.error('Não foi possível conectar ao banco de dados:', err);
-    });
+const publicDir = path.join(__dirname, 'public');
+app.use('/public', express.static(publicDir));
 
 // Configuração do armazenamento da sessão no MySQL
 const sessionStore = new SequelizeStore({
@@ -75,7 +51,7 @@ app.use(session({
 sessionStore.sync();
 
 // Configuração de rotas e outros middlewares
-const views = path.join(__dirname, "views");
+const views = path.join(__dirname, 'views');
 app.use(express.static(views));
 
 const clienteRoutes = require('./routes/clienteRoutes.js');
@@ -88,16 +64,16 @@ const usuarioRoutes = require('./routes/usuarioRoutes.js');
 const carrinhoRoutes = require('./routes/carrinhoRoutes.js');
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "./views/catalago.html"));
+    res.sendFile(path.join(__dirname, './views/catalogo.html'));
 });
 
 app.get('/cadastro', (req, res) => {
-    res.sendFile(path.join(__dirname, "./views/cadastro.html"));
+    res.sendFile(path.join(__dirname, './views/cadastro.html'));
 });
 
-app.get('/carrinho',(req,res)=>{
-    res.sendFile(path.join(__dirname,'./views/carrinho.html'))
-})
+app.get('/carrinho', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/carrinho.html'));
+});
 
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, './views/login.html'));
@@ -107,15 +83,14 @@ app.get('/confirmarcadastro', (req, res) => {
     res.sendFile(path.join(__dirname, './views/confirmarcadastro.html'));
 });
 
-app.get('/pedido/sucesso', (req,res)=>{
-    res.sendFile(path.join(__dirname,'./views/fechamento_pedido.html'))
-})
+app.get('/pedido/sucesso', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/fechamento_pedido.html'));
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-
 
 app.use('/produto', produtoRoutes);
 app.use('/cliente', clienteRoutes);
@@ -126,6 +101,8 @@ app.use('/pedido', pedidoRoutes);
 app.use('/pagamento', pagamentoRoutes);
 app.use('/usuario', usuarioRoutes);
 
-app.listen(porta, () => { console.log("server running") });
+app.listen(porta, () => {
+    console.log("Server running on port", porta);
+});
 
 module.exports = app;

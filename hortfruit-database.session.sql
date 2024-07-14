@@ -1,0 +1,1 @@
+ALTER TABLE produto MODIFY img_produto MEDIUMBLOB;

@@ -74,7 +74,7 @@ async function enviarCadastro(event) {
         logoLoja = document.getElementById('logoLoja').files[0];
     }
 
-    const userData = { nome, email, senha, telefone, isFornecedor };
+    const userData = { nome, email, senha, telefone, isFornecedor ,telefone, nomeLoja, descricaoLoja, logoLoja, rua, numero, cidade, bairro, estado, cep, complemento, referencia};
 
     try {
         const responseUser = await fetch('/usuario', {

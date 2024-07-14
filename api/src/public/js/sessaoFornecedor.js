@@ -89,16 +89,17 @@ async function obterImagemProduto(produto_id) {
 }
 
 
-
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');
-    produtosContainer.innerHTML = ''; // Limpa o conteúdo atual
+    if (!produtosContainer) {
+        console.error('Element with ID produtosContainer not found.');
+        return; // Exit if the element does not exist
+    }
+    produtosContainer.innerHTML = ''; // Clear current content
 
     try {
-        // Obtendo a lista de produtos
         const produtos = await obterListaProdutos(fornecedor_id);
 
-        // Criando a tabela HTML
         const tabela = document.createElement('table');
         tabela.classList.add('table', 'table-striped', 'table-responsive');
         tabela.innerHTML = `
@@ -118,11 +119,10 @@ async function construirTabelaProdutos(fornecedor_id) {
             <tbody></tbody>
         `;
 
-        // Adicionando cada produto como uma linha na tabela
         const tbody = tabela.querySelector('tbody');
         for (const produto of produtos) {
             const tr = document.createElement('tr');
-            const imgSrc = await obterImagemProduto(produto.id, fornecedor_id); // Chama função para obter a imagem
+            const imgSrc = await obterImagemProduto(produto.id);
             tr.innerHTML = `
                 <td><img src="${imgSrc}" alt="Imagem do Produto" style="width: 64px; height: 64px;"></td>
                 <td>${produto.nome}</td>
@@ -140,14 +140,13 @@ async function construirTabelaProdutos(fornecedor_id) {
             tbody.appendChild(tr);
         }
 
-        // Adicionando a tabela ao container
         produtosContainer.appendChild(tabela);
     } catch (error) {
-        // Em caso de erro, exibe uma mensagem de erro
         console.error('Erro ao construir a tabela de produtos:', error);
         produtosContainer.innerHTML = '<p>Erro ao carregar a lista de produtos</p>';
     }
 }
+
 
 
 async function editarLoja(id) {

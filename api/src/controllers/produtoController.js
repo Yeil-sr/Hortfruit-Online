@@ -26,8 +26,7 @@ class ProdutoController {
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-            const fornecedor_id = fornecedor.id;
-            const produtos = await Produto.findByFornecedorId(fornecedor_id);
+            const produtos = await Produto.findByFornecedorId(fornecedor.id);
             res.json(produtos);
         } catch (error) {
             console.error('Erro ao obter a lista de produtos do fornecedor:', error);
@@ -35,41 +34,30 @@ class ProdutoController {
         }
     }
 
-   async getProdutoById(req,res){
-     try{
-        const { id } = req.params;
-        const produto = await Produto.findById(id);
-        if(!produto){
-            res.status(404).json({error: 'Produto não encontrado'});
+    async getProdutoById(req, res) {
+        try {
+            const { id } = req.params;
+            const produto = await Produto.findById(id);
+            if (!produto) {
+                return res.status(404).json({ error: 'Produto não encontrado' });
             }
-            res.json(produto)
-          
-        }catch(error){
-        console.log( 'Produto não encontrado',error)
+            res.json(produto);
+        } catch (error) {
+            console.error('Erro ao encontrar produto:', error);
+            res.status(500).json({ error: 'Erro ao encontrar produto' });
         }
     }
-   
 
     async getPictureByProdutoId(req, res) {
         try {
-            const produto_id = req.params.id; // Obter o ID do produto dos parâmetros da rota
-            const imagemProduto = await Produto.findImageByProdutoId(produto_id); // Chamada para buscar imagem
-    
-            if (!imagemProduto) {
+            const produto_id = req.params.id;
+            const produto = await Produto.findById(produto_id);
+
+            if (!produto || !produto.img_produto) {
                 return res.status(404).json({ error: 'Imagem não encontrada' });
             }
-    
-            // Convertendo o Buffer de imagem em um arquivo de imagem
-            const imageBuffer = Buffer.from(imagemProduto); // Supondo que imagemProduto contém os dados binários
-            
-            // Definindo o caminho e a extensão da imagem
-            const uploadDir = path.join(__dirname, '../uploads');
-            const imagePath = path.join(uploadDir, `${produto_id}${path.extname(imagemProduto.originalname || '.jpg')}`);
-    
-            // Salvar o Buffer como um arquivo
-            fs.writeFileSync(imagePath, imageBuffer);
-    
-            // Enviar o arquivo de imagem como resposta
+
+            const imagePath = path.join(__dirname, produto.img_produto);
             res.sendFile(imagePath);
         } catch (error) {
             console.error('Erro ao obter imagem do produto:', error);
@@ -79,16 +67,11 @@ class ProdutoController {
     
     async addProduto(req, res) {
         try {
-            if (!req.session.user) {
-                return res.status(401).json({ error: 'Usuário não autenticado' });
-            }
-
             const userId = req.session.user.id;
             const fornecedor = await Fornecedor.findByUsuarioId(userId);
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-            const fornecedor_id = fornecedor.id;
 
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
 
@@ -96,9 +79,17 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            const img_produto = req.file ? req.file.filename : null;
+            let img_produto = null;
+            if (req.file) {
+                const imgPath = path.join(__dirname, '../uploads', `${fornecedor.id}_${cod}.jpg`);
+                fs.writeFileSync(imgPath, req.file.buffer);
+                img_produto = `../uploads/${fornecedor.id}_${cod}.jpg`; // Save relative path
+            }
 
-            await Produto.addProduto({ nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
+            await Produto.addProduto({
+                nome, tipo, unidade, cod, quantidade, preco, descricao,
+                fornecedor_id: fornecedor.id, img_produto
+            });
 
             res.status(201).json({ message: 'Produto cadastrado com sucesso!' });
         } catch (error) {
@@ -106,19 +97,17 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao adicionar o produto' });
         }
     }
+    
+    
+
 
     async updateProduto(req, res) {
         try {
-            if (!req.session.user) {
-                return res.status(401).json({ error: 'Usuário não autenticado' });
-            }
-
             const userId = req.session.user.id;
             const fornecedor = await Fornecedor.findByUsuarioId(userId);
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-            const fornecedor_id = fornecedor.id;
 
             const { id } = req.params;
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
@@ -127,13 +116,17 @@ class ProdutoController {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
 
-            const img_produto = req.file ? req.file.filename : null;
-
-            const result = await Produto.updateProduto(id, { nome, tipo, unidade, cod, quantidade, preco, descricao, fornecedor_id, img_produto });
-
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'Produto não encontrado ou nenhum dado foi alterado' });
+            let img_produto = null;
+            if (req.file) {
+                const imgPath = path.join(__dirname, '../uploads', `${fornecedor.id}_${cod}.jpg`);
+                fs.writeFileSync(imgPath, req.file.buffer);
+                img_produto = `../uploads/${fornecedor.id}_${cod}.jpg`; // Save relative path
             }
+
+            await Produto.updateProduto(id, {
+                nome, tipo, unidade, cod, quantidade, preco, descricao,
+                fornecedor_id: fornecedor.id, img_produto
+            });
 
             res.status(200).json({ message: 'Produto atualizado com sucesso!' });
         } catch (error) {
@@ -153,7 +146,6 @@ class ProdutoController {
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-            const fornecedor_id = fornecedor.id;
             const { id } = req.params;
             await Produto.deleteProduto(id);
             res.status(200).json({ message: 'Produto deletado com sucesso!' });
@@ -174,10 +166,13 @@ class ProdutoController {
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-            const fornecedor_id = fornecedor.id;
 
             const { id } = req.params;
             const produto = await Produto.findById(id);
+            if (!produto) {
+                return res.status(404).json({ error: 'Produto não encontrado' });
+            }
+
             res.json(produto);
         } catch (error) {
             console.error('Erro ao preencher o formulário de edição de produto:', error);

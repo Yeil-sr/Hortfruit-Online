@@ -1,128 +1,112 @@
-const { db } = require("../../db.js");
+const { Sequelize, DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const sequelize = require('../../db.js'); 
 
-class Usuario {
-    static async createUser({ nome, email, senha, isFornecedor }) {
-        const hashedPassword = await bcrypt.hash(senha, 10);
-        const query = "INSERT INTO usuarios (nome, email, senha, isFornecedor) VALUES (?, ?, ?, ?)";
-        return new Promise((resolve, reject) => {
-            db.query(query, [nome, email, hashedPassword, isFornecedor], (err, result) => {
-                if (err) {
-                    console.error('Erro ao criar usuário:', err);
-                    return reject(err);
-                }
-                resolve(result);
-            });
-        });
-    }
-
-    static async findById(userId) {
-        return new Promise((resolve, reject) => {
-            const q = "SELECT * FROM usuarios WHERE id=?";
-            db.query(q, [userId], (err, result) => {
-                if (err) {
-                    console.error('Erro ao encontrar o usuario pelo ID:', err);
-                    return reject(err);
-                }
-                if (result.length === 0) {
-                    return resolve(null); 
-                }
-                const usuario = result[0];
-                const userResponse = {
-                    id: usuario.id,
-                    nome: usuario.nome,
-                    email: usuario.email,
-                    isFornecedor: usuario.isFornecedor
-                };
-                resolve(userResponse);
-            });
-        });
-    }
-
-    static async findByEmail(email) {
-        return new Promise((resolve, reject) => {
-            const q = "SELECT * FROM usuarios WHERE email=?";
-            db.query(q, [email], (err, result) => {
-                if (err) {
-                    console.error('Erro ao encontrar o usuario pelo ID:', err);
-                    return reject(err);
-                }
-                if (result.length === 0) {
-                    return resolve(null); 
-                }
-                const usuario = result[0];
-                const userResponse = {
-                    id: usuario.id,
-                    nome: usuario.nome,
-                    email: usuario.email,
-                    isFornecedor: usuario.isFornecedor
-                };
-                resolve(userResponse);
-            });
-        });
-    }
-
-
-    static async authenticate(email) {
-        const query = "SELECT * FROM usuarios WHERE email = ?";
-        return new Promise((resolve, reject) => {
-            db.query(query, [email], async (err, results) => {
-                if (err) {
-                    console.error('Erro ao buscar usuário:', err);
-                    return reject(err);
-                }
-                if (results.length === 0) {
-                    console.log('Usuário não encontrado para o email:', email);
-                    return resolve(null); // Usuário não encontrado
-                }
-
-                const usuario = results[0];
-                console.log('Usuário encontrado:', usuario);
-
-                const isPasswordValid = await bcrypt.compare;
-                if (isPasswordValid) {
-                    console.log('Senha válida para o usuário:', email);
-                    resolve(usuario); // Senha válida, retorna o usuário
-                } else {
-                    console.log('Senha inválida para o usuário:', email);
-                    resolve(null); // Senha inválida, retorna null
-                }
-            });
-        });
-    }
-
-    static async initiatePasswordReset(email) {
-        const token = crypto.randomBytes(20).toString('hex');
-        const query = "UPDATE usuarios SET resetToken = ?, resetTokenExpiry = ? WHERE email = ?";
-        const expiry = Date.now() + 3600000; // 1 hour from now
-        return new Promise((resolve, reject) => {
-            db.query(query, [token, expiry, email], (err, result) => {
-                if (err) {
-                    console.error('Erro ao iniciar recuperação de senha:', err);
-                    return reject(err);
-                }
-                resolve({ token, email });
-            });
-        });
-    }
-
-    static async resetPassword(token, newPassword) {
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        const query = "UPDATE usuarios SET senha = ?, resetToken = NULL, resetTokenExpiry = NULL WHERE resetToken = ? AND resetTokenExpiry > ?";
-        return new Promise((resolve, reject) => {
-            db.query(query, [hashedPassword, token, Date.now()], (err, result) => {
-                if (err) {
-                    console.error('Erro ao redefinir senha:', err);
-                    return reject(err);
-                }
-                if (result.affectedRows === 0) {
-                    return reject(new Error('Token inválido ou expirado'));
-                }
-                resolve(result);
-            });
-        });
+class Usuario extends Model {
+    async comparePassword(senha) {
+        return bcrypt.compare(senha, this.senha);
     }
 }
+
+Usuario.init({
+    nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    senha: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    isFornecedor: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    resetToken: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    resetTokenExpiry: {
+        type: DataTypes.DATE,
+        allowNull: true
+    }
+}, {
+    sequelize,
+    modelName: 'Usuario',
+    tableName: 'usuarios',
+    timestamps: false // Se você não estiver usando os timestamps padrão (createdAt, updatedAt)
+});
+
+// Métodos estáticos
+Usuario.createUser = async function({ nome, email, senha, isFornecedor }) {
+    const hashedPassword = await bcrypt.hash(senha, 10);
+    return Usuario.create({ nome, email, senha: hashedPassword, isFornecedor });
+};
+
+Usuario.findById = async function(userId) {
+    const usuario = await Usuario.findByPk(userId, {
+        attributes: ['id', 'nome', 'email', 'isFornecedor']
+    });
+    return usuario ? usuario.toJSON() : null;
+};
+
+Usuario.findByEmail = async function(email) {
+    const usuario = await Usuario.findOne({
+        where: { email },
+        attributes: ['id', 'nome', 'email', 'isFornecedor']
+    });
+    return usuario ? usuario.toJSON() : null;
+};
+
+Usuario.authenticate = async function(email, senha) {
+    const usuario = await Usuario.findOne({ where: { email } });
+    if (!usuario) {
+        console.log('Usuário não encontrado para o email:', email);
+        return null;
+    }
+
+    const isPasswordValid = await usuario.comparePassword(senha);
+    if (isPasswordValid) {
+        console.log('Senha válida para o usuário:', email);
+        return usuario.toJSON();
+    } else {
+        console.log('Senha inválida para o usuário:', email);
+        return null;
+    }
+};
+
+Usuario.initiatePasswordReset = async function(email) {
+    const token = crypto.randomBytes(20).toString('hex');
+    const expiry = Date.now() + 3600000; // 1 hour from now
+    const [updated] = await Usuario.update(
+        { resetToken: token, resetTokenExpiry: expiry },
+        { where: { email } }
+    );
+
+    if (updated) {
+        return { token, email };
+    } else {
+        throw new Error('Erro ao iniciar recuperação de senha');
+    }
+};
+
+Usuario.resetPassword = async function(token, newPassword) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const [updated] = await Usuario.update(
+        { senha: hashedPassword, resetToken: null, resetTokenExpiry: null },
+        { where: { resetToken: token, resetTokenExpiry: { [Sequelize.Op.gt]: Date.now() } } }
+    );
+
+    if (updated) {
+        return true;
+    } else {
+        throw new Error('Token inválido ou expirado');
+    }
+};
 
 module.exports = Usuario;

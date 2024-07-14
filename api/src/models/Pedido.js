@@ -1,111 +1,105 @@
-const { db } = require('../../db');
-const Carrinho = require('./Carrinho');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../../db'); // Ensure this imports your sequelize instance
+const PedidoItem = require('./PedidoItem'); // Assuming this is correctly defined
 
-class Pedido {
-    static async createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo, data_venda) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                // Verificar se pagamentoId existe na tabela de pagamento
-                const qCheckPagamento = `
-                    SELECT id FROM pagamento WHERE id = ?
-                `;
-                db.query(qCheckPagamento, [pagamentoId], async (err, result) => {
-                    if (err) {
-                        console.error('Erro ao verificar pagamento:', err);
-                        return reject(err);
-                    }
-                    if (result.length === 0) {
-                        return reject(new Error('Pagamento não encontrado'));
-                    }
-    
-                    // Iniciar transação
-                    await db.beginTransaction();
-    
-                    try {
-                        // Inserir na tabela de pedido
-                        const qPedido = `
-                            INSERT INTO pedido (user_id, valor_total, pagamento_id, data_venda, endereco, mesma_entrega, salvar_info) 
-                            VALUES (?, ?, ?, NOW(), ?, ?, ?)
-                        `;
-                        db.query(qPedido, [userId, valor_total, pagamentoId, endereco, mesmaEntrega, salvarInfo], (err, resultPedido) => {
-                            if (err) {
-                                throw new Error(err);
-                            }
-    
-                            const pedidoId = resultPedido.insertId;
-    
-                            // Transferir itens do Produto para pedido_item
-                            const qItensPedido = `
-                                INSERT INTO pedido_item (pedido_id, produto_id, quantidade, valor_produto)
-                                SELECT ?, p.id, p.quantidade, p.preco
-                                FROM produto p 
-                                WHERE p.fornecedor_id = ?
-                            `;
-                            db.query(qItensPedido, [pedidoId, userId], async (err, resultItensPedido) => {
-                                if (err) {
-                                    throw new Error(err);
-                                }
-    
-                                // Limpar Carrinho
-                                await Carrinho.limparCarrinho(userId);
-    
-                                // Commit transação
-                                await db.commit();
-    
-                                resolve({ pedidoId, valor_total });
-                            });
-                        });
-                    } catch (error) {
-                        // Rollback transação em caso de erro interno
-                        await db.rollback();
-                        console.error('Erro ao criar pedido:', error);
-                        reject(error);
-                    }
-                });
-            } catch (error) {
-                console.error('Erro geral ao criar pedido:', error);
-                reject(error);
+class Pedido extends Model {
+    static async createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo) {
+        const transaction = await sequelize.transaction();
+        
+        try {
+            // Check if pagamentoId exists in the pagamento table
+            const pagamento = await sequelize.models.Pagamento.findByPk(pagamentoId, { transaction });
+            if (!pagamento) {
+                throw new Error('Pagamento não encontrado');
             }
-        });
+
+            // Create the pedido
+            const pedido = await Pedido.create({
+                user_id: userId,
+                valor_total,
+                pagamento_id: pagamentoId,
+                data_venda: new Date(),
+                endereco,
+                mesma_entrega: mesmaEntrega,
+                salvar_info: salvarInfo
+            }, { transaction });
+
+            // Transferir itens do Carrinho para pedido_item
+            const itens = await PedidoItem.findAll({ where: { user_id: userId }, transaction });
+            const pedidoItems = itens.map(item => ({
+                pedido_id: pedido.id,
+                produto_id: item.produto_id,
+                quantidade: item.quantidade,
+                valor_produto: item.valor_produto
+            }));
+
+            await sequelize.models.Pedido_item.bulkCreate(pedidoItems, { transaction });
+
+            // Limpar o Carrinho
+            await PedidoItem.limparCarrinho(userId, { transaction });
+
+            // Commit transaction
+            await transaction.commit();
+            return { pedidoId: pedido.id, valor_total };
+        } catch (error) {
+            await transaction.rollback();
+            console.error('Erro ao criar pedido:', error);
+            throw error;
+        }
     }
-    
-    
-    
 
     static async atualizarPedido(pedidoId, dadosPedido) {
-        return new Promise((resolve, reject) => {
-            const q = `
-                UPDATE pedido 
-                SET status = ?, observacao = ? 
-                WHERE id = ?
-            `;
-            const { status, observacao } = dadosPedido;
-            db.query(q, [status, observacao, pedidoId], (err, result) => {
-                if (err) {
-                    console.error('Erro ao atualizar pedido:', err);
-                    return reject(err);
-                }
-                resolve(result);
-            });
+        return await Pedido.update(dadosPedido, {
+            where: { id: pedidoId }
         });
     }
 
     static async cancelarPedido(pedidoId) {
-        return new Promise((resolve, reject) => {
-            const q = `
-                UPDATE pedido 
-                SET status = 'cancelado' 
-                WHERE id = ?
-            `;
-            db.query(q, [pedidoId], (err, result) => {
-                if (err) {
-                    console.error('Erro ao cancelar pedido:', err);
-                    return reject(err);
-                }
-                resolve(result);
-            });
+        return await Pedido.update({ status: 'cancelado' }, {
+            where: { id: pedidoId }
         });
     }
 }
+
+// Define the model attributes and options
+Pedido.init({
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    valor_total: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false
+    },
+    pagamento_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    data_venda: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    endereco: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    mesma_entrega: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    salvar_info: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'pendente' // Define default status
+    }
+}, {
+    sequelize,
+    modelName: 'Pedido',
+    tableName: 'pedido',
+    timestamps: false // Set to true if using createdAt/updatedAt fields
+});
 
 module.exports = Pedido;

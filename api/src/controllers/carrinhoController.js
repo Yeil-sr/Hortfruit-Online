@@ -1,6 +1,6 @@
-const Carrinho = require('../models/Carrinho');
+const PedidoItem = require('../models/PedidoItem');
 
-class CarrinhoController {
+class carrinhoController {
     static async addItem(req, res) {
         const { produtoId, quantidade } = req.body;
 
@@ -10,7 +10,7 @@ class CarrinhoController {
             }
 
             const userId = req.session.user.id;
-            const result = await Carrinho.addItemById(userId, produtoId, quantidade);
+            const result = await PedidoItem.addItemById(userId, produtoId, quantidade);
             res.status(200).json(result);
         } catch (err) {
             console.error('Erro ao adicionar item ao carrinho:', err);
@@ -22,7 +22,7 @@ class CarrinhoController {
         const { userId, produtoId, quantidade } = req.body;
 
         try {
-            const result = await Carrinho.updateItem(userId, produtoId, quantidade);
+            const result = await PedidoItem.updateItem(userId, produtoId, quantidade);
             res.status(200).json(result);
         } catch (err) {
             console.error('Erro ao atualizar item do carrinho:', err);
@@ -56,7 +56,7 @@ class CarrinhoController {
         const { userId } = req.params;
 
         try {
-            const result = await Carrinho.limparCarrinho(userId);
+            const result = await PedidoItem.limparCarrinho(userId);
             res.status(200).json(result);
         } catch (err) {
             console.error('Erro ao limpar carrinho:', err);
@@ -65,4 +65,4 @@ class CarrinhoController {
     }
 }
 
-module.exports = CarrinhoController;
+module.exports = carrinhoController;

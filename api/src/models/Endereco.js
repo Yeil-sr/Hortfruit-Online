@@ -1,52 +1,47 @@
-const { db } = require("../../db.js");
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = require('../../db.js'); 
 
-class Endereco {
-    static async create({ rua, numero, cidade, bairro, estado, cep, complemento, referencia }) {
-        return new Promise((resolve, reject) => {
-            const query = `
-                INSERT INTO endereco (rua, numero, cidade, bairro, estado, cep, complemento, referencia)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            `;
-            db.query(query, [rua, numero, cidade, bairro, estado, cep, complemento, referencia], (err, result) => {
-                if (err) return reject(err);
-                resolve({ id: result.insertId }); // Return the ID of the newly inserted address
-            });
-        });
-    }
+class Endereco extends Model {}
 
-    static async findByData(rua, numero, cidade, estado, cep) {
-        const query = "SELECT * FROM endereco WHERE rua = ? AND numero = ? AND cidade = ? AND estado = ? AND cep = ?";
-        return new Promise((resolve, reject) => {
-            db.query(query, [rua, numero, cidade, estado, cep], (err, result) => {
-                if (err) return reject(err);
-                resolve(result[0]);
-            });
-        });
-    }
-    static async update(id, { rua, numero, cidade, estado, cep, complemento, referencia }) {
-        return new Promise((resolve, reject) => {
-            const query = `
-                UPDATE endereco 
-                SET rua = ?, numero = ?, cidade = ?, estado = ?, cep = ?, complemento = ?, referencia = ?
-                WHERE id = ?
-            `;
-            db.query(query, [rua, numero, cidade, estado, cep, complemento, referencia, id], (err, result) => {
-                if (err) return reject(err);
-                resolve(result);
-            });
-        });
-    }
-    
+Endereco.init({
 
-    static async delete(id) {
-        return new Promise((resolve, reject) => {
-            const query = "DELETE FROM endereco WHERE id = ?";
-            db.query(query, [id], (err, result) => {
-                if (err) return reject(err);
-                resolve(result);
-            });
-        });
+    rua: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    numero: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    cidade: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    bairro: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    estado: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    cep: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    complemento: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    referencia: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
-}
+}, {
+    sequelize,
+    modelName: 'Endereco',
+    tableName: 'endereco', // Nome da tabela no banco de dados
+    timestamps: false // Se não estiver usando campos de timestamps (createdAt, updatedAt)
+});
 
 module.exports = Endereco;
