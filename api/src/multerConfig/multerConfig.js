@@ -1,22 +1,25 @@
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const { S3 } = require('@aws-sdk/client-s3');
 const path = require('path');
+require('dotenv').config();
 
-// Define o diretório de upload para arquivos de imagem
-const uploadDir = path.join(__dirname, '../uploads');
+const s3 = new S3({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+});
 
-// Certifique-se de que o diretório de upload existe
-const fs = require('fs');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Define as opções de armazenamento do multer para arquivos de imagem
-const storage = multer.memoryStorage();
-
-
-// Configura o multer para lidar com o upload de arquivos de imagem
 const upload = multer({
-    storage: storage,
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.S3_BUCKET_NAME,
+        key: function (req, file, cb) {
+            cb(null, `${Date.now().toString()}-${file.originalname}`);
+        }
+    }),
     fileFilter: function (req, file, cb) {
         const filetypes = /jpeg|jpg|png|gif/;
         const mimetype = filetypes.test(file.mimetype);

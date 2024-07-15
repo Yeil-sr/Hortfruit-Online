@@ -1,8 +1,7 @@
 const Produto = require("../models/Produto.js");
 const Fornecedor = require('../models/Fornecedor.js');
-const upload = require('../multerConfig/multerConfig');
-const path = require('path');
-const fs = require('fs');
+const aws = require('aws-sdk');
+const s3 = new aws.S3();
 
 class ProdutoController {
     async index(req, res) {
@@ -47,26 +46,35 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao encontrar produto' });
         }
     }
+
     async getPictureByProdutoId(req, res) {
         try {
-            const produto_id = req.params.id;
-            const produto = await Produto.findById(produto_id);
-    
+            const { id } = req.params;
+            const produto = await Produto.findById(id);
+
             if (!produto || !produto.img_produto) {
                 return res.status(404).json({ error: 'Imagem não encontrada' });
             }
-    
-            const tempDir = path.join('/tmp');
-            const imagePath = path.join(tempDir, `${produto_id}.jpg`);
-    
-            fs.writeFileSync(imagePath, produto.img_produto);
-            res.sendFile(imagePath);
+
+            const imgKey = produto.img_produto;
+            if (typeof imgKey !== 'string' || !imgKey.trim()) {
+                return res.status(400).json({ error: 'Chave da imagem inválida' });
+            }
+
+            // Gerar URL assinada para o S3
+            const params = {
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: imgKey,
+            };
+
+            const url = await s3.getSignedUrlPromise('getObject', params);
+            res.json({ url });
         } catch (error) {
             console.error('Erro ao obter imagem do produto:', error);
             res.status(500).json({ error: 'Erro ao obter imagem do produto' });
         }
     }
-    
+
     async addProduto(req, res) {
         try {
             const userId = req.session.user.id;
@@ -74,35 +82,29 @@ class ProdutoController {
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-    
+
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
-    
+
             if (!nome || !tipo || !unidade || !cod || !quantidade || !preco || !descricao) {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
-    
+
             let img_produto = null;
             if (req.file) {
-                const imgPath = path.join('/tmp', `${fornecedor.id}_${cod}.jpg`);
-                fs.writeFileSync(imgPath, req.file.buffer);
-                img_produto = imgPath; // Save the path to the image
+                img_produto = req.file.key; // Save S3 key
             }
-    
-            await Produto.addProduto({
+
+            const novoProduto = await Produto.addProduto({
                 nome, tipo, unidade, cod, quantidade, preco, descricao,
                 fornecedor_id: fornecedor.id, img_produto
             });
-    
-            res.status(201).json({ message: 'Produto cadastrado com sucesso!' });
+
+            res.status(201).json({ message: 'Produto cadastrado com sucesso!', produto: novoProduto });
         } catch (error) {
             console.error('Erro ao adicionar o produto:', error);
             res.status(500).json({ error: 'Erro ao adicionar o produto' });
         }
     }
-    
-    
-    
-
 
     async updateProduto(req, res) {
         try {
@@ -121,17 +123,15 @@ class ProdutoController {
 
             let img_produto = null;
             if (req.file) {
-                const imgPath = path.join(__dirname, '../uploads', `${fornecedor.id}_${cod}.jpg`);
-                fs.writeFileSync(imgPath, req.file.buffer);
-                img_produto = `../uploads/${fornecedor.id}_${cod}.jpg`; // Save relative path
+                img_produto = req.file.key; // Save S3 key
             }
 
-            await Produto.updateProduto(id, {
+            const produtoAtualizado = await Produto.updateProduto(id, {
                 nome, tipo, unidade, cod, quantidade, preco, descricao,
                 fornecedor_id: fornecedor.id, img_produto
             });
 
-            res.status(200).json({ message: 'Produto atualizado com sucesso!' });
+            res.status(200).json({ message: 'Produto atualizado com sucesso!', produto: produtoAtualizado });
         } catch (error) {
             console.error('Erro ao atualizar o produto:', error);
             res.status(500).json({ error: 'Erro ao atualizar o produto' });
@@ -172,6 +172,7 @@ class ProdutoController {
 
             const { id } = req.params;
             const produto = await Produto.findById(id);
+        
             if (!produto) {
                 return res.status(404).json({ error: 'Produto não encontrado' });
             }

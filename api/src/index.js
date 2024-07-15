@@ -4,12 +4,10 @@ const cors = require('cors');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const cookieParser = require('cookie-parser');
-const fs = require('fs');
 const path = require('path');
 const upload = require('./multerConfig/multerConfig.js');
 const { MercadoPagoConfig } = require('mercadopago');
-const sequelize = require('../db.js'); // Importar a instância do Sequelize
-
+const sequelize = require('../db.js');
 const client = new MercadoPagoConfig({
     accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
     options: { timeout: 5000, idempotencyKey: 'abc' },

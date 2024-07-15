@@ -16,17 +16,20 @@ async function obterImagemProduto(produto_id) {
         const response = await fetch(`/produto/imagem/produto/${produto_id}`);
         if (!response.ok) {
             if (response.status === 404) {
+                // Se a imagem não for encontrada, retornar um caminho para uma imagem padrão
                 return './public/img/default-image.jpg';
             }
             throw new Error('Erro ao obter a imagem do produto');
         }
-        const imageName = await response.text();
-        return `/uploads/${imageName}`;
+        const { url } = await response.json(); // Recebe a URL assinada da imagem do produto
+        return url; // Retorna a URL assinada da imagem do produto
     } catch (error) {
         console.error('Erro ao obter a imagem do produto:', error);
+        // Retornar um caminho para uma imagem padrão em caso de erro
         return './public/img/default-image.jpg';
     }
 }
+
 async function construirProdutos() {
     const produtosContainer = document.getElementById('produtosContainer');
     produtosContainer.innerHTML = ''; // Limpa o conteúdo atual

@@ -80,15 +80,14 @@ async function obterImagemProduto(produto_id) {
             }
             throw new Error('Erro ao obter a imagem do produto');
         }
-        const imageName = await response.text(); // Supõe que o servidor retorna o nome do arquivo como texto
-        return `/uploads/${imageName}`; // Retorna o caminho relativo da imagem
+        const { url } = await response.json(); // Recebe a URL assinada da imagem do produto
+        return url; // Retorna a URL assinada da imagem do produto
     } catch (error) {
         console.error('Erro ao obter a imagem do produto:', error);
         // Retornar um caminho para uma imagem padrão em caso de erro
         return './public/img/default-image.jpg';
     }
 }
-
 
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');

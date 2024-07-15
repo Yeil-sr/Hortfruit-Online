@@ -1,1 +1,1 @@
-ALTER TABLE produto MODIFY img_produto MEDIUMBLOB;
+SELECT * FROM produto WHERE id = 3;
