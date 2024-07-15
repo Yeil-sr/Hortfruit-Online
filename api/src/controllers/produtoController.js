@@ -47,18 +47,18 @@ class ProdutoController {
             res.status(500).json({ error: 'Erro ao encontrar produto' });
         }
     }
- async getPictureByProdutoId(req, res) {
+    async getPictureByProdutoId(req, res) {
         try {
             const produto_id = req.params.id;
             const produto = await Produto.findById(produto_id);
-
+    
             if (!produto || !produto.img_produto) {
                 return res.status(404).json({ error: 'Imagem não encontrada' });
             }
-
-            const uploadDir = path.join(__dirname, '../uploads');
-            const imagePath = path.join(uploadDir, `${produto_id}.jpg`);
-
+    
+            const tempDir = path.join('/tmp');
+            const imagePath = path.join(tempDir, `${produto_id}.jpg`);
+    
             fs.writeFileSync(imagePath, produto.img_produto);
             res.sendFile(imagePath);
         } catch (error) {
@@ -74,31 +74,32 @@ class ProdutoController {
             if (!fornecedor) {
                 return res.status(404).json({ error: 'Fornecedor não encontrado' });
             }
-
+    
             const { nome, tipo, unidade, cod, quantidade, preco, descricao } = req.body;
-
+    
             if (!nome || !tipo || !unidade || !cod || !quantidade || !preco || !descricao) {
                 return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
             }
-
+    
             let img_produto = null;
             if (req.file) {
-                const imgPath = path.join(__dirname, '../uploads', `${fornecedor.id}_${cod}.jpg`);
+                const imgPath = path.join('/tmp', `${fornecedor.id}_${cod}.jpg`);
                 fs.writeFileSync(imgPath, req.file.buffer);
-                img_produto = `../uploads/${fornecedor.id}_${cod}.jpg`; // Save relative path
+                img_produto = imgPath; // Save the path to the image
             }
-
+    
             await Produto.addProduto({
                 nome, tipo, unidade, cod, quantidade, preco, descricao,
                 fornecedor_id: fornecedor.id, img_produto
             });
-
+    
             res.status(201).json({ message: 'Produto cadastrado com sucesso!' });
         } catch (error) {
             console.error('Erro ao adicionar o produto:', error);
             res.status(500).json({ error: 'Erro ao adicionar o produto' });
         }
     }
+    
     
     
 
