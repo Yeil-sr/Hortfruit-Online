@@ -5,9 +5,13 @@ const path = require('path');
 // Defina o caminho absoluto para o certificado SSL
 const caCertPath = path.resolve(__dirname, './src/etc/ssl/cacert-2024-07-02.pem');
 
+// Carregue o módulo mysql2
+const mysql2 = require('mysql2');
+
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
+    dialectModule: mysql2, // Adicione esta linha
     dialectOptions: {
         ssl: {
             rejectUnauthorized: true,
