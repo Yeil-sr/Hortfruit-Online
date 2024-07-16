@@ -1,6 +1,6 @@
 const PedidoItem = require('../models/PedidoItem');
 
-class carrinhoController {
+class CarrinhoController {
     static async addItem(req, res) {
         const { produtoId, quantidade } = req.body;
 
@@ -10,7 +10,12 @@ class carrinhoController {
             }
 
             const userId = req.session.user.id;
-            const result = await PedidoItem.addItemById(userId, produtoId, quantidade);
+            const result = await PedidoItem.create({
+                user_id: userId,
+                produto_id: produtoId,
+                quantidade,
+                valor_produto: 0 // Set an appropriate value for valor_produto
+            });
             res.status(200).json(result);
         } catch (err) {
             console.error('Erro ao adicionar item ao carrinho:', err);
@@ -22,7 +27,9 @@ class carrinhoController {
         const { userId, produtoId, quantidade } = req.body;
 
         try {
-            const result = await PedidoItem.updateItem(userId, produtoId, quantidade);
+            const result = await PedidoItem.update({ quantidade }, {
+                where: { user_id: userId, produto_id: produtoId }
+            });
             res.status(200).json(result);
         } catch (err) {
             console.error('Erro ao atualizar item do carrinho:', err);
@@ -37,7 +44,8 @@ class carrinhoController {
             }
     
             const { userId } = req.params;
-            const { valor_total } = req.body;
+            const itens = await PedidoItem.findAll({ where: { user_id: userId } });
+            const valor_total = itens.reduce((acc, item) => acc + (item.quantidade * item.valor_produto), 0);
     
             if (valor_total === undefined || valor_total === null) {
                 return res.status(400).json({ error: 'Valor total não fornecido' });
@@ -50,7 +58,6 @@ class carrinhoController {
             res.status(500).json({ error: 'Erro ao calcular total do carrinho' });
         }
     }
-    
 
     static async limparCarrinho(req, res) {
         const { userId } = req.params;
@@ -65,4 +72,4 @@ class carrinhoController {
     }
 }
 
-module.exports = carrinhoController;
+module.exports = CarrinhoController;

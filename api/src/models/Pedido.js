@@ -1,19 +1,22 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../../db'); // Ensure this imports your sequelize instance
-const PedidoItem = require('./PedidoItem'); // Assuming this is correctly defined
+const sequelize = require('../../db');
+const PedidoItem = require('./PedidoItem');
 
 class Pedido extends Model {
     static async createPedido(userId, pagamentoId, valor_total, endereco, mesmaEntrega, salvarInfo) {
         const transaction = await sequelize.transaction();
-        
+    
         try {
-            // Check if pagamentoId exists in the pagamento table
+            const itens = await sequelize.models.PedidoItem.findAll({ where: { user_id: userId }, transaction });
+            if (itens.length === 0) {
+                throw new Error('Carrinho está vazio');
+            }
+    
             const pagamento = await sequelize.models.Pagamento.findByPk(pagamentoId, { transaction });
             if (!pagamento) {
                 throw new Error('Pagamento não encontrado');
             }
-
-            // Create the pedido
+    
             const pedido = await Pedido.create({
                 user_id: userId,
                 valor_total,
@@ -23,22 +26,17 @@ class Pedido extends Model {
                 mesma_entrega: mesmaEntrega,
                 salvar_info: salvarInfo
             }, { transaction });
-
-            // Transferir itens do Carrinho para pedido_item
-            const itens = await PedidoItem.findAll({ where: { user_id: userId }, transaction });
+    
             const pedidoItems = itens.map(item => ({
                 pedido_id: pedido.id,
                 produto_id: item.produto_id,
                 quantidade: item.quantidade,
                 valor_produto: item.valor_produto
             }));
-
-            await sequelize.models.Pedido_item.bulkCreate(pedidoItems, { transaction });
-
-            // Limpar o Carrinho
+    
+            await sequelize.models.PedidoItem.bulkCreate(pedidoItems, { transaction });
             await PedidoItem.limparCarrinho(userId, { transaction });
-
-            // Commit transaction
+    
             await transaction.commit();
             return { pedidoId: pedido.id, valor_total };
         } catch (error) {
@@ -47,21 +45,22 @@ class Pedido extends Model {
             throw error;
         }
     }
-
+    
     static async atualizarPedido(pedidoId, dadosPedido) {
-        return await Pedido.update(dadosPedido, {
+        const [updated] = await Pedido.update(dadosPedido, {
             where: { id: pedidoId }
         });
+        return updated;
     }
 
     static async cancelarPedido(pedidoId) {
-        return await Pedido.update({ status: 'cancelado' }, {
+        const [updated] = await Pedido.update({ status: 'cancelado' }, {
             where: { id: pedidoId }
         });
+        return updated;
     }
 }
 
-// Define the model attributes and options
 Pedido.init({
     user_id: {
         type: DataTypes.INTEGER,
@@ -93,13 +92,16 @@ Pedido.init({
     },
     status: {
         type: DataTypes.STRING,
-        defaultValue: 'pendente' // Define default status
+        defaultValue: 'pendente'
     }
 }, {
     sequelize,
     modelName: 'Pedido',
     tableName: 'pedido',
-    timestamps: false // Set to true if using createdAt/updatedAt fields
+    timestamps: false
 });
+
+Pedido.hasMany(PedidoItem, { foreignKey: 'pedido_id' });
+PedidoItem.belongsTo(Pedido, { foreignKey: 'pedido_id' });
 
 module.exports = Pedido;
