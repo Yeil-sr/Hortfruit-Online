@@ -30,13 +30,10 @@ async function obterImagemProduto(produto_id) {
 
 async function construirProdutos() {
     const produtosContainer = document.getElementById('produtosContainer');
-    const loading = document.getElementById('loading');
-    loading.style.display = 'block'; // Show loading spinner
     produtosContainer.innerHTML = ''; // Limpa o conteúdo atual
 
     try {
         const produtos = await obterListaProdutos();
-        loading.style.display = 'none'; // Hide loading spinner
 
         // Adicionando cada produto como um card
         for (const produto of produtos) {
@@ -92,7 +89,6 @@ async function construirProdutos() {
             }, 100); // delay for animation
         }
     } catch (error) {
-        loading.style.display = 'none'; // Hide loading spinner
         console.error('Erro ao construir a exibição dos produtos:', error);
         produtosContainer.innerHTML = '<p>Erro ao carregar a lista de produtos</p>';
     }
