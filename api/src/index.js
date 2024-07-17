@@ -102,6 +102,15 @@ app.get('/partials/nav:partial', (req, res) => {
     res.sendFile(partialPath);
 });
 
+app.get('/partials/footer:partial', (req, res) => {
+    const partial = req.params.partial;
+    const partialPath = path.join(__dirname, 'views/partials/footer', partial);
+    console.log(`Serving partial: ${partialPath}`);
+    res.sendFile(partialPath);
+});
+
+
+
 app.use('/produto', produtoRoutes);
 app.use('/cliente', clienteRoutes);
 app.use('/fornecedor', fornecedorRoutes);
