@@ -22,17 +22,26 @@ document.addEventListener('DOMContentLoaded', async function () {
             const response = await fetch(`/carrinho/clear/${userId}`, {
                 method: 'DELETE'
             });
-
+    
             if (!response.ok) {
                 throw new Error('Erro ao limpar o carrinho');
             }
-
-            const data = await response.json();
-            console.log('Carrinho limpo:', data);
+    
+            // Clear localStorage
+            localStorage.removeItem('produtoIds');
+            localStorage.removeItem('quantidades');
+            localStorage.setItem('subtotal', '0.00');
+    
+            // Update the UI
+            produtosContainer.innerHTML = '<p>Seu carrinho está vazio.</p>';
+            updateSubtotal(userId);
+    
+            console.log('Carrinho limpo com sucesso:', await response.json());
         } catch (error) {
             console.error(error);
         }
     });
+    
 
     const userId = await obterUsuario();
     if (!userId) {
@@ -225,13 +234,12 @@ async function enviarTotalDoCarrinho(userId) {
         throw new Error(error.message);
     }
 }
-
-function updateSubtotal(userId) {
+async function updateSubtotal(userId) {
     const subtotalElement = document.querySelector('.carrinho-subtotal');
     if (subtotalElement) {
         const subtotal = parseFloat(localStorage.getItem('subtotal')) || 0;
         subtotalElement.textContent = `Subtotal: R$ ${subtotal.toFixed(2)}`;
-        enviarTotalDoCarrinho(userId);
+        await enviarTotalDoCarrinho(userId);
     } else {
         console.error("Elemento '.carrinho-subtotal' não encontrado no DOM.");
     }
@@ -242,18 +250,18 @@ async function removeItem(produtoId, userId) {
     storedIds = storedIds.filter(id => id !== produtoId);
     localStorage.setItem('produtoIds', JSON.stringify(storedIds));
 
-    // Atualizar a quantidade de produtos no carrinho
+    // Update the quantities in localStorage
     let quantidades = JSON.parse(localStorage.getItem('quantidades')) || {};
     delete quantidades[produtoId];
     localStorage.setItem('quantidades', JSON.stringify(quantidades));
 
-    // Remover o item do DOM
+    // Remove the item from the DOM
     const itemElement = document.querySelector(`.list-group-item[data-produto-id="${produtoId}"]`);
     if (itemElement) {
         itemElement.remove();
     }
 
-    // Recalcular o subtotal
+    // Recalculate subtotal
     let subtotal = 0;
     storedIds.forEach(id => {
         const quantidade = quantidades[id] || 1;
@@ -268,8 +276,25 @@ async function removeItem(produtoId, userId) {
     });
 
     localStorage.setItem('subtotal', subtotal.toFixed(2));
-    updateSubtotal(userId);
+    await updateSubtotal(userId);
+
+    // Send request to remove the item from the cart on the server
+    try {
+        const response = await fetch(`/carrinho/remove/${userId}/${produtoId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao remover o item do carrinho');
+        }
+
+        console.log('Item removido do carrinho:', produtoId);
+    } catch (error) {
+        console.error(error);
+    }
 }
+
+
 function updateSidebar() {
     const subtotalElement = document.getElementById('subtotal');
     const taxaServicoElement = document.getElementById('taxa-servico');

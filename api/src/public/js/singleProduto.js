@@ -84,6 +84,24 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
+function updateQuantity(button, delta) {
+    const quantityInput = button.parentElement.querySelector('.quantity');
+    let currentValue = parseInt(quantityInput.value, 10);
+    
+    currentValue += delta;
+    if (currentValue < 0) currentValue = 0; // Prevent negative values
+
+    quantityInput.value = currentValue;
+}
+
+function updateQuantityInput(input) {
+    const value = parseInt(input.value, 10);
+    if (value < 0) {
+        input.value = 0; // Prevent negative values
+    }
+}
+
+
 async function obterImagemProduto(produto_id) {
     try {
         const response = await fetch(`/produto/imagem/produto/${produto_id}`);
