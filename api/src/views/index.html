@@ -23,6 +23,19 @@
     
 
     <style>
+         .card-img-top {
+            width: 100%;
+            height: 200px; /* Altura fixa para imagens iguais */
+            object-fit: contain; /* Ajusta a imagem para preencher o container */
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .btn-adicionar {
+            margin-top: auto; /* Move o botão para o final do card */
+        }
 
 .merriweather-sans-uniquifier {
   font-family: "Merriweather Sans", sans-serif;
@@ -117,8 +130,14 @@
               <!--Produtos -->
               <h3 class="m-2">Mais vendidos diariamente</h3>
 
-            <div class="row my-3 mb-lg-10 mt-lg-14 my-8" id="produtosContainer">
-            </div>               
+              <div class="row my-3 mb-lg-10 mt-lg-14 my-8" id="produtosContainer">
+                <div class="col-12 text-center" id="loading">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+                    
                 <!-- Lojas e Fornecedores -->
             </div>
             <div class="row my-2">

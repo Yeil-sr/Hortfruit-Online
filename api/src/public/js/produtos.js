@@ -16,35 +16,35 @@ async function obterImagemProduto(produto_id) {
         const response = await fetch(`/produto/imagem/produto/${produto_id}`);
         if (!response.ok) {
             if (response.status === 404) {
-                // Se a imagem não for encontrada, retornar um caminho para uma imagem padrão
                 return './public/img/default-image.jpg';
             }
             throw new Error('Erro ao obter a imagem do produto');
         }
-        const { url } = await response.json(); // Recebe a URL assinada da imagem do produto
-        return url; // Retorna a URL assinada da imagem do produto
+        const { url } = await response.json();
+        return url;
     } catch (error) {
         console.error('Erro ao obter a imagem do produto:', error);
-        // Retornar um caminho para uma imagem padrão em caso de erro
         return './public/img/default-image.jpg';
     }
 }
 
 async function construirProdutos() {
     const produtosContainer = document.getElementById('produtosContainer');
+    const loading = document.getElementById('loading');
+    loading.style.display = 'block'; // Show loading spinner
     produtosContainer.innerHTML = ''; // Limpa o conteúdo atual
 
     try {
-        // Obtendo a lista de produtos
         const produtos = await obterListaProdutos();
+        loading.style.display = 'none'; // Hide loading spinner
 
         // Adicionando cada produto como um card
         for (const produto of produtos) {
             const imgSrc = await obterImagemProduto(produto.id);
             const card = document.createElement('div');
-            card.classList.add('col-xl-2', 'col-lg-3', 'col-md-4', 'col-sm-6', 'mb-4');
+            card.classList.add('col-xl-2', 'col-lg-3', 'col-md-4', 'col-sm-6', 'mb-4', 'd-flex', 'align-items-stretch', 'fade-in-up');
             card.innerHTML = `
-                <div class="card text-center bg-white  btn-outline-success">
+                <div class="card text-center bg-white btn-outline-success flex-fill">
                     <a id="favorito-${produto.id}" href="#" class="position-absolute right-0 p-2 text-danger" title="adicionar ao favoritos">
                         <svg class="bi" width="20" height="20" fill="currentColor">
                             <use xlink:href="/bi.svg#suit-heart" />
@@ -58,10 +58,10 @@ async function construirProdutos() {
                         <h2 class="fs-6"><a href="#" class="text-inherit text-dark text-decoration-none">${produto.nome}</a></h2>  
                         <div>
                             <small class="text-warning">
-                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>                                        
-                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a> 
-                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
-                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""><a>   
+                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""></a>                                        
+                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""></a> 
+                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""></a>   
+                                <a class="" href="#"> <img style="height:14px;" src="./public/img/favicon/star.png" alt=""></a>   
                             </small>
                             <span class="text-muted small">4,5 (67)</span>
                         </div>
@@ -73,7 +73,7 @@ async function construirProdutos() {
                             <div></div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center align-items-center m-2">
+                    <div class="d-flex justify-content-center align-items-center m-2 btn-adicionar">
                         <div>
                             <a href="produto.html?id=${produto.id}" class="btn btn-success btn-sm" style="width: 180px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
@@ -87,9 +87,12 @@ async function construirProdutos() {
                 </div>
             `;
             produtosContainer.appendChild(card);
+            setTimeout(() => {
+                card.classList.add('show');
+            }, 100); // delay for animation
         }
     } catch (error) {
-        // Em caso de erro, exibe uma mensagem de erro
+        loading.style.display = 'none'; // Hide loading spinner
         console.error('Erro ao construir a exibição dos produtos:', error);
         produtosContainer.innerHTML = '<p>Erro ao carregar a lista de produtos</p>';
     }
@@ -97,4 +100,3 @@ async function construirProdutos() {
 
 // Chama a função para construir os produtos ao carregar a página
 document.addEventListener('DOMContentLoaded', construirProdutos);
-
