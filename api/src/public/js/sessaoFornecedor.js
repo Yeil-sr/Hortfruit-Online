@@ -88,20 +88,22 @@ async function obterImagemProduto(produto_id) {
         return './public/img/default-image.jpg';
     }
 }
-
 async function construirTabelaProdutos(fornecedor_id) {
     const produtosContainer = document.getElementById('produtosContainer');
+    const loadingContainer = document.getElementById('loadingContainer');
+    
     if (!produtosContainer) {
         console.error('Element with ID produtosContainer not found.');
         return; // Exit if the element does not exist
     }
     produtosContainer.innerHTML = ''; // Clear current content
+    loadingContainer.style.display = 'flex'; // Show loading message
 
     try {
         const produtos = await obterListaProdutos(fornecedor_id);
 
         const tabela = document.createElement('table');
-        tabela.classList.add('table', 'table-striped', 'table-responsive');
+        tabela.classList.add('table', 'table-striped', 'table-responsive', 'table-container');
         tabela.innerHTML = `
             <thead>
                 <tr>
@@ -140,12 +142,15 @@ async function construirTabelaProdutos(fornecedor_id) {
             tbody.appendChild(tr);
         }
 
+        loadingContainer.style.display = 'none'; // Hide loading message
         produtosContainer.appendChild(tabela);
     } catch (error) {
         console.error('Erro ao construir a tabela de produtos:', error);
+        loadingContainer.style.display = 'none'; // Hide loading message
         produtosContainer.innerHTML = '<p>Erro ao carregar a lista de produtos</p>';
     }
 }
+
 
 
 

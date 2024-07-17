@@ -23,7 +23,16 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/css/estilos.css">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
+    <style>
+        @media (max-width: 600px) {
+            .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.5%29" stroke-width="2" linecap="round" linejoin="round" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+        }
+        }
+    </style>
 </head>
 
 <body>
@@ -75,14 +84,65 @@
     <div class="bg-danger"> 
         <p class="text-white text-center py-1">Esta é uma loja de demonstração. Nenhum pedido será entregue.</p> 
     </div> 
+        <!-- Offcanvas -->
+        <div class="position-relative">
+            <nav class="navbar navbar-light bg-light d-md-none">
+                <div class="container-fluid">
+                    <a class="navbar-brand fs-3" href="#">Painel</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Painel</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="account-orders.html">Painel</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-target="fornecedor_dados.html">Configurações</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-target="fornecedor_endereco.html">Endereço</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-target="fornecedor_pedidos.html">Forma de pagamento</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-target="fornecedor_produtos.html">Produto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-target="fornecedor_cadastroproduto.html">Cadastrar Produtos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../index.html">Sair</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex mt-3">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    
     <main class="main-content-wrapper">
+        
         <!-- Menu de navegação -->
         <div id="navlateral" class="row">
             <div class="col-lg-3 col-md-4 col-12 border-end p-3 d-none d-md-block" style="box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.2);">
-                <div class="d-flex flex-column">
-                    <div></div>
+                <div class="d-flex flex-column ">
+                    <div>
                     <!-- heading -->
-                    <div class="mt-4">
+                    <div class="mt-4 px-3">
                         <h1 class="mb-1 h4">Hortfruit: Online</h1>
                         <div class="small text-muted">
                             <span>Preços diários da loja</span>
@@ -178,9 +238,11 @@
                                       </li>
                     
                         </ul>
+                        
                     </div>
                 </div>
             </div>
+        </div>
     
             <!-- Conteúdo da página -->
             <div class="col-lg-9 col-md-8 col-12" id="content" style="padding-left: 30px; padding-right: 30px;">
@@ -212,13 +274,25 @@
     <div class="d-none d-lg-block"></div>
 
     <footer id="footer"></footer>
-    
+    <script>
+        $(document).ready(function(){
+            $(".navbar-toggler").click(function(){
+                $("#offcanvasNavbar").toggleClass("show");
+                $(".offcanvas-backdrop").toggleClass("show");
+            });
 
-    <script src="../public/js/footerPartials.js"></script>
-
+            $(".btn-close").click(function(){
+                $("#offcanvasNavbar").removeClass("show");
+                $(".offcanvas-backdrop").removeClass("show");
+            });
+        });
+    </script>    <script src="../public/js/footerPartials.js"></script>
+    <script src="../public/js/navPartials.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="../public/js/produtos.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 </body>

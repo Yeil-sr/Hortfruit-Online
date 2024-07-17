@@ -19,7 +19,30 @@
     <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 </head>
-
+<style>
+    .table-responsive {
+        overflow-x: auto;
+        display: block;
+        width: 100%;
+        white-space: nowrap;
+    }
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+    .loading img {
+        width: 50px;
+        height: 50px;
+    }
+    @media (max-width: 600px) {
+        .table-container {
+            overflow-x: scroll;
+            text-align: center;
+        }
+    }
+</style>
 <body>
     <main class="mb-5 pb-5 mb-md-0">
         <div class="container">
@@ -29,7 +52,11 @@
                 <a href="#" class="btn text-light" style="background-color: #0aad0a;">Criar produto</a>
              </div>
 
-            <div class="col-xl-12 col-12 mb-5" id="produtosContainer" ></div>
+            <div class="col-xl-12 col-12 mb-5" id="produtosContainer">
+                <div class="loading" id="loadingContainer">
+                    <img src="../../../public/img/favicon/loading.gif" alt="Loading...">
+                </div>
+            </div>
         </div>
     </main>
 
