@@ -18,6 +18,10 @@ As funcionalidades principais do Hortfruit Online incluem:
 
 - Sistema de Pagamento: O Hortfruit Online oferece um sistema de pagamento seguro, permitindo que os consumidores efetuem transações online de forma conveniente e confiável.
 
+<h2>Layout</h2>
+<div>
+<img src="https://github.com/user-attachments/assets/991b70e4-7c0d-4f11-982b-9d18bce7a5fc" alt="hortfruit-online: Página Principal">
+</div>
 <h2>As tecnologias utilizadas</h2>
 
  - HTML
