@@ -20,7 +20,7 @@ As funcionalidades principais do Hortfruit Online incluem:
 
 <h2>Layout</h2>
 <div>
-<img src="https://github.com/user-attachments/assets/991b70e4-7c0d-4f11-982b-9d18bce7a5fc" alt="hortfruit-online: Página Principal">
+<img src="https://github.com/user-attachments/assets/fc64bb2e-fc0c-4a85-a96e-e2a7d65e5a5f" alt="hortfruit-online: Página Principal">
 </div>
 <h2>As tecnologias utilizadas</h2>
 
