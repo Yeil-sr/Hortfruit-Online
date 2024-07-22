@@ -29,9 +29,11 @@ As funcionalidades principais do Hortfruit Online incluem:
  - JavaScript 
 -  Node.js 
  - MySQL 
--  Express.js 
+-  Express.js
 
-<h2>Autor</h2>
+  <h2> Licença </h2>
+<p>Este projeto é disponibilizado apenas para visualização e inspiração. Não é permitida a modificação do código-fonte.</p>
+   <h2>Autor</h2>
 
   <h3>Yale da Silva Souza</h3>
  Linkedin:
