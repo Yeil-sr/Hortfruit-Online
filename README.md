@@ -30,6 +30,46 @@ As funcionalidades principais do Hortfruit Online incluem:
 -  Node.js 
  - MySQL 
 -  Express.js
+<h2>Instalação de Pré-requisitos e Dependências</h2>
+<h3>Pré-requisitos</h3>
+<ul>
+<li>Node.js e npm (Node Package Manager) instalados. Você pode baixá-los <a href="https://nodejs.org/">aqui</a>.</li>
+<li>MySQL instalado e em execução. Para instalação, veja as instruções <a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/">aqui</a>.</li>
+<li>Conta no MercadoPago para integração de pagamento, se necessário.</li>
+</ul>
+<h3>Instruções de Instalação</h3
+ <ol>
+<li>Clone o repositório do projeto:</li>
+  
+```bash
+git clone https://github.com/Yeil-sr/Hortfruit-Online.git
+```
+<li>Navegue até o diretório do projeto:</li>
+
+```bash
+  cd Hortfruit-Online
+```
+<li>Instale as dependências do projeto:</li>
+
+```bash
+npm install
+```
+<li>Crie um arquivo `.env` na raiz do projeto e configure suas variáveis de ambiente conforme necessário. Exemplo:</li>
+
+```bash
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=sua-senha
+DB_NAME=hortfruit
+SESSION_SECRET=sua-chave-secreta
+```
+<li>Inicialize o servidor:</li>
+
+```bash
+npm start
+```
+
+
 
   <h2> Licença </h2>
 <p>Este projeto é disponibilizado apenas para visualização e inspiração. Não é permitida a modificação do código-fonte.</p>
