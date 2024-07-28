@@ -68,7 +68,73 @@ SESSION_SECRET=sua-chave-secreta
 ```bash
 npm start
 ```
-
+<h2>API Endpoints</h2>
+<h3>Usuário</h3>
+<ul>
+  <p><code>GET /user</code> - Retorna todos os usuários.</p>
+  <p><code>GET /user/:id</code> - Retorna um usuário pelo ID.</p>
+  <p><code>GET /user/email/:email</code> - Retorna um usuário pelo email.</p>
+  <p><code>POST /</code> - Cria um novo usuário.</p>
+  <p><code>POST /login</code> - Autentica um usuário.</p>
+  <p><code>POST /logout</code> - Faz o logout do usuário.</p>
+  <p><code>POST /recuperar-senha</code> - Inicia o processo de recuperação de senha.</p>
+  <p><code>POST /redefinir-senha</code> - Redefine a senha do usuário.</p>
+</ul>
+<h3>Cliente</h3>
+<ul>
+  <p><code>POST /</code> - Cria um novo cliente. (Autenticado)</li>
+  <p><code>PUT /:id</code> - Atualiza um cliente pelo ID. (Autenticado)</p>
+  <p><code>DELETE /:id</code> - Deleta um cliente pelo ID. (Autenticado)</p>
+  <p><code>GET /partials/cliente:partial</code> - Serve as partials da view de cliente.</p>
+  <p><code>GET /</code> - Retorna a página de cliente.</p>
+</ul>
+<h3>Fornecedor</h3>
+<ul>
+  <p><code>POST /</code> - Cria um novo fornecedor. (Autenticado)</p>
+  <p><code>GET /:id</code> - Retorna um fornecedor pelo ID. (Autenticado)</p>
+  <p><code>PUT /:id</code> - Atualiza um fornecedor pelo ID. (Autenticado)</p>
+  <p><code>DELETE /</code> - Deleta um fornecedor. (Autenticado)</p>
+  <p><code>GET /</code> - Retorna a página de fornecedor. (Autenticado)</p>
+  <p><code>GET /partials/fornecedor:partial</code> - Serve as partials da view de fornecedor. (Autenticado)</p>
+</ul>
+<h3>Endereço</h3>
+<ul>
+  <p><code>POST /</code> - Cria um novo endereço.</p>
+  <p><code>GET /:id</code> - Retorna um endereço pelo ID.</p>
+  <p><code>PUT /:id</code> - Atualiza um endereço pelo ID.</p>
+  <p><code>DELETE /:id</code> - Deleta um endereço pelo ID.</p>
+</ul>
+<h3>Carrinho</h3>
+<ul>
+  <p><code>POST /add</code> - Adiciona um item ao carrinho.</p>
+  <p><code>PUT /update</code> - Atualiza um item no carrinho.</p>
+  <p><code>GET /total/:userId</code> - Calcula o total do carrinho de um usuário.</p>
+  <p><code>POST /total/:userId</code> - Calcula o total do carrinho de um usuário.</p>
+  <p><code>DELETE /clear/:userId</code> - Limpa o carrinho de um usuário.</p>
+</ul>
+<h3>Produto</h3>
+<ul>
+  <p><code>GET /</code> - Retorna todos os produtos.</p>
+  <p><code>GET /fornecedor/:fornecedor_id</code> - Retorna produtos por fornecedor. (Autenticado)</p>
+  <p><code>GET /editar/:id</code> - Retorna a página de edição de produto pelo ID. (Autenticado)</p>
+  <p><code>GET /:id/</code> - Retorna um produto pelo ID. (Autenticado)</p>
+  <p><code>GET /imagem/produto/:id</code> - Retorna a imagem de um produto pelo ID.</p>
+  <p><code>POST /</code> - Adiciona um novo produto. (Autenticado, com upload de imagem)</p>
+  <p><code>PUT /:id</code> - Atualiza um produto pelo ID. (Autenticado, com upload de imagem)</p>
+  <p><code>DELETE /:id</code> - Deleta um produto pelo ID. (Autenticado)</p>
+</ul>
+<h3>Pagamento</h3>
+<ul>
+  <p><code>POST /criar-pix</code> - Cria um pagamento PIX.</p>
+  <p><code>POST /processar</code> - Processa um pagamento.</p>
+  <p><code>DELETE /cancelar/:pagamentoId</code> - Cancela um pagamento pelo ID.</p>
+</ul>
+<h3>Pedido</h3>
+<ul>
+  <p><code>POST /create</code> - Cria um novo pedido. (Autenticado)</p>
+  <p><code>PUT /atualizar/:pedidoId</code> - Atualiza um pedido pelo ID. (Autenticado)</p>
+  <p><code>DELETE /cancelar/:pedidoId</code> - Cancela um pedido pelo ID. (Autenticado)</p>
+</ul>
 
 
   <h2> Licença </h2>
